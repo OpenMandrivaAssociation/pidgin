@@ -3,9 +3,16 @@
 %define release %mkrel 2.%subv.1
 
 %define major 0
-%define libname %mklibname purple %major
+%define name pidgin
+%define libname %mklibname %{name} %major
 
-%define build_evolution 1
+%define purple purple
+%define lib_purple %mklibname %{purple} %major
+
+%define console_app finch
+%define lib_console_app %mklibname %{console_app} %major
+
+%define build_evolution 0
 %if %{mdkversion} < 1010
 	%define build_evolution 0
 	%define __libtoolize /bin/true
@@ -61,11 +68,11 @@ URL: 		http://www.pidgin.im/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source0:	%{name}-%{version}%subv.tar.bz2
-Source1: 	%{name}-%{version}%subv.tar.bz2.asc
-Source2:	gaim-qq.theme.bz2
+#Source1: 	%{name}-%{version}%subv.tar.bz2.asc
+#Source2:	gaim-qq.theme.bz2
 Patch0:		gaim-2.0.0beta2-smiley.patch
 #gw: from svn, make mono plugins build again
-Patch1: gaim-18172-mono-api-change.patch
+#Patch1: gaim-18172-mono-api-change.patch
 #gw these patches were copied from the Fedora package
 #gw include the gnthistory plugin in the gtk UI
 Patch102: gaim-2.0.0beta5-debian-02_gnthistory-in-gtk.patch
@@ -128,7 +135,7 @@ Obsoletes:	hackgaim <= 0.60
 Provides:	hackgaim <= 0.60
 Obsoletes:	gaim
 Provides:	gaim
-Requires:	%{libname} >= %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -144,44 +151,70 @@ unique features, such as perl scripting, TCL scripting and C plugins.
 Pidgin is not affiliated with or endorsed by America Online, Inc.,
 Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 
-%package	perl
-Summary:	Pidgin extension, to use perl scripting
+%package -n	%{purple}-perl
+Summary:	Purple extension, to use perl scripting
 Group: 		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-perl
+Provides:	gaim-perl = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description	perl
-Pidgin can use perl script as plugin, this plugin enable them.
+%description -n	%{purple}-perl
+Purple can use perl script as plugin, this plugin enable them.
 
-%package	tcl
-Summary:	Pidgin extension, to use tcl scripting
+%package -n	%{purple}-tcl
+Summary:	Purple extension, to use tcl scripting
 Group: 		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-tcl
+Provides:	gaim-tcl = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description	tcl
-Pidgin can use tcl script as plugin, this plugin enable them.
+%description -n	%{purple}-tcl
+Purple can use tcl script as plugin, this plugin enable them.
 
-%package	gevolution
-Summary:	Pidgin extension, for Evolution integration
+%package -n	%{purple}-gevolution
+Summary:	Purple extension, for Evolution integration
 Group:          Networking/Instant messaging
-Requires:       %{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-gevolution
+Provides:	gaim-gevolution = %{epoch}:%{version}-%release
+Requires:       %{purple} = %{epoch}:%{version}-%release
 
-%description	gevolution
-This gaim plugin allows you to have gaim working together with evolution.
+%description -n	%{purple}-gevolution
+This purple plugin allows you to have purple working together with evolution.
 
-%package	silc
-Summary:	Pidgin extension, to use SILC (Secure Internet Live Conferencing)
+%package -n	%{purple}-silc
+Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
 Group: 		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-silc
+Provides:	gaim-silc = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description silc
-This gaim plugin allows you to use SILC (Secure Internet Live Conferencing)
+%description -n %{purple}-silc
+This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
 plugin for live video conference.
 
-%package -n %libname
-Summary:	Shared libs for %name
-Group: 		System/Libraries
+%package -n	%{libname}-devel
+Summary:	Development files for pidgin
+Group: 		Development/GNOME and GTK+
+Requires:	%{libname} = %{epoch}:%{version}-%release
+Requires:	libpurple-devel = %{epoch}:%{version}-%release
+Provides:	libpidgin-devel = %{epoch}:%{version}-%release
+Provides:	pidgin-devel = %{epoch}:%{version}-%release
+Obsoletes:	gaim-devel
 
-%description -n %libname
+%description -n %{libname}-devel
+The pidgin-devel package contains the header files, developer
+documentation, and libraries required for development of Pidgin scripts
+and plugins.
+
+%package -n	%{lib_purple}
+Summary:	libpurple library for IM clients like Pidgin and Finch
+Group:		System/Libraries
+Provides:	libpurple = %{epoch}:%{version}-%release 	
+Provides:	purple = %{epoch}:%{version}-%release
+Obsoletes:	%mklibname gaim 0
+Provides:	%mklibname gaim 0 = %{epoch}:%{version}-%release
+
+%description -n %{lib_purple}
 libpurple contains the core IM support for IM clients such as Pidgin
 and Finch.
 
@@ -189,77 +222,107 @@ libpurple supports a variety of messaging protocols including AIM, MSN,
 Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
-%package -n	%libname-devel
-Summary:	Development files for gaim
-Group: 		Development/GNOME and GTK+
-Requires:	%{libname} = %{epoch}:%{version}-%release
-Provides:	libgaim-devel = %{epoch}:%{version}-%release
-Provides:	gaim-devel = %{epoch}:%{version}-%release
-Obsoletes:	gaim-devel
+%package -n	%{lib_purple}-devel
+Summary:	Development headers, documentation, and libraries for libpurple
+Group:		Development/GNOME and GTK+
+Requires:	%{lib_purple} = %{epoch}:%{version}-%release
+Provides:	libpurple-devel = %{epoch}:%{version}-%release 	
+Provides:	purple-devel = %{epoch}:%{version}-%release 	
 
-%description -n %libname-devel
+%description -n %{lib_purple}-devel
 The libpurple-devel package contains the header files, developer
 documentation, and libraries required for development of libpurple based
 instant messaging clients or plugins for any libpurple based client.
 
-%package	bonjour
-Summary:	Bonjour plugin for Pidgin
+%package -n	%{console_app}
+Summary:	A text-based user interface for Pidgin
+Group:	Networking/Instant messaging
+Provides:	gaim-text = %{epoch}:%{version}-%release
+Requires:	libpurple = %{epoch}:%{version}-%release
+Conflicts:	%mklibname gaim 0
+
+%description -n	%{console_app}
+A text-based user interface for using libpurple. This can be run from a
+standard text console or from a terminal within X Windows.  It
+uses ncurses and our homegrown gnt library for drawing windows
+and text.
+
+%package -n	%{lib_console_app}-devel
+Summary:	Headers etc. for finch stuffs
+Group:	Development/C
+Requires:	libpurple-devel = %{epoch}:%{version}-%release 	
+Provides:	%{console_app}-devel = %{epoch}:%{version}-%release 	
+
+%description -n	%{lib_console_app}-devel
+The finch-devel package contains the header files, developer
+documentation, and libraries required for development of Finch scripts
+and plugins.
+
+%package -n	%{purple}-bonjour
+Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-bonjour
+Provides:	gaim-bonjour  = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description bonjour
-Bonjour plugin for Pidgin
+%description -n %{purple}-bonjour
+Bonjour plugin for Purple
 
-%package	meanwhile
-Summary:	Lotus Sametime Community Client plugin for Pidgin
+%package -n	%{purple}-meanwhile
+Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-meanwhile
+Provides:	gaim-meanwhile = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description meanwhile
-Lotus Sametime Community Client plugin for Pidgin
+%description -n %{purple}-meanwhile
+Lotus Sametime Community Client plugin for purple
 
-%package	client
-Summary:	Plugin and sample client to control gaim
+%package -n	%{purple}-client
+Summary:	Plugin and sample client to control purple clients
 Group: 		Networking/Instant messaging
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{purple} >= %{epoch}:%{version}-%{release}
 Requires:	dbus-python
-Obsoletes:	libgaim-remote0
-Provides:	libgaim-remote0
+Obsoletes:	libgaim-remote0, gaim-client
+Provides:	libgaim-remote0, gaim-client
 
-%description	client
-Applications and library to control GAIM remotely.
+%description -n	%{purple}-client
+Applications and library to control purple clients remotely.
 
-%package	client-devel
+%package -n	%{purple}-client-devel
 Summary:	Development files for gaim-client
 Group:		Development/GNOME and GTK+
-Requires:	%{name}-client = %{epoch}:%{version}-%release
+Obsoletes:	gaim-client-devel
+Provides:	gaim-client-devel = %{epoch}:%{version}-%release
+Requires:	%{purple}-client = %{epoch}:%{version}-%release
 
-%description	client-devel
+%description -n	%{purple}-client-devel
 This package contains development files needed for developing or
-compiling applications that need gaim remote control functions.
+compiling applications that need purple remote control functions.
 
-%package mono
-Summary:        Pidgin extension, to use Mono plugins
+%package -n	%{purple}-mono
+Summary:        Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
-Requires:	%{name} = %{epoch}:%{version}-%release
+Obsoletes:	gaim-mono
+Provides:	gaim-mono = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{epoch}:%{version}-%release
 
-%description	mono
-Pidgin can use plugins developed with Mono.
-
+%description -n	%{purple}-mono
+Purple can use plugins developed with Mono.
 
 %prep
 %setup -q -n %{name}-%{version}%{subv}
-cd gtk
-%patch0 -p1 -b .smiley
-cd ..
-%patch1 -p0 -b .mono
-%patch102 -p0
-%patch103 -p1
-%patch111 -p1
+#cd gtk
+#%patch0 -p1 -b .smiley
+#cd ..
+#%patch1 -p0 -b .mono
+#%patch102 -p0
+#%patch103 -p1
+#%patch111 -p1
 
-aclocal-1.9
-automake-1.9
-autoconf
+#aclocal-1.9
+#automake-1.9
+#autoconf
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
@@ -294,10 +357,10 @@ rm -rf %{buildroot}
 %makeinstall_std mkinstalldirs='mkdir -p'
 
 #icons
-install -d -m 755 %{buildroot}%{_iconsdir} %{buildroot}%{_miconsdir}
-install -m 644 -D       gtk/pixmaps/gaim.png %{buildroot}%{_liconsdir}/%{name}.png
-convert -geometry 32x32 gtk/pixmaps/gaim.png %{buildroot}%{_iconsdir}/%{name}.png
-convert -geometry 16x16 gtk/pixmaps/gaim.png %{buildroot}%{_miconsdir}/%{name}.png
+#install -d -m 755 %{buildroot}%{_iconsdir} %{buildroot}%{_miconsdir}
+#install -m 644 -D %{name}/pixmaps/icons/48/%{name}.png %{buildroot}%{_liconsdir}/%{name}.png
+#install -m 644 -D %{name}/pixmaps/icons/32/%{name}.png %{buildroot}%{_iconsdir}/%{name}.png
+#install -m 644 -D %{name}/pixmaps/icons/16/%{name}.png %{buildroot}%{_miconsdir}/%{name}.png
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -308,174 +371,161 @@ desktop-file-install --vendor="" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 # append QQ theme entry into default theme
-bzip2 -dc %{SOURCE2} >> %{buildroot}%{_datadir}/pixmaps/gaim/smileys/default/theme
+#bzip2 -dc %{SOURCE2} >> %{buildroot}%{_datadir}/pixmaps/pidgin/emotes/default
 
 # remove files not bundled
 rm -f %{buildroot}%{_libdir}/%{name}/*.la \
-      %{buildroot}%{_libdir}/%{name}/*.a
-
-
+      %{buildroot}%{_libdir}/%{name}/*.a \
+      %{buildroot}%{_libdir}/%{purple}-2/*.la \
+      %{buildroot}%{_libdir}/%{purple}-2/*.a \
+      %{buildroot}%{_libdir}/*.la
+ 
 %find_lang %{name}
 
+find $RPM_BUILD_ROOT%{_libdir}/purple-2 -xtype f -print | \
+        sed "s@^$RPM_BUILD_ROOT@@g" | \
+        grep -v /libbonjour.so | \
+        grep -v /libsametime.so | \
+        grep -v /mono.so | \
+	grep -v /tcl.so | \
+	grep -v /dbus-example.so | \
+	grep -v /libsilcpurple.so | \
+	grep -v /perl.so | \
+        grep -v ".dll$" > %{name}-%{version}-purpleplugins
+
+find $RPM_BUILD_ROOT%{_libdir}/pidgin -xtype f -print | \
+        sed "s@^$RPM_BUILD_ROOT@@g" > %{name}-%{version}-pidginplugins
+
+find $RPM_BUILD_ROOT%{_libdir}/finch -xtype f -print | \
+        sed "s@^$RPM_BUILD_ROOT@@g" > %{name}-%{version}-finchplugins
+
+# files -f file can only take one filename :(
+cat %{name}.lang >> %{name}-%{version}-purpleplugins
+
 %post
-%post_install_gconf_schemas gaim
+%post_install_gconf_schemas purple
 
 %preun
-%preun_uninstall_gconf_schemas gaim
+%preun_uninstall_gconf_schemas purple
 
 %postun
 
-%post -n %libname -p /sbin/ldconfig
-%postun -n %libname -p /sbin/ldconfig
+%post -n %{lib_purple} -p /sbin/ldconfig
+%postun -n %{lib_purple} -p /sbin/ldconfig
 
 %if %build_dbus
-%post client -p /sbin/ldconfig
-%postun client -p /sbin/ldconfig
+%post -n %{purple}-client -p /sbin/ldconfig
+%postun -n %{purple}-client -p /sbin/ldconfig
 %endif
 
-%files -f %{name}.lang
+%files -f %{name}-%{version}-pidginplugins
 %defattr(-,root,root)
-%doc doc/FAQ doc/*.txt
-%doc AUTHORS ChangeLog COPYING NEWS README 
-%_sysconfdir/gconf/schemas/gaim.schemas
-#gw TODO: split this to a separate package
-%{_bindir}/gaim-text
-%{_bindir}/gaim
+%doc AUTHORS COPYING COPYRIGHT ChangeLog
+%doc NEWS README README.MTN doc/the_penguin.txt
+%{_mandir}/man1/pidgin.*
+%{_mandir}/man3*/*
+%_sysconfdir/gconf/schemas/%{purple}.schemas
+%{_bindir}/%{name}
+%dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
+%{_datadir}/icons/*
 %{_datadir}/sounds/%{name}
-%dir %{_libdir}/%{name}/ 
-%dir %_libdir/%name/private/
-%_libdir/%name/autoaccept.so
-%_libdir/%name/autoreply.so
-%_libdir/%name/buddynote.so
-%_libdir/%name/cap.so
-%_libdir/%name/convcolors.so
-%_libdir/%name/extplacement.so
-%_libdir/%name/gaimrc.so
-%_libdir/%name/gestures.so
-%_libdir/%name/gntgf.so
-%_libdir/%name/gnthistory.so
-%_libdir/%name/gntlastlog.so
-%_libdir/%name/history.so
-%_libdir/%name/iconaway.so
-%_libdir/%name/idle.so
-%_libdir/%name/libaim.so
-%_libdir/%name/libbonjour.so
-%_libdir/%name/libgg.so
-%_libdir/%name/libicq.so
-%_libdir/%name/libirc.so
-%_libdir/%name/libjabber.so
-%_libdir/%name/libmsn.so
-%_libdir/%name/libnovell.so
-%_libdir/%name/liboscar.so*
-%_libdir/%name/libqq.so
-%_libdir/%name/libsimple.so
-%_libdir/%name/libyahoo.so
-%_libdir/%name/libzephyr.so
-%_libdir/%name/log_reader.so
-%_libdir/%name/markerline.so
-%_libdir/%name/musicmessaging.so
-%_libdir/%name/newline.so
-%_libdir/%name/notify.so
-%_libdir/%name/offlinemsg.so
-%_libdir/%name/psychic.so
-%_libdir/%name/relnot.so
-%_libdir/%name/s.so
-%_libdir/%name/spellchk.so
-%_libdir/%name/ssl-gnutls.so
-%_libdir/%name/ssl-nss.so
-%_libdir/%name/ssl.so
-%_libdir/%name/statenotify.so
-%_libdir/%name/ticker.so
-%_libdir/%name/timestamp.so
-%_libdir/%name/timestamp_format.so
-%_libdir/%name/xmppconsole.so
-%{_mandir}/*/*
-%{_miconsdir}/%{name}.png
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
 
-%files -n %libname
+%files -n %{libname}-devel
+%dir %{_includedir}/%{name}
+%{_includedir}/%{name}/*.h
+%{_libdir}/pkgconfig/%{name}.pc
+
+%files -f %{name}-%{version}-purpleplugins -n %{lib_purple}
 %defattr(-,root,root)
-%_libdir/libgnt.so.%{major}*
-%_libdir/libgaim.so.%{major}*
+%_libdir/libpurple.so.%{major}*
 
-%files -n %libname-devel
+%files -n %{lib_purple}-devel
+%defattr(-, root, root)
+%doc ChangeLog.API HACKING PLUGIN_HOWTO
+%dir %{_includedir}/libpurple
+%{_includedir}/lib%{purple}/*.h
+%{_libdir}/lib%{purple}.so
+%{_libdir}/pkgconfig/%{purple}.pc
+%{_datadir}/aclocal/%{purple}.m4
+
+%files -f %{name}-%{version}-finchplugins -n %{console_app}
+%defattr(-, root, root)
+%doc %{_mandir}/man1/%{console_app}.*
+%{_bindir}/%{console_app}
+%{_libdir}/libgnt.so.*
+
+%files -n %{lib_console_app}-devel
+%defattr(-, root, root)
+%dir %{_includedir}/%{console_app}
+%{_includedir}/%{console_app}/*.h
+%dir %{_includedir}/gnt
+%{_includedir}/gnt/*.h
+%{_libdir}/pkgconfig/gnt.pc
+%{_libdir}/libgnt.so
+
+%files -n %{purple}-bonjour
 %defattr(-,root,root)
-%doc PROGRAMMING_NOTES HACKING doc/[[:lower:]]*.dox
-%{_libdir}/pkgconfig/*.pc
-%{_datadir}/aclocal/gaim.m4
-%{_includedir}/gaim
-%{_includedir}/gnt/
-%_libdir/libgaim.so
-%_libdir/libgaim.la
-%_libdir/libgnt.so
-%_libdir/libgnt.la
+%{_libdir}/%{purple}-2/libbonjour.so
 
-
-%files perl
+%files -n %{purple}-perl
 %defattr(-,root,root)
 %doc doc/PERL-HOWTO.dox
 %{perl_vendorarch}/*.pm
-%{perl_vendorarch}/Gaim/
-%{perl_vendorarch}/auto/Gaim/
-%{_libdir}/%{name}/perl.so
-%_libdir/%name/private/libgaimperl*
+%{perl_vendorarch}/auto/Pidgin/*
+%{perl_vendorarch}/auto/Purple/*
+%{_libdir}/%{purple}-2/perl.so
 
-%files tcl
+%files -n %{purple}-tcl
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/%{name}/tcl.so
+%{_libdir}/%{purple}-2/tcl.so
 
 %if %build_silc
-%files silc
+%files -n %{purple}-silc
 %defattr(-,root,root)
-%doc libgaim/protocols/silc/README
-%{_libdir}/%{name}/libsilcgaim.so
+%doc libpurple/protocols/silc/README
+%{_libdir}/%{purple}-2/libsilcpurple.so
 %endif
 
 %if %build_evolution
-%files gevolution
+%files -n %{purple}-gevolution
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/%{name}/gevolution.so
 %endif
 
 %if %build_meanwhile
-%files meanwhile
+%files -n %{purple}-meanwhile
 %defattr(-,root,root)
-%{_libdir}/%{name}/libsametime.so
+%{_libdir}/%{purple}-2/libsametime.so
 %endif
 
 %if %build_dbus
-%files client
+%files -n %{purple}-client
 %defattr(-,root,root)
 %doc COPYRIGHT
-%{_bindir}/gaim-remote
-%{_bindir}/gaim-send
-%{_bindir}/gaim-send-async
-%{_bindir}/gaim-client-example
-%{_bindir}/gaim-url-handler
-%attr(644,root,root) %{_libdir}/libgaim-client.la
-%{_libdir}/libgaim-client.so.0*
-%{_datadir}/dbus-1/services/gaim.service
-%{_libdir}/gaim/dbus-example.so
+%{_bindir}/%{purple}-remote
+%{_bindir}/%{purple}-send
+%{_bindir}/%{purple}-send-async
+%{_bindir}/%{purple}-client-example
+%{_bindir}/%{purple}-url-handler
+%{_libdir}/lib%{purple}-client.so.0*
+%{_libdir}/%{purple}-2/dbus-example.so
 
-%files client-devel
+%files -n %{purple}-client-devel
 %defattr(-,root,root)
-%{_libdir}/libgaim-client.so
+%{_libdir}/lib%{purple}-client.so
 %endif
 
 %if %build_mono
-%files mono
+%files -n %{purple}-mono
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/%{name}/mono.so
-%{_libdir}/%{name}/*.dll
+%{_libdir}/%{purple}-2/mono.so
+%{_libdir}/%{purple}-2/*.dll
 %endif
 
 %clean
 rm -rf %{buildroot}
-
-
