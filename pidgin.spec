@@ -51,13 +51,13 @@
 %define epoch 1
 
 Summary: 	A GTK+ based multiprotocol instant messaging client
-Name: 		gaim
+Name: 		pidgin
 Version: 	%{version}
 Release: 	%{release}
 Epoch:		%{epoch}
 Group: 		Networking/Instant messaging
 License: 	GPL
-URL: 		http://gaim.sourceforge.net/
+URL: 		http://www.pidgin.im/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source0:	%{name}-%{version}%subv.tar.bz2
@@ -129,35 +129,35 @@ Provides:	hackgaim <= 0.60
 Requires:	%{libname} >= %{epoch}:%{version}-%release
 
 %description
-Gaim allows you to talk to anyone using a variety of messaging  
+Pidgin allows you to talk to anyone using a variety of messaging  
 protocols, including AIM (Oscar and TOC), ICQ, IRC, Yahoo!,
 MSN Messenger, Jabber, Gadu-Gadu, Napster, and Zephyr.  These
 protocols are implemented using a modular, easy to use design.  
 To use a protocol, just load the plugin for it.
 
-Gaim supports many common features of other clients, as well as many
+Pidgin supports many common features of other clients, as well as many
 unique features, such as perl scripting and C plugins.
 
-Gaim is NOT affiliated with or endorsed by AOL.
+Pidgin is NOT affiliated with or endorsed by AOL.
 
 %package	perl
-Summary:	Gaim extension, to use perl scripting
+Summary:	Pidgin extension, to use perl scripting
 Group: 		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
 %description	perl
-Gaim can use perl script as plugin, this plugin enable them.
+Pidgin can use perl script as plugin, this plugin enable them.
 
 %package	tcl
-Summary:	Gaim extension, to use tcl scripting
+Summary:	Pidgin extension, to use tcl scripting
 Group: 		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
 %description	tcl
-Gaim can use tcl script as plugin, this plugin enable them.
+Pidgin can use tcl script as plugin, this plugin enable them.
 
 %package	gevolution
-Summary:	Gaim extension, for Evolution integration
+Summary:	Pidgin extension, for Evolution integration
 Group:          Networking/Instant messaging
 Requires:       %{name} = %{epoch}:%{version}-%release
 
@@ -165,7 +165,7 @@ Requires:       %{name} = %{epoch}:%{version}-%release
 This gaim plugin allows you to have gaim working together with evolution.
 
 %package	silc
-Summary:	Gaim extension, to use SILC (Secure Internet Live Conferencing)
+Summary:	Pidgin extension, to use SILC (Secure Internet Live Conferencing)
 Group: 		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
@@ -194,23 +194,23 @@ This package contains development files needed for developing or
 compiling gaim plugins.
 
 %package	bonjour
-Summary:	Bonjour plugin for Gaim
+Summary:	Bonjour plugin for Pidgin
 Group:		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
 %description bonjour
-Bonjour plugin for Gaim
+Bonjour plugin for Pidgin
 
 %package	meanwhile
-Summary:	Lotus Sametime Community Client plugin for Gaim
+Summary:	Lotus Sametime Community Client plugin for Pidgin
 Group:		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
 %description meanwhile
-Lotus Sametime Community Client plugin for Gaim
+Lotus Sametime Community Client plugin for Pidgin
 
 %package	client
-Summary:	PLugin and sample client to control gaim
+Summary:	Plugin and sample client to control gaim
 Group: 		Networking/Instant messaging
 Requires:	%{name} >= %{epoch}:%{version}-%{release}
 Requires:	dbus-python
@@ -230,12 +230,12 @@ This package contains development files needed for developing or
 compiling applications that need gaim remote control functions.
 
 %package mono
-Summary:        Gaim extension, to use Mono plugins
+Summary:        Pidgin extension, to use Mono plugins
 Group:		Networking/Instant messaging
 Requires:	%{name} = %{epoch}:%{version}-%release
 
 %description	mono
-Gaim can use plugins developed with Mono.
+Pidgin can use plugins developed with Mono.
 
 
 %prep
