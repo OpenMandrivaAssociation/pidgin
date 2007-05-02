@@ -1,6 +1,6 @@
 %define version 2.0.0
-%define subv	beta6
-%define release %mkrel 2.%subv.2
+%define subv	beta7
+%define release %mkrel 2.%subv.1
 
 %define major 0
 %define libname %mklibname gaim %major
