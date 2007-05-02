@@ -4,10 +4,7 @@
 
 %define major 0
 %define name pidgin
-%define libname %mklibname %{name} %major
-
-%define purple purple
-%define lib_purple %mklibname %{purple} %major
+%define libname %mklibname purple %major
 
 %define console_app finch
 %define lib_console_app %mklibname %{console_app} %major
@@ -23,11 +20,6 @@
 	%define build_silc 1
 %endif
 
-%define build_dbus 1
-%if %{mdkversion} < 200610
-	%define build_dbus 0
-%endif
-
 %define build_meanwhile 1
 %if %{mdkversion} < 200610
 	%define build_meanwhile 0
@@ -41,9 +33,6 @@
 
 %{?_without_silc: %{expand: %%global build_silc 0}}
 %{?_with_silc: %{expand: %%global build_silc 1}}
-
-%{?_without_dbus: %{expand: %%global build_dbus 0}}
-%{?_with_dbus: %{expand: %%global build_dbus 1}}
 
 %{?_without_meanwhile: %{expand: %%global build_meanwhile 0}}
 %{?_with_meanwhile: %{expand: %%global build_meanwhile 1}}
@@ -64,7 +53,6 @@ URL: 		http://www.pidgin.im/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source0:	%{name}-%{version}%subv.tar.bz2
-Source1: 	%{name}-%{version}%subv.tar.bz2.asc
 Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw these patches were copied from the Fedora package
 #gw include the gnthistory plugin in the gtk UI
@@ -113,9 +101,7 @@ BuildRequires:	silc-toolkit-devel >= 0.9.12
 %else
 BuildConflicts:	silc-toolkit-devel
 %endif
-%if %build_dbus
 BuildRequires:	dbus-devel >= 0.50
-%endif
 %if %build_mono
 BuildRequires:	mono-devel
 %endif
@@ -123,11 +109,9 @@ BuildRequires:	mono-devel
 BuildRequires:  libortp-devel >= 0.8.1
 BuildRequires:	speex-devel
 %endif
-Obsoletes:	hackgaim <= 0.60
-Provides:	hackgaim <= 0.60
-Obsoletes:	gaim
-Provides:	gaim
-Requires:	%{purple} = %{version}-%release
+Obsoletes:	hackgaim <= 0.60 gaim
+Provides:	hackgaim <= 0.60 gaim
+Requires: %libname >= %version
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -143,24 +127,33 @@ unique features, such as perl scripting, TCL scripting and C plugins.
 Pidgin is not affiliated with or endorsed by America Online, Inc.,
 Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 
-%package -n	%{purple}-perl
+%package plugins
+Summary: Pidgin plugins shared by the Purple and Finch
+Group: Networking/Instant messaging
+
+%description plugins
+This contains the parts of Pidgin that are shared between the Purple and
+Finch Instant Messengers.
+
+
+%package perl
 Summary:	Purple extension, to use perl scripting
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-perl
 Provides:	gaim-perl
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-%description -n	%{purple}-perl
+%description perl
 Purple can use perl script as plugin, this plugin enable them.
 
-%package -n	%{purple}-tcl
+%package tcl
 Summary:	Purple extension, to use tcl scripting
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-tcl
 Provides:	gaim-tcl
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-%description -n	%{purple}-tcl
+%description tcl
 Purple can use tcl script as plugin, this plugin enable them.
 
 %package 	gevolution
@@ -170,19 +163,17 @@ Obsoletes:	gaim-gevolution
 Provides:	gaim-gevolution
 Requires:       %{name} = %{version}-%release
 
-
 %description 	gevolution
 This pidgin plugin allows you to have pidgin working together with evolution.
 
-%package -n	%{purple}-silc
+%package silc
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-silc
 Provides:	gaim-silc
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-
-%description -n %{purple}-silc
+%description silc
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
 plugin for live video conference.
 
@@ -190,7 +181,7 @@ plugin for live video conference.
 Summary:	Development files for pidgin
 Group: 		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%release
-Requires:	libpurple-devel = %{version}-%release
+Requires:	%{lib_console_app} = %{version}-%release
 Provides:	libpidgin-devel = %{version}-%release
 Provides:	pidgin-devel = %{version}-%release
 Obsoletes:	gaim-devel
@@ -200,13 +191,11 @@ The pidgin-devel package contains the header files, developer
 documentation, and libraries required for development of Pidgin scripts
 and plugins.
 
-%package -n	%{lib_purple}
-Summary:	libpurple library for IM clients like Pidgin and Finch
+%package -n	%{libname}
+Summary:	The libpurple library for IM clients like Pidgin and Finch
 Group:		System/Libraries
-Provides:	libpurple = %{version}-%release 	
-Provides:	purple = %{version}-%release
 
-%description -n %{lib_purple}
+%description -n %{libname}
 libpurple contains the core IM support for IM clients such as Pidgin
 and Finch.
 
@@ -214,25 +203,23 @@ libpurple supports a variety of messaging protocols including AIM, MSN,
 Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
-%package -n	%{lib_purple}-devel
-Summary:	Development headers, documentation, and libraries for libpurple
-Group:		Development/GNOME and GTK+
-Requires:	%{lib_purple} = %{version}-%release
-Provides:	libpurple-devel = %{version}-%release 	
-Provides:	purple-devel = %{version}-%release 	
+%package -n	%{lib_console_app}
+Summary:	The libgnt library for the Finch IM client
+Group:		System/Libraries
+Conflicts:	%mklibname gaim 0
 
+%description -n %{lib_console_app}
+libgnt contains the core IM support for the Finch IM client.
 
-%description -n %{lib_purple}-devel
-The libpurple-devel package contains the header files, developer
-documentation, and libraries required for development of libpurple based
-instant messaging clients or plugins for any libpurple based client.
+libgnt supports a variety of messaging protocols including AIM, MSN,
+Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
+Lotus Sametime, SILC, Simple and Zephyr.
 
 %package -n	%{console_app}
 Summary:	A text-based user interface for Pidgin
 Group:	Networking/Instant messaging
-Provides:	gaim-text
-Requires:	libpurple = %{version}-%release
-Conflicts:	%mklibname gaim 0
+Requires: %name = %version-%release
+Requires: %lib_console_app >= %version
 
 %description -n	%{console_app}
 A text-based user interface for using libpurple. This can be run from a
@@ -240,71 +227,46 @@ standard text console or from a terminal within X Windows.  It
 uses ncurses and our homegrown gnt library for drawing windows
 and text.
 
-%package -n	%{lib_console_app}-devel
-Summary:	Headers etc. for finch stuffs
-Group:	Development/C
-Requires:	libpurple-devel = %{version}-%release 	
-Provides:	%{console_app}-devel = %{version}-%release 	
-
-%description -n	%{lib_console_app}-devel
-The finch-devel package contains the header files, developer
-documentation, and libraries required for development of Finch scripts
-and plugins.
-
-%package -n	%{purple}-bonjour
+%package bonjour
 Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-bonjour
 Provides:	gaim-bonjour
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-
-%description -n %{purple}-bonjour
+%description bonjour
 Bonjour plugin for Purple
 
-%package -n	%{purple}-meanwhile
+%package meanwhile
 Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-meanwhile
 Provides:	gaim-meanwhile
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-%description -n %{purple}-meanwhile
+%description meanwhile
 Lotus Sametime Community Client plugin for purple
 
-%package -n	%{purple}-client
+%package client
 Summary:	Plugin and sample client to control purple clients
 Group: 		Networking/Instant messaging
-Requires:	%{purple} >= %{version}-%{release}
 Requires:	dbus-python
 Obsoletes:	libgaim-remote0, gaim-client
 Provides:	libgaim-remote0, gaim-client
+Requires: %name = %version-%release
 
-
-%description -n	%{purple}-client
+%description client
 Applications and library to control purple clients remotely.
 
-%package -n	%{purple}-client-devel
-Summary:	Development files for pidgin-client
-Group:		Development/GNOME and GTK+
-Obsoletes:	gaim-client-devel
-Provides:	gaim-client-devel
-Requires:	%{purple}-client = %{version}-%release
 
-
-%description -n	%{purple}-client-devel
-This package contains development files needed for developing or
-compiling applications that need purple remote control functions.
-
-%package -n	%{purple}-mono
+%package mono
 Summary:        Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-mono
 Provides:	gaim-mono
-Requires:	%{purple} = %{version}-%release
+Requires: %name = %version-%release
 
-
-%description -n	%{purple}-mono
+%description mono
 Purple can use plugins developed with Mono.
 
 %prep
@@ -324,11 +286,6 @@ cd ..
 %configure2_5x \
 	--enable-gnutls=no \
 	--with-perl-lib=vendor \
-%if %build_dbus
-	--enable-dbus \
-%else
-	--disable-dbus \
-%endif
 %if %build_mono
 	--enable-mono \
 %else
@@ -365,26 +322,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la \
  
 %find_lang %{name}
 
-find $RPM_BUILD_ROOT%{_libdir}/purple-2 -xtype f -print | \
-        sed "s@^$RPM_BUILD_ROOT@@g" | \
-        grep -v /libbonjour.so | \
-        grep -v /libsametime.so | \
-        grep -v /mono.so | \
-	grep -v /tcl.so | \
-	grep -v /dbus-example.so | \
-	grep -v /libsilcpurple.so | \
-	grep -v /perl.so | \
-        grep -v ".dll$" > %{name}-%{version}-purpleplugins
-
-find $RPM_BUILD_ROOT%{_libdir}/pidgin -xtype f -print | \
-	grep -v /gevolution.so | \
-        sed "s@^$RPM_BUILD_ROOT@@g" > %{name}-%{version}-pidginplugins
-
-find $RPM_BUILD_ROOT%{_libdir}/finch -xtype f -print | \
-        sed "s@^$RPM_BUILD_ROOT@@g" > %{name}-%{version}-finchplugins
-
-# files -f file can only take one filename :(
-cat %{name}.lang >> %{name}-%{version}-purpleplugins
 
 %post
 %post_install_gconf_schemas purple
@@ -392,89 +329,125 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 
 %preun
 %preun_uninstall_gconf_schemas purple
-%clean_icon_cache hicolor
 
 %postun
+%clean_icon_cache hicolor
 
-%post -n %{lib_purple} -p /sbin/ldconfig
-%postun -n %{lib_purple} -p /sbin/ldconfig
 
-%if %build_dbus
-%post -n %{purple}-client -p /sbin/ldconfig
-%postun -n %{purple}-client -p /sbin/ldconfig
-%endif
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -f %{name}-%{version}-pidginplugins
+%post -n %{lib_console_app} -p /sbin/ldconfig
+%postun -n %{lib_console_app} -p /sbin/ldconfig
+
+%files -f %name.lang
 %defattr(-,root,root)
 %doc AUTHORS COPYING COPYRIGHT ChangeLog
 %doc NEWS README README.MTN doc/the_penguin.txt
 %{_mandir}/man1/pidgin.*
-%{_mandir}/man3*/*
-%_sysconfdir/gconf/schemas/%{purple}.schemas
+%_sysconfdir/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/%{name}
+%_libdir/pidgin/cap.so
+%_libdir/pidgin/convcolors.so
+%_libdir/pidgin/extplacement.so
+%_libdir/pidgin/gestures.so
+%_libdir/pidgin/history.so
+%_libdir/pidgin/iconaway.so
+%_libdir/pidgin/markerline.so
+%_libdir/pidgin/musicmessaging.so
+%_libdir/pidgin/notify.so
+%_libdir/pidgin/pidginrc.so
+%_libdir/pidgin/relnot.so
+%_libdir/pidgin/spellchk.so
+%_libdir/pidgin/ticker.so
+%_libdir/pidgin/timestamp.so
+%_libdir/pidgin/timestamp_format.so
+%_libdir/pidgin/xmppconsole.so
+%_libdir/purple-2/autoaccept.so
+%_libdir/purple-2/buddynote.so
+%_libdir/purple-2/idle.so
+%_libdir/purple-2/joinpart.so
+%_libdir/purple-2/libaim.so
+%_libdir/purple-2/libgg.so
+%_libdir/purple-2/libicq.so
+%_libdir/purple-2/libirc.so
+%_libdir/purple-2/libjabber.so
+%_libdir/purple-2/libjabber.so.0
+%_libdir/purple-2/libjabber.so.0.0.0
+%_libdir/purple-2/libmsn.so
+%_libdir/purple-2/libnovell.so
+%_libdir/purple-2/liboscar.so
+%_libdir/purple-2/liboscar.so.0
+%_libdir/purple-2/liboscar.so.0.0.0
+%_libdir/purple-2/libqq.so
+%_libdir/purple-2/libsimple.so
+%_libdir/purple-2/libxmpp.so
+%_libdir/purple-2/libyahoo.so
+%_libdir/purple-2/libzephyr.so
+%_libdir/purple-2/log_reader.so
+%_libdir/purple-2/newline.so
+%_libdir/purple-2/offlinemsg.so
+%_libdir/purple-2/psychic.so
+%_libdir/purple-2/ssl-gnutls.so
+%_libdir/purple-2/ssl-nss.so
+%_libdir/purple-2/ssl.so
+%_libdir/purple-2/statenotify.so
+
 
 %files -n %{libname}-devel
-%dir %{_includedir}/%{name}
-%{_includedir}/%{name}/*.h
-%{_libdir}/pkgconfig/%{name}.pc
+%defattr(-,root,root)
+%doc ChangeLog.API HACKING PLUGIN_HOWTO
+%{_includedir}/*
+%{_datadir}/aclocal/purple.m4
+%{_libdir}/pkgconfig/*.pc
+%{_libdir}/libpurple.so
+%{_libdir}/libgnt.so
+%{_libdir}/libpurple-client.so
+%{_libdir}/lib*.la
 
-
-%files -f %{name}-%{version}-purpleplugins -n %{lib_purple}
+%files -n %libname 
 %defattr(-,root,root)
 %_libdir/libpurple.so.%{major}*
 
-%files -n %{lib_purple}-devel
-%defattr(-, root, root)
-%doc ChangeLog.API HACKING PLUGIN_HOWTO
-%dir %{_includedir}/libpurple
-%{_includedir}/lib%{purple}/*.h
-%{_libdir}/lib%{purple}.so
-%{_libdir}/pkgconfig/%{purple}.pc
-%{_datadir}/aclocal/%{purple}.m4
-
-%files -f %{name}-%{version}-finchplugins -n %{console_app}
+%files -n %{console_app}
 %defattr(-, root, root)
 %doc %{_mandir}/man1/%{console_app}.*
 %{_bindir}/%{console_app}
-%{_libdir}/libgnt.so.*
+%_libdir/finch/
 
-%files -n %{lib_console_app}-devel
+%files -n %lib_console_app
 %defattr(-, root, root)
-%dir %{_includedir}/%{console_app}
-%{_includedir}/%{console_app}/*.h
-%dir %{_includedir}/gnt
-%{_includedir}/gnt/*.h
-%{_libdir}/pkgconfig/gnt.pc
-%{_libdir}/libgnt.so
+%{_libdir}/libgnt.so.%{major}*
 
-%files -n %{purple}-bonjour
+
+%files bonjour
 %defattr(-,root,root)
-%{_libdir}/%{purple}-2/libbonjour.so
+%{_libdir}/purple-2/libbonjour.so
 
-%files -n %{purple}-perl
+%files perl
 %defattr(-,root,root)
 %doc doc/PERL-HOWTO.dox
 %{perl_vendorarch}/*.pm
 %{perl_vendorarch}/auto/Pidgin/*
 %{perl_vendorarch}/auto/Purple/*
-%{_libdir}/%{purple}-2/perl.so
+%{_libdir}/purple-2/perl.so
+%{_mandir}/man3*/*
 
-
-%files -n %{purple}-tcl
+%files tcl
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/%{purple}-2/tcl.so
+%{_libdir}/purple-2/tcl.so
 
 %if %build_silc
-%files -n %{purple}-silc
+%files silc
 %defattr(-,root,root)
 %doc libpurple/protocols/silc/README
-%{_libdir}/%{purple}-2/libsilcpurple.so
+%{_libdir}/purple-2/libsilcpurple.so
 %endif
 
 %if %build_evolution
@@ -485,34 +458,28 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 %endif
 
 %if %build_meanwhile
-%files -n %{purple}-meanwhile
+%files meanwhile
 %defattr(-,root,root)
-%{_libdir}/%{purple}-2/libsametime.so
+%{_libdir}/purple-2/libsametime.so
 %endif
 
-%if %build_dbus
-%files -n %{purple}-client
+%files client
 %defattr(-,root,root)
 %doc COPYRIGHT
-%{_bindir}/%{purple}-remote
-%{_bindir}/%{purple}-send
-%{_bindir}/%{purple}-send-async
-%{_bindir}/%{purple}-client-example
-%{_bindir}/%{purple}-url-handler
-%{_libdir}/lib%{purple}-client.so.0*
-%{_libdir}/%{purple}-2/dbus-example.so
-
-%files -n %{purple}-client-devel
-%defattr(-,root,root)
-%{_libdir}/lib%{purple}-client.so
-%endif
+%{_bindir}/purple-remote
+%{_bindir}/purple-send
+%{_bindir}/purple-send-async
+%{_bindir}/purple-client-example
+%{_bindir}/purple-url-handler
+%{_libdir}/libpurple-client.so.0*
+%{_libdir}/purple-2/dbus-example.so
 
 %if %build_mono
-%files -n %{purple}-mono
+%files mono
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/%{purple}-2/mono.so
-%{_libdir}/%{purple}-2/*.dll
+%{_libdir}/purple-2/mono.so
+%{_libdir}/purple-2/*.dll
 %endif
 
 %clean
