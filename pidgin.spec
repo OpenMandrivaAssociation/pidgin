@@ -171,15 +171,15 @@ Requires:	%{purple} = %{epoch}:%{version}-%release
 %description -n	%{purple}-tcl
 Purple can use tcl script as plugin, this plugin enable them.
 
-%package -n	%{purple}-gevolution
-Summary:	Purple extension, for Evolution integration
+%package 	gevolution
+Summary:	Pidgin extension, for Evolution integration
 Group:          Networking/Instant messaging
 Obsoletes:	gaim-gevolution
 Provides:	gaim-gevolution = %{epoch}:%{version}-%release
-Requires:       %{purple} = %{epoch}:%{version}-%release
+Requires:       %{name} = %{epoch}:%{version}-%release
 
-%description -n	%{purple}-gevolution
-This purple plugin allows you to have purple working together with evolution.
+%description 	gevolution
+This pidgin plugin allows you to have pidgin working together with evolution.
 
 %package -n	%{purple}-silc
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
@@ -394,6 +394,7 @@ find $RPM_BUILD_ROOT%{_libdir}/purple-2 -xtype f -print | \
         grep -v ".dll$" > %{name}-%{version}-purpleplugins
 
 find $RPM_BUILD_ROOT%{_libdir}/pidgin -xtype f -print | \
+	grep -v /gevolution.so | \
         sed "s@^$RPM_BUILD_ROOT@@g" > %{name}-%{version}-pidginplugins
 
 find $RPM_BUILD_ROOT%{_libdir}/finch -xtype f -print | \
@@ -490,7 +491,7 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 %endif
 
 %if %build_evolution
-%files -n %{purple}-gevolution
+%files gevolution
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/%{name}/gevolution.so
