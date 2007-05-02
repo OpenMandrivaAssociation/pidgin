@@ -12,7 +12,7 @@
 %define console_app finch
 %define lib_console_app %mklibname %{console_app} %major
 
-%define build_evolution 0
+%define build_evolution 1
 %if %{mdkversion} < 1010
 	%define build_evolution 0
 	%define __libtoolize /bin/true
