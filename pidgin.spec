@@ -3,7 +3,7 @@
 %define release %mkrel 2.%subv.1
 
 %define major 0
-%define libname %mklibname gaim %major
+%define libname %mklibname purple %major
 
 %define build_evolution 1
 %if %{mdkversion} < 1010
@@ -126,19 +126,23 @@ BuildRequires:	speex-devel
 %endif
 Obsoletes:	hackgaim <= 0.60
 Provides:	hackgaim <= 0.60
+Obsoletes:	gaim
+Provides:	gaim
 Requires:	%{libname} >= %{epoch}:%{version}-%release
 
 %description
-Pidgin allows you to talk to anyone using a variety of messaging  
-protocols, including AIM (Oscar and TOC), ICQ, IRC, Yahoo!,
-MSN Messenger, Jabber, Gadu-Gadu, Napster, and Zephyr.  These
-protocols are implemented using a modular, easy to use design.  
-To use a protocol, just load the plugin for it.
+Pidgin allows you to talk to anyone using a variety of messaging
+protocols including AIM, MSN, Yahoo!, Jabber, Bonjour, Gadu-Gadu,
+ICQ, IRC, Novell Groupwise, QQ, Lotus Sametime, SILC, Simple and
+Zephyr.  These protocols are implemented using a modular, easy to
+use design.  To use a protocol, just add an account using the
+account editor.
 
 Pidgin supports many common features of other clients, as well as many
-unique features, such as perl scripting and C plugins.
+unique features, such as perl scripting, TCL scripting and C plugins.
 
-Pidgin is NOT affiliated with or endorsed by AOL.
+Pidgin is not affiliated with or endorsed by America Online, Inc.,
+Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 
 %package	perl
 Summary:	Pidgin extension, to use perl scripting
@@ -178,8 +182,12 @@ Summary:	Shared libs for %name
 Group: 		System/Libraries
 
 %description -n %libname
-This is the shared library for %name that contains functions needed by %name.
+libpurple contains the core IM support for IM clients such as Pidgin
+and Finch.
 
+libpurple supports a variety of messaging protocols including AIM, MSN,
+Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
+Lotus Sametime, SILC, Simple and Zephyr.
 
 %package -n	%libname-devel
 Summary:	Development files for gaim
@@ -190,8 +198,9 @@ Provides:	gaim-devel = %{epoch}:%{version}-%release
 Obsoletes:	gaim-devel
 
 %description -n %libname-devel
-This package contains development files needed for developing or
-compiling gaim plugins.
+The libpurple-devel package contains the header files, developer
+documentation, and libraries required for development of libpurple based
+instant messaging clients or plugins for any libpurple based client.
 
 %package	bonjour
 Summary:	Bonjour plugin for Pidgin
