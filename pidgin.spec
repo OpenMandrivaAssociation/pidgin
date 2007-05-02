@@ -1,6 +1,6 @@
 %define version 2.0.0
 %define subv	beta7
-%define release %mkrel 2.%subv.1
+%define release %mkrel 0.%subv.1
 
 %define major 0
 %define name pidgin
@@ -54,30 +54,23 @@
 %{?_without_vv: %{expand: %%global build_vv 0}}
 %{?_with_vv: %{expand: %%global build_vv 1}}
 
-%define perl_version %(rpm -q --qf '%%{epoch}:%%{VERSION}' perl)
-%define epoch 1
-
 Summary: 	A GTK+ based multiprotocol instant messaging client
 Name: 		pidgin
 Version: 	%{version}
 Release: 	%{release}
-Epoch:		%{epoch}
 Group: 		Networking/Instant messaging
 License: 	GPL
 URL: 		http://www.pidgin.im/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source0:	%{name}-%{version}%subv.tar.bz2
-#Source1: 	%{name}-%{version}%subv.tar.bz2.asc
-#Source2:	gaim-qq.theme.bz2
-Patch0:		gaim-2.0.0beta2-smiley.patch
-#gw: from svn, make mono plugins build again
-#Patch1: gaim-18172-mono-api-change.patch
+Source1: 	%{name}-%{version}%subv.tar.bz2.asc
+Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw these patches were copied from the Fedora package
 #gw include the gnthistory plugin in the gtk UI
 Patch102: gaim-2.0.0beta5-debian-02_gnthistory-in-gtk.patch
 #gw get the right GStreamer audio sink from GConf
-Patch103: gaim-2.0.0beta5-debian-03_gconf-gstreamer.patch
+Patch103: pidgin-2.0.0beta7-gconf-gstreamer.patch
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 BuildRequires:	automake1.9 intltool
@@ -95,7 +88,6 @@ BuildRequires:  libgstreamer0.10-devel
 BuildRequires:	perl-devel
 BuildRequires:	tk tk-devel tcl tcl-devel
 BuildRequires:	startup-notification-devel >= 0.5
-BuildRequires:	ImageMagick
 BuildRequires:	libnss-devel
 BuildRequires:	libnspr-devel
 BuildRequires:	krb5-devel
@@ -135,7 +127,7 @@ Obsoletes:	hackgaim <= 0.60
 Provides:	hackgaim <= 0.60
 Obsoletes:	gaim
 Provides:	gaim
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Requires:	%{purple} = %{version}-%release
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -155,8 +147,8 @@ Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 Summary:	Purple extension, to use perl scripting
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-perl
-Provides:	gaim-perl = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-perl
+Requires:	%{purple} = %{version}-%release
 
 %description -n	%{purple}-perl
 Purple can use perl script as plugin, this plugin enable them.
@@ -165,8 +157,8 @@ Purple can use perl script as plugin, this plugin enable them.
 Summary:	Purple extension, to use tcl scripting
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-tcl
-Provides:	gaim-tcl = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-tcl
+Requires:	%{purple} = %{version}-%release
 
 %description -n	%{purple}-tcl
 Purple can use tcl script as plugin, this plugin enable them.
@@ -175,8 +167,9 @@ Purple can use tcl script as plugin, this plugin enable them.
 Summary:	Pidgin extension, for Evolution integration
 Group:          Networking/Instant messaging
 Obsoletes:	gaim-gevolution
-Provides:	gaim-gevolution = %{epoch}:%{version}-%release
-Requires:       %{name} = %{epoch}:%{version}-%release
+Provides:	gaim-gevolution
+Requires:       %{name} = %{version}-%release
+
 
 %description 	gevolution
 This pidgin plugin allows you to have pidgin working together with evolution.
@@ -185,8 +178,9 @@ This pidgin plugin allows you to have pidgin working together with evolution.
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
 Group: 		Networking/Instant messaging
 Obsoletes:	gaim-silc
-Provides:	gaim-silc = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-silc
+Requires:	%{purple} = %{version}-%release
+
 
 %description -n %{purple}-silc
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
@@ -195,10 +189,10 @@ plugin for live video conference.
 %package -n	%{libname}-devel
 Summary:	Development files for pidgin
 Group: 		Development/GNOME and GTK+
-Requires:	%{libname} = %{epoch}:%{version}-%release
-Requires:	libpurple-devel = %{epoch}:%{version}-%release
-Provides:	libpidgin-devel = %{epoch}:%{version}-%release
-Provides:	pidgin-devel = %{epoch}:%{version}-%release
+Requires:	%{libname} = %{version}-%release
+Requires:	libpurple-devel = %{version}-%release
+Provides:	libpidgin-devel = %{version}-%release
+Provides:	pidgin-devel = %{version}-%release
 Obsoletes:	gaim-devel
 
 %description -n %{libname}-devel
@@ -209,10 +203,8 @@ and plugins.
 %package -n	%{lib_purple}
 Summary:	libpurple library for IM clients like Pidgin and Finch
 Group:		System/Libraries
-Provides:	libpurple = %{epoch}:%{version}-%release 	
-Provides:	purple = %{epoch}:%{version}-%release
-Obsoletes:	%mklibname gaim 0
-Provides:	%mklibname gaim 0 = %{epoch}:%{version}-%release
+Provides:	libpurple = %{version}-%release 	
+Provides:	purple = %{version}-%release
 
 %description -n %{lib_purple}
 libpurple contains the core IM support for IM clients such as Pidgin
@@ -225,9 +217,10 @@ Lotus Sametime, SILC, Simple and Zephyr.
 %package -n	%{lib_purple}-devel
 Summary:	Development headers, documentation, and libraries for libpurple
 Group:		Development/GNOME and GTK+
-Requires:	%{lib_purple} = %{epoch}:%{version}-%release
-Provides:	libpurple-devel = %{epoch}:%{version}-%release 	
-Provides:	purple-devel = %{epoch}:%{version}-%release 	
+Requires:	%{lib_purple} = %{version}-%release
+Provides:	libpurple-devel = %{version}-%release 	
+Provides:	purple-devel = %{version}-%release 	
+
 
 %description -n %{lib_purple}-devel
 The libpurple-devel package contains the header files, developer
@@ -237,8 +230,8 @@ instant messaging clients or plugins for any libpurple based client.
 %package -n	%{console_app}
 Summary:	A text-based user interface for Pidgin
 Group:	Networking/Instant messaging
-Provides:	gaim-text = %{epoch}:%{version}-%release
-Requires:	libpurple = %{epoch}:%{version}-%release
+Provides:	gaim-text
+Requires:	libpurple = %{version}-%release
 Conflicts:	%mklibname gaim 0
 
 %description -n	%{console_app}
@@ -250,8 +243,8 @@ and text.
 %package -n	%{lib_console_app}-devel
 Summary:	Headers etc. for finch stuffs
 Group:	Development/C
-Requires:	libpurple-devel = %{epoch}:%{version}-%release 	
-Provides:	%{console_app}-devel = %{epoch}:%{version}-%release 	
+Requires:	libpurple-devel = %{version}-%release 	
+Provides:	%{console_app}-devel = %{version}-%release 	
 
 %description -n	%{lib_console_app}-devel
 The finch-devel package contains the header files, developer
@@ -262,8 +255,9 @@ and plugins.
 Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-bonjour
-Provides:	gaim-bonjour  = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-bonjour
+Requires:	%{purple} = %{version}-%release
+
 
 %description -n %{purple}-bonjour
 Bonjour plugin for Purple
@@ -272,8 +266,8 @@ Bonjour plugin for Purple
 Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-meanwhile
-Provides:	gaim-meanwhile = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-meanwhile
+Requires:	%{purple} = %{version}-%release
 
 %description -n %{purple}-meanwhile
 Lotus Sametime Community Client plugin for purple
@@ -281,20 +275,22 @@ Lotus Sametime Community Client plugin for purple
 %package -n	%{purple}-client
 Summary:	Plugin and sample client to control purple clients
 Group: 		Networking/Instant messaging
-Requires:	%{purple} >= %{epoch}:%{version}-%{release}
+Requires:	%{purple} >= %{version}-%{release}
 Requires:	dbus-python
 Obsoletes:	libgaim-remote0, gaim-client
 Provides:	libgaim-remote0, gaim-client
+
 
 %description -n	%{purple}-client
 Applications and library to control purple clients remotely.
 
 %package -n	%{purple}-client-devel
-Summary:	Development files for gaim-client
+Summary:	Development files for pidgin-client
 Group:		Development/GNOME and GTK+
 Obsoletes:	gaim-client-devel
-Provides:	gaim-client-devel = %{epoch}:%{version}-%release
-Requires:	%{purple}-client = %{epoch}:%{version}-%release
+Provides:	gaim-client-devel
+Requires:	%{purple}-client = %{version}-%release
+
 
 %description -n	%{purple}-client-devel
 This package contains development files needed for developing or
@@ -304,25 +300,23 @@ compiling applications that need purple remote control functions.
 Summary:        Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-mono
-Provides:	gaim-mono = %{epoch}:%{version}-%release
-Requires:	%{purple} = %{epoch}:%{version}-%release
+Provides:	gaim-mono
+Requires:	%{purple} = %{version}-%release
+
 
 %description -n	%{purple}-mono
 Purple can use plugins developed with Mono.
 
 %prep
 %setup -q -n %{name}-%{version}%{subv}
-#cd gtk
-#%patch0 -p1 -b .smiley
-#cd ..
-#%patch1 -p0 -b .mono
-#%patch102 -p0
-#%patch103 -p1
-#%patch111 -p1
-
-#aclocal-1.9
-#automake-1.9
-#autoconf
+%patch0 -p1 -b .smiley
+cd finch
+#%patch102 -p1
+cd ..
+%patch103 -p1
+cd libpurple
+%patch111 -p2
+cd ..
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
@@ -356,11 +350,6 @@ make
 rm -rf %{buildroot}
 %makeinstall_std mkinstalldirs='mkdir -p'
 
-#icons
-#install -d -m 755 %{buildroot}%{_iconsdir} %{buildroot}%{_miconsdir}
-#install -m 644 -D %{name}/pixmaps/icons/48/%{name}.png %{buildroot}%{_liconsdir}/%{name}.png
-#install -m 644 -D %{name}/pixmaps/icons/32/%{name}.png %{buildroot}%{_iconsdir}/%{name}.png
-#install -m 644 -D %{name}/pixmaps/icons/16/%{name}.png %{buildroot}%{_miconsdir}/%{name}.png
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -370,15 +359,9 @@ desktop-file-install --vendor="" \
   --add-category="X-MandrivaLinux-Internet-InstantMessaging" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
-# append QQ theme entry into default theme
-#bzip2 -dc %{SOURCE2} >> %{buildroot}%{_datadir}/pixmaps/pidgin/emotes/default
-
 # remove files not bundled
-rm -f %{buildroot}%{_libdir}/%{name}/*.la \
-      %{buildroot}%{_libdir}/%{name}/*.a \
-      %{buildroot}%{_libdir}/%{purple}-2/*.la \
-      %{buildroot}%{_libdir}/%{purple}-2/*.a \
-      %{buildroot}%{_libdir}/*.la
+rm -f %{buildroot}%{_libdir}/*/*.la \
+      %{buildroot}%{_libdir}/*/*.a
  
 %find_lang %{name}
 
@@ -405,9 +388,11 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 
 %post
 %post_install_gconf_schemas purple
+%update_icon_cache hicolor
 
 %preun
 %preun_uninstall_gconf_schemas purple
+%clean_icon_cache hicolor
 
 %postun
 
@@ -437,6 +422,7 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}/*.h
 %{_libdir}/pkgconfig/%{name}.pc
+
 
 %files -f %{name}-%{version}-purpleplugins -n %{lib_purple}
 %defattr(-,root,root)
@@ -477,6 +463,7 @@ cat %{name}.lang >> %{name}-%{version}-purpleplugins
 %{perl_vendorarch}/auto/Pidgin/*
 %{perl_vendorarch}/auto/Purple/*
 %{_libdir}/%{purple}-2/perl.so
+
 
 %files -n %{purple}-tcl
 %defattr(-,root,root)
