@@ -55,10 +55,6 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source0:	%{name}-%{version}%subv.tar.bz2
 Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw these patches were copied from the Fedora package
-#gw include the gnthistory plugin in the gtk UI
-Patch102: gaim-2.0.0beta5-debian-02_gnthistory-in-gtk.patch
-#gw get the right GStreamer audio sink from GConf
-Patch103: pidgin-2.0.0beta7-gconf-gstreamer.patch
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 BuildRequires:	automake1.9 intltool
@@ -272,10 +268,6 @@ Purple can use plugins developed with Mono.
 %prep
 %setup -q -n %{name}-%{version}%{subv}
 %patch0 -p1 -b .smiley
-cd finch
-#%patch102 -p1
-cd ..
-%patch103 -p1
 cd libpurple
 %patch111 -p2
 cd ..
