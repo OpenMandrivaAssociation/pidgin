@@ -1,6 +1,5 @@
 %define version 2.0.0
-%define subv	beta7
-%define release %mkrel 0.%subv.1
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -52,7 +51,7 @@ License: 	GPL
 URL: 		http://www.pidgin.im/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-Source0:	%{name}-%{version}%subv.tar.bz2
+Source0:	%{name}-%{version}.tar.bz2
 Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
@@ -266,7 +265,7 @@ Requires: %name = %version-%release
 Purple can use plugins developed with Mono.
 
 %prep
-%setup -q -n %{name}-%{version}%{subv}
+%setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 cd libpurple
 %patch111 -p2
