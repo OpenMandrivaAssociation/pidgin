@@ -1,5 +1,5 @@
 %define version 2.0.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define name pidgin
@@ -56,6 +56,9 @@ Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
+# (tpg) pidgin-privacy-please is useless without those two patches
+Patch112:	pidgin-2.0-auth-signals.patch
+Patch113:	pidgin-2.0-mtn-blocked-signals.patch 
 BuildRequires:	automake1.9 intltool
 BuildRequires:	autoconf2.5
 BuildRequires:	gtk+2-devel
@@ -267,9 +270,12 @@ Purple can use plugins developed with Mono.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-cd libpurple
+pushd libpurple
 %patch111 -p2
-cd ..
+popd
+
+%patch112 -p1
+%patch113 -p1
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
