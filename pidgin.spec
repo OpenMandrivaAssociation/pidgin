@@ -1,5 +1,5 @@
 %define version 2.0.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 0
 %define name pidgin
@@ -57,7 +57,7 @@ Patch0:		pidgin-2.0.0beta7-smiley.patch
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
-Patch112:	pidgin-2.0-auth-signals.patch
+Patch112:	pidgin-2.0.1-auth-signals.patch
 Patch113:	pidgin-2.0-mtn-blocked-signals.patch 
 BuildRequires:	automake1.9 intltool
 BuildRequires:	autoconf2.5
