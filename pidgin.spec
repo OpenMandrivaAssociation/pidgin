@@ -53,6 +53,7 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		pidgin-2.0.0beta7-smiley.patch
+Patch1:		pidgin-2.0.1-gevolution-e-book-listener.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
@@ -270,6 +271,7 @@ Purple can use plugins developed with Mono.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
+%patch1 -p1 -b .eds
 pushd libpurple
 %patch111 -p2
 popd
