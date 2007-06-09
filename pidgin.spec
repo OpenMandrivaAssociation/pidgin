@@ -1,5 +1,5 @@
 %define version 2.0.1
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define major 0
 %define name pidgin
@@ -68,8 +68,8 @@ BuildRequires:	gtk+2-devel
 Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
-#gw not really needed as gaim has its own libgadu included
-#Buildrequires:	libgadu-devel
+# (tpg) libgadu is now in main, pidgin's one is really old
+Buildrequires:	libgadu-devel
 #gw we have networkmanager only in contribs:
 #Buildrequires:	libnetworkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
@@ -315,9 +315,14 @@ popd
 %else
 	--disable-vv \
 %endif
-	--without-krb4
+	--without-krb4 \
+	--with-gadu-includes=%{buildroot}%{_includedir} \
+	--with-gadu-libs=%{buildroot}%{_libdir} \
+	--disable-static
 #gw parallel build doesn't work with the mono plugin
-make
+# (tpg) this dirty hack solves this :)
+%(echo %make|perl -pe 's/-j\d+/-j1/g')
+
 
 %install
 rm -rf %{buildroot}
@@ -340,8 +345,7 @@ desktop-file-install --vendor="" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 # remove files not bundled
-rm -f %{buildroot}%{_libdir}/*/*.la \
-      %{buildroot}%{_libdir}/*/*.a
+rm -f %{buildroot}%{_libdir}/*/*.la
  
 %find_lang %{name}
 
@@ -512,3 +516,4 @@ rm -f %{buildroot}%{_libdir}/*/*.la \
 
 %clean
 rm -rf %{buildroot}
+
