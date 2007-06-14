@@ -1,5 +1,5 @@
 %define version 2.0.1
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define major 0
 %define name pidgin
@@ -316,8 +316,8 @@ popd
 	--disable-vv \
 %endif
 	--without-krb4 \
-	--with-gadu-includes=%{buildroot}%{_includedir} \
-	--with-gadu-libs=%{buildroot}%{_libdir} \
+	--with-gadu-includes=%{_includedir} \
+	--with-gadu-libs=%{_libdir} \
 	--disable-static
 #gw parallel build doesn't work with the mono plugin
 # (tpg) this dirty hack solves this :)
@@ -342,7 +342,7 @@ desktop-file-install --vendor="" \
   --add-category="Network" \
   --add-category="InstantMessaging" \
   --add-category="X-MandrivaLinux-Internet-InstantMessaging" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 # remove files not bundled
 rm -f %{buildroot}%{_libdir}/*/*.la
@@ -516,4 +516,3 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 
 %clean
 rm -rf %{buildroot}
-
