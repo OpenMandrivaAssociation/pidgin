@@ -381,6 +381,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/pidgin/convcolors.so
 %_libdir/pidgin/extplacement.so
 %_libdir/pidgin/gestures.so
+%_libdir/pidgin/gtkbuddynote.so
 %_libdir/pidgin/history.so
 %_libdir/pidgin/iconaway.so
 %_libdir/pidgin/markerline.so
