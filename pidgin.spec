@@ -4,6 +4,7 @@
 %define major 0
 %define name pidgin
 %define libname %mklibname purple %major
+%define develname %mklibname -d purple
 
 %define console_app finch
 %define lib_console_app %mklibname %{console_app} %major
@@ -177,7 +178,7 @@ Requires: %name = %version-%release
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
 plugin for live video conference.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}-devel
 Summary:	Development files for pidgin
 Group: 		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%release
@@ -186,7 +187,7 @@ Provides:	libpidgin-devel = %{version}-%release
 Provides:	pidgin-devel = %{version}-%release
 Obsoletes:	gaim-devel
 
-%description -n %{libname}-devel
+%description -n %{develname}-devel
 The pidgin-devel package contains the header files, developer
 documentation, and libraries required for development of Pidgin scripts
 and plugins.
@@ -425,7 +426,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/purple-2/statenotify.so
 
 
-%files -n %{libname}-devel
+%files -n %{develname}-devel
 %defattr(-,root,root)
 %doc ChangeLog.API HACKING PLUGIN_HOWTO
 %{_includedir}/*
