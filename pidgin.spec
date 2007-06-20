@@ -186,6 +186,7 @@ Requires:	%{lib_console_app} = %{version}-%release
 Provides:	libpidgin-devel = %{version}-%release
 Provides:	pidgin-devel = %{version}-%release
 Obsoletes:	gaim-devel
+Obsoletes:	%{libname}-devel
 
 %description -n %{develname}
 The pidgin-devel package contains the header files, developer
