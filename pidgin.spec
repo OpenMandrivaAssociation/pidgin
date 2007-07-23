@@ -1,5 +1,5 @@
 %define version 2.0.2
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 0
 %define name pidgin
@@ -62,8 +62,8 @@ Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
 Patch112:	pidgin-2.0.1-auth-signals.patch
 Patch113:	pidgin-2.0-mtn-blocked-signals.patch 
-BuildRequires:	automake1.9 intltool
-BuildRequires:	autoconf2.5
+BuildRequires:	automake intltool
+BuildRequires:	autoconf
 BuildRequires:	gtk+2-devel
 Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
@@ -113,6 +113,7 @@ BuildRequires:	speex-devel
 Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
 Requires: %libname >= %version
+Requires: %name-i18n = %version
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -222,6 +223,7 @@ Summary:	A text-based user interface for Pidgin
 Group:	Networking/Instant messaging
 Requires: %name = %version-%release
 Requires: %lib_console_app >= %version
+Requires: %name-i18n = %version
 
 %description -n	%{console_app}
 A text-based user interface for using libpurple. This can be run from a
@@ -286,6 +288,13 @@ package, but please feel free to change this.
 
 See: http://www.neaveru.com/wordpress/index.php/pidgin-facebook-plugin/ 
 
+%package i18n
+Summary:	Translation files for Pidgin/Finch
+Group:		Networking/Instant messaging
+
+%description i18n
+This package contains translation files for Pidgin/Finch.
+
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
@@ -341,7 +350,6 @@ desktop-file-install --vendor="" \
   --add-category="GTK" \
   --add-category="Network" \
   --add-category="InstantMessaging" \
-  --add-category="X-MandrivaLinux-Internet-InstantMessaging" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 # remove files not bundled
@@ -367,7 +375,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %post -n %{lib_console_app} -p /sbin/ldconfig
 %postun -n %{lib_console_app} -p /sbin/ldconfig
 
-%files -f %name.lang
+%files
 %defattr(-,root,root)
 %doc AUTHORS COPYING COPYRIGHT ChangeLog
 %doc NEWS README README.MTN doc/the_penguin.txt
@@ -514,6 +522,9 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/purple-2/facebook.so
+
+%files i18n -f %{name}.lang
+%defattr(-,root,root)
 
 %clean
 rm -rf %{buildroot}
