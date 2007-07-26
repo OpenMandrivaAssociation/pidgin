@@ -1,5 +1,5 @@
 %define version 2.0.2
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define major 0
 %define name pidgin
@@ -56,6 +56,7 @@ Source0:	%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
 Patch0:		pidgin-2.0.0beta7-smiley.patch
+Patch1:         http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
@@ -298,6 +299,7 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
+%patch1 -p0 -b .vertical-panel-icon
 pushd libpurple
 %patch111 -p2
 popd
