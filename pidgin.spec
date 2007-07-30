@@ -1,5 +1,5 @@
-%define version 2.0.2
-%define release %mkrel 4
+%define version 2.1.0
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -299,7 +299,7 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-%patch1 -p0 -b .vertical-panel-icon
+#patch1 -p0 -b .vertical-panel-icon
 pushd libpurple
 %patch111 -p2
 popd
