@@ -457,6 +457,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %doc %{_mandir}/man1/%{console_app}.*
 %{_bindir}/%{console_app}
 %_libdir/finch/
+%_libdir/gnt/
 
 %files -n %lib_console_app
 %defattr(-, root, root)
