@@ -1,5 +1,5 @@
 %define version 2.1.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define name pidgin
@@ -292,6 +292,7 @@ See: http://www.neaveru.com/wordpress/index.php/pidgin-facebook-plugin/
 %package i18n
 Summary:	Translation files for Pidgin/Finch
 Group:		Networking/Instant messaging
+Obsoletes:	%name < 2.1.0
 
 %description i18n
 This package contains translation files for Pidgin/Finch.
