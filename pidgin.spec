@@ -389,7 +389,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
-%{_datadir}/sounds/%{name}
+%{_datadir}/sounds/purple
 %_libdir/pidgin/cap.so
 %_libdir/pidgin/convcolors.so
 %_libdir/pidgin/extplacement.so
