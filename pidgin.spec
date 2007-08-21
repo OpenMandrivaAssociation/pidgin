@@ -1,5 +1,5 @@
-%define version 2.1.0
-%define release %mkrel 2
+%define version 2.1.1
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -55,7 +55,7 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source0:	%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
-Patch0:		pidgin-2.0.0beta7-smiley.patch
+Patch0:		pidgin-2.1.1-smiley.patch
 Patch1:         http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
@@ -305,8 +305,8 @@ pushd libpurple
 %patch111 -p2
 popd
 
-%patch112 -p1
-%patch113 -p1
+#%patch112 -p1
+#%patch113 -p1
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
