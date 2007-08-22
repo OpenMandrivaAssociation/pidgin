@@ -1,5 +1,5 @@
 %define version 2.1.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define name pidgin
@@ -61,7 +61,7 @@ Patch1:         http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-ico
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
-Patch112:	pidgin-2.0.1-auth-signals.patch
+Patch112:	pidgin-2.1.1-auth-signals.patch
 Patch113:	pidgin-2.0-mtn-blocked-signals.patch 
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
@@ -305,8 +305,8 @@ pushd libpurple
 %patch111 -p2
 popd
 
-#%patch112 -p1
-#%patch113 -p1
+%patch112 -p1
+%patch113 -p1
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
