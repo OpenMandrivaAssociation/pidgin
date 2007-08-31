@@ -1,5 +1,5 @@
 %define version 2.1.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 0
 %define name pidgin
@@ -61,8 +61,8 @@ Patch1:         http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-ico
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
-Patch112:	pidgin-2.1.1-auth-signals.patch
-Patch113:	pidgin-2.0-mtn-blocked-signals.patch 
+Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-auth-signals-1.2.patch
+Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-blocked-signals-1.0.patch
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
 BuildRequires:	gtk+2-devel
