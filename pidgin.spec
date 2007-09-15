@@ -88,7 +88,7 @@ BuildRequires:	libexpat-devel
 BuildRequires:	howl-devel
 BuildRequires:	avahi-glib-devel avahi-client-devel
 BuildRequires:	doxygen
-BuildRequires:	perl-XML-Parser
+BuildRequires:	perl(XML::Parser)
 BuildRequires:	desktop-file-utils
 %if %build_meanwhile
 BuildRequires:	meanwhile-devel >= 1.0.0
@@ -263,7 +263,6 @@ Requires: %name = %version-%release
 %description client
 Applications and library to control purple clients remotely.
 
-
 %package mono
 Summary:        Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
@@ -360,7 +359,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
  
 %find_lang %{name}
 
-
 %post
 %post_install_gconf_schemas purple
 %update_icon_cache hicolor
@@ -419,6 +417,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/purple-2/libjabber.so.0
 %_libdir/purple-2/libjabber.so.0.0.0
 %_libdir/purple-2/libmsn.so
+%_libdir/purple-2/libmyspace.so
 %_libdir/purple-2/libnovell.so
 %_libdir/purple-2/liboscar.so
 %_libdir/purple-2/liboscar.so.0
@@ -436,7 +435,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/purple-2/ssl-nss.so
 %_libdir/purple-2/ssl.so
 %_libdir/purple-2/statenotify.so
-
+%_datadir/purple/ca-certs/*.pem
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -463,7 +462,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %files -n %lib_console_app
 %defattr(-, root, root)
 %{_libdir}/libgnt.so.%{major}*
-
 
 %files bonjour
 %defattr(-,root,root)
