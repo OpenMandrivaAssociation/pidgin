@@ -1,5 +1,5 @@
 %define version 2.2.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define name pidgin
@@ -55,14 +55,20 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source0:	%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
-Patch0:		pidgin-2.1.1-smiley.patch
-Patch1:         http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
+Patch0:		%{name}-2.1.1-smiley.patch
+Patch1:		http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111: gaim-2.0.0beta5-debian-11_reread-resolvconf.patch
+Patch111:	%{name}-2.2.0-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
 Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-auth-signals-1.2.patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-blocked-signals-1.0.patch
+# (tpg) Upstream patches will be included in next release
+Patch114:	%{name}-2.2.0-plug_memleaks.patch 
+Patch115:	%{name}-2.2.0-fix-proxy-settings.patch
+Patch116:	%{name}-2.2.0-fix-status-scores.patch
+Patch117:	%{name}-2.2.0-plug-more-memleaks.patch
+
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
 BuildRequires:	gtk+2-devel
@@ -74,7 +80,7 @@ Buildrequires:	libgadu-devel
 #gw we have networkmanager only in contribs:
 #Buildrequires:	libnetworkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
-BuildRequires:  libgstreamer0.10-devel
+BuildRequires:	libgstreamer0.10-devel
 BuildRequires:	perl-devel
 BuildRequires:	tk tk-devel tcl tcl-devel
 BuildRequires:	startup-notification-devel >= 0.5
@@ -90,6 +96,7 @@ BuildRequires:	avahi-glib-devel avahi-client-devel
 BuildRequires:	doxygen
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	desktop-file-utils
+BuildRequires:	gnutls-devel
 %if %build_meanwhile
 BuildRequires:	meanwhile-devel >= 1.0.0
 %else
@@ -108,13 +115,13 @@ BuildRequires:	dbus-devel >= 0.50
 BuildRequires:	mono-devel
 %endif
 %if %build_vv
-BuildRequires:  libortp-devel >= 0.8.1
+BuildRequires:	libortp-devel >= 0.8.1
 BuildRequires:	speex-devel
 %endif
 Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
-Requires: %libname >= %version
-Requires: %name-i18n = %version
+Requires:	%{libname} >= %{version}-%{release}
+Requires:	%{name}-i18n = %{version}-%{release}
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -141,61 +148,60 @@ Finch Instant Messengers.
 
 %package perl
 Summary:	Purple extension, to use perl scripting
-Group: 		Networking/Instant messaging
+Group:		Networking/Instant messaging
 Obsoletes:	gaim-perl
 Provides:	gaim-perl
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description perl
 Purple can use perl script as plugin, this plugin enable them.
 
 %package tcl
 Summary:	Purple extension, to use tcl scripting
-Group: 		Networking/Instant messaging
+Group:		Networking/Instant messaging
 Obsoletes:	gaim-tcl
 Provides:	gaim-tcl
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description tcl
 Purple can use tcl script as plugin, this plugin enable them.
 
-%package 	gevolution
+%package gevolution
 Summary:	Pidgin extension, for Evolution integration
-Group:          Networking/Instant messaging
+Group:		Networking/Instant messaging
 Obsoletes:	gaim-gevolution
 Provides:	gaim-gevolution
-Requires:       %{name} = %{version}-%release
+Requires:	%{name} = %{version}-%{release}
 
-%description 	gevolution
+%description gevolution
 This pidgin plugin allows you to have pidgin working together with evolution.
 
 %package silc
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
-Group: 		Networking/Instant messaging
+Group:		Networking/Instant messaging
 Obsoletes:	gaim-silc
 Provides:	gaim-silc
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description silc
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
 plugin for live video conference.
 
-%package -n	%{develname}
+%package -n %{develname}
 Summary:	Development files for pidgin
-Group: 		Development/GNOME and GTK+
-Requires:	%{libname} = %{version}-%release
-Requires:	%{lib_console_app} = %{version}-%release
-Provides:	libpidgin-devel = %{version}-%release
-Provides:	pidgin-devel = %{version}-%release
+Group:		Development/GNOME and GTK+
+Requires:	%{libname} = %{version}-%{release}
+Requires:	%{lib_console_app} = %{version}-%{release}
+Provides:	libpidgin-devel = %{version}-%{release}
+Provides:	pidgin-devel = %{version}-%{release}
 Obsoletes:	gaim-devel
-Obsoletes:	%{libname}-devel
 
 %description -n %{develname}
 The pidgin-devel package contains the header files, developer
 documentation, and libraries required for development of Pidgin scripts
 and plugins.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	The libpurple library for IM clients like Pidgin and Finch
 Group:		System/Libraries
 
@@ -207,7 +213,7 @@ libpurple supports a variety of messaging protocols including AIM, MSN,
 Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
-%package -n	%{lib_console_app}
+%package -n %{lib_console_app}
 Summary:	The libgnt library for the Finch IM client
 Group:		System/Libraries
 Conflicts:	%mklibname gaim 0
@@ -219,12 +225,12 @@ libgnt supports a variety of messaging protocols including AIM, MSN,
 Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
-%package -n	%{console_app}
+%package -n %{console_app}
 Summary:	A text-based user interface for Pidgin
-Group:	Networking/Instant messaging
-Requires: %name = %version-%release
-Requires: %lib_console_app >= %version
-Requires: %name-i18n = %version
+Group:		Networking/Instant messaging
+Requires:	%{name} = %{version}-%{release}
+Requires:	%{lib_console_app} >= %{version}-%{release}
+Requires:	%{name}-i18n = %{version}-%{release}
 
 %description -n	%{console_app}
 A text-based user interface for using libpurple. This can be run from a
@@ -237,7 +243,7 @@ Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-bonjour
 Provides:	gaim-bonjour
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description bonjour
 Bonjour plugin for Purple
@@ -247,36 +253,36 @@ Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-meanwhile
 Provides:	gaim-meanwhile
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description meanwhile
 Lotus Sametime Community Client plugin for purple
 
 %package client
 Summary:	Plugin and sample client to control purple clients
-Group: 		Networking/Instant messaging
+Group:		Networking/Instant messaging
 Requires:	dbus-python
 Obsoletes:	libgaim-remote0, gaim-client
 Provides:	libgaim-remote0, gaim-client
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description client
 Applications and library to control purple clients remotely.
 
 %package mono
-Summary:        Purple extension, to use Mono plugins
+Summary:	Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-mono
 Provides:	gaim-mono
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description mono
 Purple can use plugins developed with Mono.
 
 %package facebook
-Summary:        Facebook plugin for Pidgin
+Summary:	Facebook plugin for Pidgin
 Group:		Networking/Instant messaging
-Requires: %name = %version-%release
+Requires:	%{name} = %{version}-%{release}
 
 %description facebook
 The Pidgin Facebook Plugin is a plugin for the pidgin 
@@ -291,7 +297,7 @@ See: http://www.neaveru.com/wordpress/index.php/pidgin-facebook-plugin/
 %package i18n
 Summary:	Translation files for Pidgin/Finch
 Group:		Networking/Instant messaging
-Obsoletes:	%name < 2.1.0
+Obsoletes:	%{name} < 2.1.0
 
 %description i18n
 This package contains translation files for Pidgin/Finch.
@@ -300,18 +306,21 @@ This package contains translation files for Pidgin/Finch.
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 #patch1 -p0 -b .vertical-panel-icon
-pushd libpurple
-%patch111 -p2
-popd
+%patch111 -p1
 
 %patch112 -p1
 %patch113 -p1
+%patch114 -p0
+%patch115 -p0
+%patch116 -p0
+%patch117 -p0
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
 #                  linked against gnutls
+# (tpg) should work now!
 %configure2_5x \
-	--enable-gnutls=no \
+	--enable-gnutls=yes \
 	--with-perl-lib=vendor \
 %if %build_mono
 	--enable-mono \
@@ -334,9 +343,9 @@ popd
 # (tpg) this dirty hack solves this :)
 %(echo %make|perl -pe 's/-j\d+/-j1/g')
 
-
 %install
 rm -rf %{buildroot}
+
 %makeinstall_std mkinstalldirs='mkdir -p'
 
 ### HACK Facebook plugin (colin)
@@ -347,7 +356,7 @@ cp -a facebook.so %{buildroot}%{_libdir}/purple-2
 popd
 ### END HACK
 
-desktop-file-install --vendor="" \
+desktop-file-install \
   --remove-category="Application" \
   --add-category="GTK" \
   --add-category="Network" \
@@ -360,6 +369,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %find_lang %{name}
 
 %post
+%{update_menus}
 %post_install_gconf_schemas purple
 %update_icon_cache hicolor
 
@@ -367,8 +377,8 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %preun_uninstall_gconf_schemas purple
 
 %postun
+%{clean_menus}
 %clean_icon_cache hicolor
-
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
@@ -448,7 +458,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_libdir}/libpurple-client.so
 %{_libdir}/lib*.la
 
-%files -n %libname 
+%files -n %{libname}
 %defattr(-,root,root)
 %_libdir/libpurple.so.%{major}*
 
@@ -459,7 +469,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/finch/
 %_libdir/gnt/
 
-%files -n %lib_console_app
+%files -n %{lib_console_app}
 %defattr(-, root, root)
 %{_libdir}/libgnt.so.%{major}*
 
