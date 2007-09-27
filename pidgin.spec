@@ -43,16 +43,14 @@
 %{?_without_vv: %{expand: %%global build_vv 0}}
 %{?_with_vv: %{expand: %%global build_vv 1}}
 
-Summary: 	A GTK+ based multiprotocol instant messaging client
-Name: 		pidgin
-Version: 	%{version}
-Release: 	%{release}
-Group: 		Networking/Instant messaging
-License: 	GPL
-URL: 		http://www.pidgin.im/
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
-Source0:	%{name}-%{version}.tar.bz2
+Summary:	A GTK+ based multiprotocol instant messaging client
+Name:		pidgin
+Version:	%{version}
+Release:	%{release}
+Group:		Networking/Instant messaging
+License:	GPLv2+
+URL:		http://www.pidgin.im/
+Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
 Patch0:		%{name}-2.1.1-smiley.patch
@@ -122,6 +120,7 @@ Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
