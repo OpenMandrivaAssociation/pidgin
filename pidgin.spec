@@ -1,5 +1,5 @@
-%define version 2.2.0
-%define release %mkrel 2
+%define version 2.2.1
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -59,13 +59,8 @@ Patch1:		http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.2.0-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
-Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-auth-signals-1.2.patch
+Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.2.1-auth-signals-1.2.patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-blocked-signals-1.0.patch
-# (tpg) Upstream patches will be included in next release
-Patch114:	%{name}-2.2.0-plug_memleaks.patch 
-Patch115:	%{name}-2.2.0-fix-proxy-settings.patch
-Patch116:	%{name}-2.2.0-fix-status-scores.patch
-Patch117:	%{name}-2.2.0-plug-more-memleaks.patch
 
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
@@ -309,10 +304,6 @@ This package contains translation files for Pidgin/Finch.
 
 %patch112 -p1
 %patch113 -p1
-%patch114 -p0
-%patch115 -p0
-%patch116 -p0
-%patch117 -p0
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
