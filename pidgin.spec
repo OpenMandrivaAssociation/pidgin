@@ -1,5 +1,5 @@
-%define version 2.2.1
-%define release %mkrel 2
+%define version 2.2.2
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -53,11 +53,11 @@ URL:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
-Patch0:		%{name}-2.1.1-smiley.patch
+Patch0:		pidgin-2.1.1-smiley.patch
 Patch1:		http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111:	%{name}-2.2.0-reread-resolvconf.patch
+Patch111:	pidgin-2.2.0-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
 Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.2.1-auth-signals-1.2.patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.1-blocked-signals-1.0.patch
