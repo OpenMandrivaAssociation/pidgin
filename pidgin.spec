@@ -70,7 +70,7 @@ Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
-Buildrequires:	libgadu-devel
+Buildrequires:	libgadu-devel >= 1.7.1-7
 #gw we have networkmanager only in contribs:
 #Buildrequires:	libnetworkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
@@ -306,7 +306,7 @@ This package contains translation files for Pidgin/Finch.
 %patch112 -p1
 %patch113 -p1
 
-%patch114 -p0
+#%patch114 -p0
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
