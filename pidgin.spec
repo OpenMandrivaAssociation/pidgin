@@ -116,7 +116,6 @@ Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
