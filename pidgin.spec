@@ -74,7 +74,7 @@ Buildrequires:	libgadu-devel >= 1.7.1-7
 #gw we have networkmanager only in contribs:
 #Buildrequires:	libnetworkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
-BuildRequires:	libgstreamer0.10-devel
+BuildRequires:	gstreamer0.10-devel
 BuildRequires:	perl-devel
 BuildRequires:	tk tk-devel tcl tcl-devel
 BuildRequires:	startup-notification-devel >= 0.5
