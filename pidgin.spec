@@ -1,5 +1,5 @@
 %define version 2.3.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 0
 %define name pidgin
@@ -54,14 +54,15 @@ Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
 Patch0:		pidgin-2.1.1-smiley.patch
-Patch1:		http://www.nosnilmot.com/patches/pidgin-2.0.2-vertical-panel-icon.patch
+#gw from Monotone, ensure that error messages stored in accounts.xml are in 
+# UTF-8 ( http://developer.pidgin.im/ticket/4264 )
+Patch2: pidgin-2.3.1-utf8-error.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.2.0-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
 Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.2.2-auth-signals-1.2.patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.3.0-blocked-signals-1.0.patch
-Patch114:	pidgin-2.2.1-jabber-crash-non-utf8-locale.patch
 Patch115:	pidgin-2.3.1-gg-search-by-uin.patch
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
@@ -300,13 +301,12 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-#patch1 -p0 -b .vertical-panel-icon
+%patch2 -p1
 %patch111 -p1
 
 %patch112 -p1
 %patch113 -p1
 
-#%patch114 -p0
 %patch115 -p1
 
 %build
