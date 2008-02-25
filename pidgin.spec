@@ -63,7 +63,8 @@ Patch111:	pidgin-2.2.0-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without those two patches
 Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.2.2-auth-signals-1.2.patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.3.0-blocked-signals-1.0.patch
-Patch115:	pidgin-2.3.1-gg-search-by-uin.patch
+Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
+Patch116:	%{name}-2.3.1-gg-disconnect.patch
 BuildRequires:	automake intltool
 BuildRequires:	autoconf
 BuildRequires:	gtk+2-devel
@@ -308,6 +309,7 @@ This package contains translation files for Pidgin/Finch.
 %patch113 -p1
 
 %patch115 -p1
+%patch116 -p1
 
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
