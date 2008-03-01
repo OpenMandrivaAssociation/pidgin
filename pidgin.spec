@@ -1,5 +1,5 @@
-%define version 2.3.1
-%define release %mkrel 4
+%define version 2.4.0
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -54,9 +54,6 @@ Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 Source1:	facebook.c
 
 Patch0:		pidgin-2.1.1-smiley.patch
-#gw from Monotone, ensure that error messages stored in accounts.xml are in 
-# UTF-8 ( http://developer.pidgin.im/ticket/4264 )
-Patch2: pidgin-2.3.1-utf8-error.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.2.0-reread-resolvconf.patch
@@ -87,7 +84,6 @@ BuildRequires:	libjack-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libexpat-devel
-BuildRequires:	howl-devel
 BuildRequires:	avahi-glib-devel avahi-client-devel
 BuildRequires:	doxygen
 BuildRequires:	perl(XML::Parser)
@@ -302,7 +298,6 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-%patch2 -p1
 %patch111 -p1
 
 %patch112 -p1
