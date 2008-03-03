@@ -51,7 +51,6 @@ Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
-Source1:	facebook.c
 
 Patch0:		pidgin-2.1.1-smiley.patch
 #gw these patches were copied from the Fedora package
@@ -272,21 +271,6 @@ Requires:	%{name} = %{version}-%{release}
 %description mono
 Purple can use plugins developed with Mono.
 
-%package facebook
-Summary:	Facebook plugin for Pidgin
-Group:		Networking/Instant messaging
-Requires:	%{name} = %{version}-%{release}
-
-%description facebook
-The Pidgin Facebook Plugin is a plugin for the pidgin 
-instant messaging client that integrates facebook data
-with the buddy data. It is currently in early development.
-
-I have added a default API Key/Secret for the Mandriva
-package, but please feel free to change this.
-
-See: http://www.neaveru.com/wordpress/index.php/pidgin-facebook-plugin/ 
-
 %package i18n
 Summary:	Translation files for Pidgin/Finch
 Group:		Networking/Instant messaging
@@ -339,13 +323,6 @@ rm -rf %{buildroot}
 
 %makeinstall_std mkinstalldirs='mkdir -p'
 
-### HACK Facebook plugin (colin)
-pushd pidgin/plugins
-cp -f %SOURCE1 .
-make facebook.so
-cp -a facebook.so %{buildroot}%{_libdir}/purple-2
-popd
-### END HACK
 
 desktop-file-install \
   --remove-category="Application" \
@@ -520,11 +497,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_libdir}/purple-2/mono.so
 %{_libdir}/purple-2/*.dll
 %endif
-
-%files facebook
-%defattr(-,root,root)
-%doc COPYING
-%{_libdir}/purple-2/facebook.so
 
 %files i18n -f %{name}.lang
 %defattr(-,root,root)
