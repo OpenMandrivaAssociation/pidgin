@@ -1,5 +1,5 @@
 %define version 2.4.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major 0
 %define name pidgin
@@ -113,6 +113,7 @@ Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
+Requires:	%{name}-plugins = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -132,11 +133,11 @@ Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 %package plugins
 Summary: Pidgin plugins shared by the Purple and Finch
 Group: Networking/Instant messaging
+Conflicts: %name < 2.4.1-2mdv
 
 %description plugins
 This contains the parts of Pidgin that are shared between the Purple and
 Finch Instant Messengers.
-
 
 %package perl
 Summary:	Purple extension, to use perl scripting
@@ -223,6 +224,7 @@ Group:		Networking/Instant messaging
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{lib_console_app} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
+Requires:	%{name}-plugins = %{version}-%{release}
 
 %description -n	%{console_app}
 A text-based user interface for using libpurple. This can be run from a
@@ -366,6 +368,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
+%_datadir/purple/ca-certs/*.pem
 %_libdir/pidgin/cap.so
 %_libdir/pidgin/convcolors.so
 %_libdir/pidgin/extplacement.so
@@ -383,37 +386,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/pidgin/timestamp.so
 %_libdir/pidgin/timestamp_format.so
 %_libdir/pidgin/xmppconsole.so
-%_libdir/purple-2/autoaccept.so
-%_libdir/purple-2/buddynote.so
-%_libdir/purple-2/idle.so
-%_libdir/purple-2/joinpart.so
-%_libdir/purple-2/libaim.so
-%_libdir/purple-2/libgg.so
-%_libdir/purple-2/libicq.so
-%_libdir/purple-2/libirc.so
-%_libdir/purple-2/libjabber.so
-%_libdir/purple-2/libjabber.so.0
-%_libdir/purple-2/libjabber.so.0.0.0
-%_libdir/purple-2/libmsn.so
-%_libdir/purple-2/libmyspace.so
-%_libdir/purple-2/libnovell.so
-%_libdir/purple-2/liboscar.so
-%_libdir/purple-2/liboscar.so.0
-%_libdir/purple-2/liboscar.so.0.0.0
-%_libdir/purple-2/libqq.so
-%_libdir/purple-2/libsimple.so
-%_libdir/purple-2/libxmpp.so
-%_libdir/purple-2/libyahoo.so
-%_libdir/purple-2/libzephyr.so
-%_libdir/purple-2/log_reader.so
-%_libdir/purple-2/newline.so
-%_libdir/purple-2/offlinemsg.so
-%_libdir/purple-2/psychic.so
-%_libdir/purple-2/ssl-gnutls.so
-%_libdir/purple-2/ssl-nss.so
-%_libdir/purple-2/ssl.so
-%_libdir/purple-2/statenotify.so
-%_datadir/purple/ca-certs/*.pem
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -499,7 +471,39 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %endif
 
 %files i18n -f %{name}.lang
+
+%files plugins
 %defattr(-,root,root)
+%_libdir/purple-2/autoaccept.so
+%_libdir/purple-2/buddynote.so
+%_libdir/purple-2/idle.so
+%_libdir/purple-2/joinpart.so
+%_libdir/purple-2/libaim.so
+%_libdir/purple-2/libgg.so
+%_libdir/purple-2/libicq.so
+%_libdir/purple-2/libirc.so
+%_libdir/purple-2/libjabber.so
+%_libdir/purple-2/libjabber.so.0
+%_libdir/purple-2/libjabber.so.0.0.0
+%_libdir/purple-2/libmsn.so
+%_libdir/purple-2/libmyspace.so
+%_libdir/purple-2/libnovell.so
+%_libdir/purple-2/liboscar.so
+%_libdir/purple-2/liboscar.so.0
+%_libdir/purple-2/liboscar.so.0.0.0
+%_libdir/purple-2/libqq.so
+%_libdir/purple-2/libsimple.so
+%_libdir/purple-2/libxmpp.so
+%_libdir/purple-2/libyahoo.so
+%_libdir/purple-2/libzephyr.so
+%_libdir/purple-2/log_reader.so
+%_libdir/purple-2/newline.so
+%_libdir/purple-2/offlinemsg.so
+%_libdir/purple-2/psychic.so
+%_libdir/purple-2/ssl-gnutls.so
+%_libdir/purple-2/ssl-nss.so
+%_libdir/purple-2/ssl.so
+%_libdir/purple-2/statenotify.so
 
 %clean
 rm -rf %{buildroot}
