@@ -1,5 +1,5 @@
 %define version 2.4.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major 0
 %define name pidgin
@@ -56,9 +56,8 @@ Patch0:		pidgin-2.1.1-smiley.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.2.0-reread-resolvconf.patch
-# (tpg) pidgin-privacy-please is useless without those two patches
-Patch112:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.2.2-auth-signals-1.2.patch
-Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.3.0-blocked-signals-1.0.patch
+# (tpg) pidgin-privacy-please is useless without this patch
+Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.4.1-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 BuildRequires:	automake intltool
@@ -286,7 +285,6 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch111 -p1
 
-%patch112 -p1
 %patch113 -p1
 
 %patch115 -p1
