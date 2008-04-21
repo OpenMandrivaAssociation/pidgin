@@ -67,11 +67,11 @@ Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
-Buildrequires:	libgadu-devel >= 1.7.1-7
+Buildrequires:	libgadu-devel >= 1.7.1
 #gw we have networkmanager only in contribs:
 #Buildrequires:	libnetworkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
-BuildRequires:	gstreamer0.10-devel
+BuildRequires:	libgstreamer-devel >= 0.10
 BuildRequires:	perl-devel
 BuildRequires:	tk tk-devel tcl tcl-devel
 BuildRequires:	startup-notification-devel >= 0.5
