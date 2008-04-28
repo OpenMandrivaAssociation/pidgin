@@ -1,5 +1,5 @@
 %define version 2.4.1
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define major 0
 %define name pidgin
@@ -25,6 +25,8 @@
 	%define build_meanwhile 0
 %endif
 
+%define build_fetion 1
+
 %define build_mono 1
 %define build_vv 0
 
@@ -43,6 +45,9 @@
 %{?_without_vv: %{expand: %%global build_vv 0}}
 %{?_with_vv: %{expand: %%global build_vv 1}}
 
+%{?_without_fetion: %{expand: %%global build_fetion 0}}
+%{?_with_fetion: %{expand: %%global build_fetion 1}}
+
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	%{version}
@@ -51,8 +56,14 @@ Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
-
+%if %build_fetion
+%define fetion_date 20080424
+Source10:	fetion-%{fetion_date}.tar.bz2
+Source11:	autogen.sh
+Patch2:		pidgin-2.4.1-add-fetion-protocol.patch
+%endif
 Patch0:		pidgin-2.1.1-smiley.patch
+Patch1:		pidgin-2.0.0-fix-AM_PATH_CHECK.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.2.0-reread-resolvconf.patch
@@ -283,6 +294,7 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
+%patch1 -p1
 %patch111 -p1
 
 %patch113 -p1
@@ -290,10 +302,22 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 
+%if %build_fetion
+pushd libpurple/protocols
+tar xfj %{SOURCE10}
+rm -f fetion/Makefile
+popd
+cp %{SOURCE11} .
+%patch2 -p1
+%endif
+
 %build
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
 #                  linked against gnutls
 # (tpg) should work now!
+%if %build_fetion
+./autogen.sh
+%endif
 %configure2_5x \
 	--enable-gnutls=yes \
 	--with-perl-lib=vendor \
