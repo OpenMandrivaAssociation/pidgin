@@ -504,6 +504,9 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/purple-2/idle.so
 %_libdir/purple-2/joinpart.so
 %_libdir/purple-2/libaim.so
+%if %build_fetion
+%_libdir/purple-2/libfetion.so
+%endif
 %_libdir/purple-2/libgg.so
 %_libdir/purple-2/libicq.so
 %_libdir/purple-2/libirc.so
