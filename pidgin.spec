@@ -83,7 +83,7 @@ Buildrequires:	libncursesw-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
 Buildrequires:	libgadu-devel >= 1.7.1
 #gw we have networkmanager only in contribs:
-#Buildrequires:	libnetworkmanager-glib-devel
+Buildrequires:	networkmanager-glib-devel
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	libgstreamer-devel >= 0.10
 BuildRequires:	perl-devel
