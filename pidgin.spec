@@ -9,7 +9,7 @@
 %define console_app finch
 %define lib_console_app %mklibname %{console_app} %major
 
-%define build_evolution 0
+%define build_evolution 1
 %if %{mdkversion} < 1010
 	%define build_evolution 0
 	%define __libtoolize /bin/true
@@ -329,8 +329,8 @@ cp %{SOURCE11} .
 %else
 	--disable-mono \
 %endif
-%if ! %build_evolution
-	--disable-gevolution \
+%if %build_evolution
+	--enable-gevolution \
 %endif
 %if %build_vv
 	--enable-vv \
@@ -338,6 +338,7 @@ cp %{SOURCE11} .
 	--disable-vv \
 %endif
 	--without-krb4 \
+	--enable-cap \
 	--with-gadu-includes=%{_includedir} \
 	--with-gadu-libs=%{_libdir} \
 	--disable-static
@@ -394,8 +395,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
 %_datadir/purple/ca-certs/*.pem
-#%_libdir/pidgin/cap.so
-%_libdir/pidgin/sendbutton.so
+%_libdir/pidgin/cap.so
 %_libdir/pidgin/convcolors.so
 %_libdir/pidgin/extplacement.so
 %_libdir/pidgin/gestures.so
@@ -407,6 +407,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/pidgin/notify.so
 %_libdir/pidgin/pidginrc.so
 %_libdir/pidgin/relnot.so
+%_libdir/pidgin/sendbutton.so
 %_libdir/pidgin/spellchk.so
 %_libdir/pidgin/ticker.so
 %_libdir/pidgin/timestamp.so
