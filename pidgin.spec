@@ -25,6 +25,11 @@
 	%define build_meanwhile 0
 %endif
 
+%define build_networkmanager 1
+%if %{mdkversion} < 200900
+	%define build_networkmanager 0
+%endif
+
 %define build_fetion 1
 
 %define build_mono 1
@@ -38,6 +43,9 @@
 
 %{?_without_meanwhile: %{expand: %%global build_meanwhile 0}}
 %{?_with_meanwhile: %{expand: %%global build_meanwhile 1}}
+
+%{?_without_networkmanager: %{expand: %%global build_networkmanager 0}}
+%{?_with_networkmanager: %{expand: %%global build_networkmanager 1}}
 
 %{?_without_mono: %{expand: %%global build_mono 0}}
 %{?_with_mono: %{expand: %%global build_mono 1}}
@@ -83,7 +91,9 @@ Buildrequires:	libncursesw-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
 Buildrequires:	libgadu-devel >= 1.7.1
 #gw we have networkmanager only in contribs:
+%if %build_networkmanager
 Buildrequires:	networkmanager-glib-devel
+%endif
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	libgstreamer-devel >= 0.10
 BuildRequires:	perl-devel
@@ -329,6 +339,11 @@ cp %{SOURCE11} .
 %else
 	--disable-mono \
 %endif
+%if %build_networkmanager
+	--enalbe-nm \
+%else
+	--disable-nm \
+%endif
 %if %build_evolution
 	--enable-gevolution \
 %endif
@@ -344,7 +359,7 @@ cp %{SOURCE11} .
 	--disable-static
 #gw parallel build doesn't work with the mono plugin
 # (tpg) this dirty hack solves this :)
-%(echo %make|perl -pe 's/-j\d+/-j1/g')
+make -j1
 
 %install
 rm -rf %{buildroot}
