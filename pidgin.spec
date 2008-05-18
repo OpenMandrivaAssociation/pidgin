@@ -9,7 +9,7 @@
 %define console_app finch
 %define lib_console_app %mklibname %{console_app} %major
 
-%define build_evolution 1
+%define build_evolution 0
 %if %{mdkversion} < 1010
 	%define build_evolution 0
 	%define __libtoolize /bin/true
@@ -394,7 +394,8 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
 %_datadir/purple/ca-certs/*.pem
-%_libdir/pidgin/cap.so
+#%_libdir/pidgin/cap.so
+%_libdir/pidgin/sendbutton.so
 %_libdir/pidgin/convcolors.so
 %_libdir/pidgin/extplacement.so
 %_libdir/pidgin/gestures.so
