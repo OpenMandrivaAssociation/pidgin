@@ -1,5 +1,5 @@
-%define version 2.4.1
-%define release %mkrel 4
+%define version 2.4.2
+%define release %mkrel 1
 
 %define major 0
 %define name pidgin
@@ -69,7 +69,7 @@ Patch0:		pidgin-2.1.1-smiley.patch
 Patch1:		pidgin-2.0.0-fix-AM_PATH_CHECK.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111:	pidgin-2.2.0-reread-resolvconf.patch
+Patch111:	pidgin-2.4.2-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without this patch
 Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.4.1-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
