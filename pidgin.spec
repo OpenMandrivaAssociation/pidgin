@@ -92,7 +92,7 @@ Buildrequires:	libncursesw-devel
 Buildrequires:	libgadu-devel >= 1.7.1
 #gw we have networkmanager only in contribs:
 %if %build_networkmanager
-Buildrequires:	networkmanager-glib-devel
+Buildrequires:	networkmanager-devel
 %endif
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	libgstreamer-devel >= 0.10
@@ -340,7 +340,7 @@ cp %{SOURCE11} .
 	--disable-mono \
 %endif
 %if %build_networkmanager
-	--enalbe-nm \
+	--enable-nm \
 %else
 	--disable-nm \
 %endif
