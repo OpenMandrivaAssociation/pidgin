@@ -1,8 +1,4 @@
-%define version 2.4.2
-%define release %mkrel 2
-
 %define major 0
-%define name pidgin
 %define libname %mklibname purple %major
 %define develname %mklibname purple -d
 
@@ -10,28 +6,10 @@
 %define lib_console_app %mklibname %{console_app} %major
 
 %define build_evolution 1
-%if %{mdkversion} < 1010
-	%define build_evolution 0
-	%define __libtoolize /bin/true
-%endif
-
-%define build_silc 0
-%if %{mdkversion} >= 1020
-	%define build_silc 1
-%endif
-
+%define build_silc 1
 %define build_meanwhile 1
-%if %{mdkversion} < 200610
-	%define build_meanwhile 0
-%endif
-
 %define build_networkmanager 0
-%if %{mdkversion} < 200900
-	%define build_networkmanager 0
-%endif
-
 %define build_fetion 1
-
 %define build_mono 1
 %define build_vv 0
 
@@ -58,8 +36,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	%{version}
-Release:	%{release}
+Version:	2.4.2
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -111,6 +89,9 @@ BuildRequires:	doxygen
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnutls-devel
+BuildRequires:	dbus-devel >= 0.50
+BuildRequires:	graphviz
+BuildRequires:	libxslt-proc
 %if %build_meanwhile
 BuildRequires:	meanwhile-devel >= 1.0.0
 %else
@@ -124,7 +105,6 @@ BuildRequires:	silc-toolkit-devel >= 0.9.12
 %else
 BuildConflicts:	silc-toolkit-devel
 %endif
-BuildRequires:	dbus-devel >= 0.50
 %if %build_mono
 BuildRequires:	mono-devel
 %endif
@@ -154,9 +134,9 @@ Pidgin is not affiliated with or endorsed by America Online, Inc.,
 Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 
 %package plugins
-Summary: Pidgin plugins shared by the Purple and Finch
-Group: Networking/Instant messaging
-Conflicts: %name < 2.4.1-2mdv
+Summary:	Pidgin plugins shared by the Purple and Finch
+Group:		Networking/Instant messaging
+Conflicts:	%{name} < 2.4.1-2mdv
 
 %description plugins
 This contains the parts of Pidgin that are shared between the Purple and
@@ -359,7 +339,7 @@ cp %{SOURCE11} .
 	--disable-static
 #gw parallel build doesn't work with the mono plugin
 # (tpg) this dirty hack solves this :)
-make -j1
+%make -j1
 
 %install
 rm -rf %{buildroot}
@@ -397,12 +377,15 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %post -n %{lib_console_app} -p /sbin/ldconfig
 %postun -n %{lib_console_app} -p /sbin/ldconfig
 
+%clean
+rm -rf %{buildroot}
+
 %files
 %defattr(-,root,root)
-%doc AUTHORS COPYING COPYRIGHT ChangeLog
+%doc AUTHORS COPYRIGHT ChangeLog
 %doc NEWS README README.MTN doc/the_penguin.txt
 %{_mandir}/man1/pidgin.*
-%_sysconfdir/gconf/schemas/purple.schemas
+%{_sysconfdir}/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -470,7 +453,7 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 
 %files tcl
 %defattr(-,root,root)
-%doc COPYING
+%doc doc/TCL-HOWTO.dox
 %{_libdir}/purple-2/tcl.so
 
 %if %build_silc
@@ -483,7 +466,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %if %build_evolution
 %files gevolution
 %defattr(-,root,root)
-%doc COPYING
 %{_libdir}/%{name}/gevolution.so
 %endif
 
@@ -495,7 +477,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 
 %files client
 %defattr(-,root,root)
-%doc COPYRIGHT
 %{_bindir}/purple-remote
 %{_bindir}/purple-send
 %{_bindir}/purple-send-async
@@ -507,7 +488,6 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %if %build_mono
 %files mono
 %defattr(-,root,root)
-%doc COPYING
 %{_libdir}/purple-2/mono.so
 %{_libdir}/purple-2/*.dll
 %endif
@@ -549,6 +529,3 @@ rm -f %{buildroot}%{_libdir}/*/*.la
 %_libdir/purple-2/ssl-nss.so
 %_libdir/purple-2/ssl.so
 %_libdir/purple-2/statenotify.so
-
-%clean
-rm -rf %{buildroot}
