@@ -25,7 +25,7 @@
 	%define build_meanwhile 0
 %endif
 
-%define build_networkmanager 1
+%define build_networkmanager 0
 %if %{mdkversion} < 200900
 	%define build_networkmanager 0
 %endif
