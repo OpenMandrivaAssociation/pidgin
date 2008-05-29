@@ -53,6 +53,7 @@ Patch2:		pidgin-2.4.1-add-fetion-protocol.patch
 %endif
 Patch0:		pidgin-2.1.1-smiley.patch
 Patch1:		pidgin-2.0.0-fix-AM_PATH_CHECK.patch
+Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.4.2-reread-resolvconf.patch
@@ -288,6 +289,7 @@ This package contains translation files for Pidgin/Finch.
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 %patch1 -p1
+%patch3 -p0
 %patch111 -p1
 
 %patch113 -p1
