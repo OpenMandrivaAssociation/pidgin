@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.2
-Release:	%mkrel 4
+Release:	%mkrel 5
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -54,6 +54,8 @@ Patch2:		pidgin-2.4.1-add-fetion-protocol.patch
 Patch0:		pidgin-2.1.1-smiley.patch
 Patch1:		pidgin-2.0.0-fix-AM_PATH_CHECK.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
+# fwang: patch4 from http://developer.pidgin.im/ticket/4757
+Patch4:		99_qq_group_name.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	pidgin-2.4.2-reread-resolvconf.patch
@@ -290,6 +292,7 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch1 -p1
 %patch3 -p0
+%patch4 -p1
 %patch111 -p1
 
 %patch113 -p1
