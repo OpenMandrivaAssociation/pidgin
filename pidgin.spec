@@ -1,9 +1,9 @@
 %define major 0
-%define libname %mklibname purple %major
+%define libname %mklibname purple %{major}
 %define develname %mklibname purple -d
 
 %define console_app finch
-%define lib_console_app %mklibname %{console_app} %major
+%define lib_console_app %mklibname %{console_app} %{major}
 
 %define build_evolution 1
 %define build_silc 1
@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.2
-Release:	%mkrel 6
+Release:	%mkrel 7
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -49,23 +49,25 @@ Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 # tar cfj fetion-%{fetion_date}.tar.bz2 fetion
 Source10:	fetion-%{fetion_date}.tar.bz2
 Source11:	autogen.sh
-Patch2:		pidgin-2.4.1-add-fetion-protocol.patch
+Patch2:		%{name}-2.4.1-add-fetion-protocol.patch
 %endif
-Patch0:		pidgin-2.1.1-smiley.patch
-Patch1:		pidgin-2.0.0-fix-AM_PATH_CHECK.patch
-Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
+Patch0:		%{name}-2.1.1-smiley.patch
+Patch1:		%{name}-2.0.0-fix-AM_PATH_CHECK.patch
+Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 # fwang: patch4 from http://developer.pidgin.im/ticket/4757
 Patch4:		99_qq_group_name.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111:	pidgin-2.4.2-reread-resolvconf.patch
+Patch111:	%{name}-2.4.2-reread-resolvconf.patch
 # (tpg) pidgin-privacy-please is useless without this patch
-Patch113:	http://tools.desire.ch/data/pidgin-pp/files/patches/pidgin-2.4.1-blocked-signals-1.0.patch
+# http://code.google.com/p/pidgin-privacy-please/wiki/PidginPatches
+Patch113:	%{name}-2.4.2-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
 Patch117:	%{name}-2.4.2-gg-images.patch
-BuildRequires:	automake intltool
+BuildRequires:	automake
+BuildRequires:	intltool
 BuildRequires:	autoconf
 BuildRequires:	gtk+2-devel
 Buildrequires:	gtkspell-devel >= 2.0.2
@@ -80,7 +82,8 @@ Buildrequires:	networkmanager-devel
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	libgstreamer-devel >= 0.10
 BuildRequires:	perl-devel
-BuildRequires:	tk tk-devel tcl tcl-devel
+BuildRequires:	tk-devel
+BuildRequires:	tcl-devel
 BuildRequires:	startup-notification-devel >= 0.5
 BuildRequires:	libnss-devel
 BuildRequires:	libnspr-devel
@@ -89,7 +92,8 @@ BuildRequires:	libjack-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libexpat-devel
-BuildRequires:	avahi-glib-devel avahi-client-devel
+BuildRequires:	avahi-glib-devel
+BuildRequires:	avahi-client-devel
 BuildRequires:	doxygen
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	desktop-file-utils
@@ -248,7 +252,7 @@ Provides:	gaim-bonjour
 Requires:	%{name} = %{version}-%{release}
 
 %description bonjour
-Bonjour plugin for Purple
+Bonjour plugin for purple.
 
 %package meanwhile
 Summary:	Lotus Sametime Community Client plugin for Purple
@@ -258,7 +262,7 @@ Provides:	gaim-meanwhile
 Requires:	%{name} = %{version}-%{release}
 
 %description meanwhile
-Lotus Sametime Community Client plugin for purple
+Lotus Sametime Community Client plugin for purple.
 
 %package client
 Summary:	Plugin and sample client to control purple clients
@@ -401,25 +405,25 @@ rm -rf %{buildroot}
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
-%_datadir/purple/ca-certs/*.pem
-%_libdir/pidgin/cap.so
-%_libdir/pidgin/convcolors.so
-%_libdir/pidgin/extplacement.so
-%_libdir/pidgin/gestures.so
-%_libdir/pidgin/gtkbuddynote.so
-%_libdir/pidgin/history.so
-%_libdir/pidgin/iconaway.so
-%_libdir/pidgin/markerline.so
-%_libdir/pidgin/musicmessaging.so
-%_libdir/pidgin/notify.so
-%_libdir/pidgin/pidginrc.so
-%_libdir/pidgin/relnot.so
-%_libdir/pidgin/sendbutton.so
-%_libdir/pidgin/spellchk.so
-%_libdir/pidgin/ticker.so
-%_libdir/pidgin/timestamp.so
-%_libdir/pidgin/timestamp_format.so
-%_libdir/pidgin/xmppconsole.so
+%{_datadir}/purple/ca-certs/*.pem
+%{_libdir}/pidgin/cap.so
+%{_libdir}/pidgin/convcolors.so
+%{_libdir}/pidgin/extplacement.so
+%{_libdir}/pidgin/gestures.so
+%{_libdir}/pidgin/gtkbuddynote.so
+%{_libdir}/pidgin/history.so
+%{_libdir}/pidgin/iconaway.so
+%{_libdir}/pidgin/markerline.so
+%{_libdir}/pidgin/musicmessaging.so
+%{_libdir}/pidgin/notify.so
+%{_libdir}/pidgin/pidginrc.so
+%{_libdir}/pidgin/relnot.so
+%{_libdir}/pidgin/sendbutton.so
+%{_libdir}/pidgin/spellchk.so
+%{_libdir}/pidgin/ticker.so
+%{_libdir}/pidgin/timestamp.so
+%{_libdir}/pidgin/timestamp_format.so
+%{_libdir}/pidgin/xmppconsole.so
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -434,14 +438,14 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%_libdir/libpurple.so.%{major}*
+%{_libdir}/libpurple.so.%{major}*
 
 %files -n %{console_app}
 %defattr(-, root, root)
 %doc %{_mandir}/man1/%{console_app}.*
 %{_bindir}/%{console_app}
-%_libdir/finch/
-%_libdir/gnt/
+%{_libdir}/finch/
+%{_libdir}/gnt/
 
 %files -n %{lib_console_app}
 %defattr(-, root, root)
@@ -505,36 +509,36 @@ rm -rf %{buildroot}
 
 %files plugins
 %defattr(-,root,root)
-%_libdir/purple-2/autoaccept.so
-%_libdir/purple-2/buddynote.so
-%_libdir/purple-2/idle.so
-%_libdir/purple-2/joinpart.so
-%_libdir/purple-2/libaim.so
+%{_libdir}/purple-2/autoaccept.so
+%{_libdir}/purple-2/buddynote.so
+%{_libdir}/purple-2/idle.so
+%{_libdir}/purple-2/joinpart.so
+%{_libdir}/purple-2/libaim.so
 %if %build_fetion
-%_libdir/purple-2/libfetion.so
+%{_libdir}/purple-2/libfetion.so
 %endif
-%_libdir/purple-2/libgg.so
-%_libdir/purple-2/libicq.so
-%_libdir/purple-2/libirc.so
-%_libdir/purple-2/libjabber.so
-%_libdir/purple-2/libjabber.so.0
-%_libdir/purple-2/libjabber.so.0.0.0
-%_libdir/purple-2/libmsn.so
-%_libdir/purple-2/libmyspace.so
-%_libdir/purple-2/libnovell.so
-%_libdir/purple-2/liboscar.so
-%_libdir/purple-2/liboscar.so.0
-%_libdir/purple-2/liboscar.so.0.0.0
-%_libdir/purple-2/libqq.so
-%_libdir/purple-2/libsimple.so
-%_libdir/purple-2/libxmpp.so
-%_libdir/purple-2/libyahoo.so
-%_libdir/purple-2/libzephyr.so
-%_libdir/purple-2/log_reader.so
-%_libdir/purple-2/newline.so
-%_libdir/purple-2/offlinemsg.so
-%_libdir/purple-2/psychic.so
-%_libdir/purple-2/ssl-gnutls.so
-%_libdir/purple-2/ssl-nss.so
-%_libdir/purple-2/ssl.so
-%_libdir/purple-2/statenotify.so
+%{_libdir}/purple-2/libgg.so
+%{_libdir}/purple-2/libicq.so
+%{_libdir}/purple-2/libirc.so
+%{_libdir}/purple-2/libjabber.so
+%{_libdir}/purple-2/libjabber.so.0
+%{_libdir}/purple-2/libjabber.so.0.0.0
+%{_libdir}/purple-2/libmsn.so
+%{_libdir}/purple-2/libmyspace.so
+%{_libdir}/purple-2/libnovell.so
+%{_libdir}/purple-2/liboscar.so
+%{_libdir}/purple-2/liboscar.so.0
+%{_libdir}/purple-2/liboscar.so.0.0.0
+%{_libdir}/purple-2/libqq.so
+%{_libdir}/purple-2/libsimple.so
+%{_libdir}/purple-2/libxmpp.so
+%{_libdir}/purple-2/libyahoo.so
+%{_libdir}/purple-2/libzephyr.so
+%{_libdir}/purple-2/log_reader.so
+%{_libdir}/purple-2/newline.so
+%{_libdir}/purple-2/offlinemsg.so
+%{_libdir}/purple-2/psychic.so
+%{_libdir}/purple-2/ssl-gnutls.so
+%{_libdir}/purple-2/ssl-nss.so
+%{_libdir}/purple-2/ssl.so
+%{_libdir}/purple-2/statenotify.so
