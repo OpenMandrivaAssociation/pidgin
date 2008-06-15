@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.2
-Release:	%mkrel 8
+Release:	%mkrel 9
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -65,7 +65,7 @@ Patch113:	%{name}-2.4.2-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
-Patch117:	%{name}-2.4.2-gg-images.patch
+Patch117:	gg-patch.diff
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -305,7 +305,7 @@ This package contains translation files for Pidgin/Finch.
 
 %patch115 -p1
 %patch116 -p1
-%patch117 -p1
+%patch117 -p0
 
 %if %build_fetion
 pushd libpurple/protocols
