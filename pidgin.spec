@@ -412,6 +412,7 @@ rm -rf %{buildroot}
 %{_sysconfdir}/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
+%dir %{_datadir}/purple
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
@@ -520,6 +521,7 @@ rm -rf %{buildroot}
 
 %files plugins
 %defattr(-,root,root)
+%dir %{_libdir}/purple-2
 %{_libdir}/purple-2/autoaccept.so
 %{_libdir}/purple-2/buddynote.so
 %{_libdir}/purple-2/idle.so
