@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.2
-Release:	%mkrel 10
+Release:	%mkrel 11
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
