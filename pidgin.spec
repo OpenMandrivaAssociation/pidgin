@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.2
-Release:	%mkrel 11
+Release:	%mkrel 12
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -66,6 +66,8 @@ Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
 Patch117:	gg-patch.diff
+# (pt) Upstream patch for connecting to ICQ
+Patch118:	pidgin-2.4.2-icq6.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -306,7 +308,7 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 %patch117 -p0
-
+%patch118 -p0
 %if %build_fetion
 pushd libpurple/protocols
 tar xfj %{SOURCE10}
