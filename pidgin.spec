@@ -36,8 +36,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.4.2
-Release:	%mkrel 12
+Version:	2.4.3
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -55,6 +55,7 @@ Patch0:		%{name}-2.1.1-smiley.patch
 Patch1:		%{name}-2.0.0-fix-AM_PATH_CHECK.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 # fwang: patch4 from http://developer.pidgin.im/ticket/4757
+# gw: this doesn't apply anymore, but it is not fixed yet
 Patch4:		99_qq_group_name.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
@@ -66,8 +67,6 @@ Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
 Patch117:	gg-patch.diff
-# (pt) Upstream patch for connecting to ICQ
-Patch118:	pidgin-2.4.2-icq6.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -300,7 +299,7 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch1 -p1
 %patch3 -p0
-%patch4 -p1
+#%patch4 -p1
 %patch111 -p1
 
 %patch113 -p1
@@ -308,7 +307,6 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 %patch117 -p0
-%patch118 -p0
 %if %build_fetion
 pushd libpurple/protocols
 tar xfj %{SOURCE10}
