@@ -13,6 +13,10 @@
 %define build_mono 1
 %define build_vv 0
 
+%ifarch mipsel
+%define build_mono 0
+%endif
+
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
 %{?_with_evolution: %{expand: %%global build_evolution 1}}
 
@@ -276,6 +280,7 @@ Requires:	%{name} = %{version}-%{release}
 %description client
 Applications and library to control purple clients remotely.
 
+%if %build_mono
 %package mono
 Summary:	Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
@@ -285,6 +290,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description mono
 Purple can use plugins developed with Mono.
+%endif
 
 %package i18n
 Summary:	Translation files for Pidgin/Finch
