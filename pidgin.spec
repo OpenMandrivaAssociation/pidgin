@@ -13,7 +13,7 @@
 %define build_mono 1
 %define build_vv 0
 
-%ifarch mipsel
+%ifarch mips mipsel
 %define build_mono 0
 %endif
 
