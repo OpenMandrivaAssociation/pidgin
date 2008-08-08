@@ -41,7 +41,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.4.3
-Release:	%mkrel 4
+Release:	%mkrel 5
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -70,7 +70,7 @@ Patch113:	%{name}-2.4.2-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
-Patch117:	gg-patch.diff
+Patch117:	libpurple_gg_image_support.4.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
