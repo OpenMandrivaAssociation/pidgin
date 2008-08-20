@@ -40,8 +40,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.4.3
-Release:	%mkrel 5
+Version:	2.5.0
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -56,7 +56,6 @@ Source11:	autogen.sh
 Patch2:		%{name}-2.4.1-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.1.1-smiley.patch
-Patch1:		%{name}-2.0.0-fix-AM_PATH_CHECK.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 # fwang: patch4 from http://developer.pidgin.im/ticket/4757
 # gw: this doesn't apply anymore, but it is not fixed yet
@@ -64,9 +63,6 @@ Patch4:		99_qq_group_name.patch
 #gw these patches were copied from the Fedora package
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.4.2-reread-resolvconf.patch
-# (tpg) pidgin-privacy-please is useless without this patch
-# http://code.google.com/p/pidgin-privacy-please/wiki/PidginPatches
-Patch113:	%{name}-2.4.2-blocked-signals-1.0.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
@@ -303,12 +299,10 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-%patch1 -p1
 %patch3 -p0
 #%patch4 -p1
 %patch111 -p1
 
-%patch113 -p1
 
 %patch115 -p1
 %patch116 -p1
