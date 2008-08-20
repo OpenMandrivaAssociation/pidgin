@@ -127,6 +127,7 @@ Provides:	hackgaim <= 0.60 gaim
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
 Requires:	%{name}-plugins = %{version}-%{release}
+Requires:	rootcerts
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -348,6 +349,7 @@ cp %{SOURCE11} .
 	--enable-cap \
 	--with-gadu-includes=%{_includedir} \
 	--with-gadu-libs=%{_libdir} \
+	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
 	--disable-static
 #gw parallel build doesn't work with the mono plugin
 # (tpg) this dirty hack solves this :)
@@ -412,12 +414,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
-%dir %{_datadir}/purple
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
-%{_datadir}/purple/ca-certs/*.pem
 %{_libdir}/pidgin/cap.so
 %{_libdir}/pidgin/convcolors.so
 %{_libdir}/pidgin/extplacement.so
