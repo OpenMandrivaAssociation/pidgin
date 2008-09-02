@@ -96,7 +96,6 @@ BuildRequires:	libexpat-devel
 BuildRequires:	avahi-glib-devel
 BuildRequires:	avahi-client-devel
 BuildRequires:	doxygen
-BuildRequires:	perl(XML::Parser)
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnutls-devel
 BuildRequires:	dbus-devel >= 0.50
@@ -199,6 +198,7 @@ Summary:	Development files for pidgin
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{lib_console_app} = %{version}-%{release}
+Requires:	pidgin-client = %version-%release
 Provides:	libpidgin-devel = %{version}-%{release}
 Provides:	pidgin-devel = %{version}-%{release}
 Obsoletes:	gaim-devel
