@@ -41,7 +41,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.5.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -67,6 +67,8 @@ Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 # (tpg) http://developer.pidgin.im/ticket/220
 Patch117:	libpurple_gg_image_support.4.patch
+# pt: Temporary fix for a crash
+Patch118:	pidgin-2.5.1-jabber-presence.crash
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -308,6 +310,7 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 %patch117 -p0
+%patch118 -p1 -b .presence
 %if %build_fetion
 pushd libpurple/protocols
 tar xfj %{SOURCE10}
