@@ -41,7 +41,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.5.1
-Release:	%mkrel 3
+Release:	%mkrel 4
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -148,7 +148,7 @@ Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 %package plugins
 Summary:	Pidgin plugins shared by the Purple and Finch
 Group:		Networking/Instant messaging
-Conflicts:	%{name} < 2.4.1-2mdv
+Conflicts:	%{name} < 2.4.1-3mdv
 
 %description plugins
 This contains the parts of Pidgin that are shared between the Purple and
