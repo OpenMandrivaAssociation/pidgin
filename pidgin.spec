@@ -40,8 +40,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.5.1
-Release:	%mkrel 5
+Version:	2.5.2
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -60,15 +60,6 @@ Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 # fwang: patch4 from http://developer.pidgin.im/ticket/4757
 # gw: this doesn't apply anymore, but it is not fixed yet
 Patch4:		99_qq_group_name.patch
-#gw these patches were copied from the Fedora package
-# fix a crash in gnome proxy handling
-Patch100:       pidgin-2.5.1-gnomeproxy.patch
-# fix crash in buddyicon handling
-Patch101:       pidgin-2.5.1-buddyicon.patch
-# readd "has you" for msn contacts
-Patch102:       pidgin-2.5.1-msn-hasyou.patch
-# fix crash with nss and self-signed certificates
-Patch103:       pidgin-2.5.1-nss-ssl.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.4.2-reread-resolvconf.patch
@@ -315,10 +306,6 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch3 -p0
 #%patch4 -p1
-%patch100 -p0 -b .gnomeproxy
-%patch101 -p0 -b .buddyicon
-%patch102 -p0 -b .hasyou
-%patch103 -p0 -b .nss
 
 %patch111 -p1
 
