@@ -105,6 +105,7 @@ BuildRequires:	doxygen
 BuildRequires:	desktop-file-utils
 BuildRequires:	gnutls-devel
 BuildRequires:	dbus-devel >= 0.50
+BuildRequires:	dbus-glib-devel
 BuildRequires:	graphviz
 BuildRequires:	libxslt-proc
 %if %build_meanwhile
