@@ -40,8 +40,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.5.2
-Release:	%mkrel 3
+Version:	2.5.3
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -53,26 +53,27 @@ Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 # tar cfj fetion-%{fetion_date}.tar.bz2 fetion
 Source10:	fetion-%{fetion_date}.tar.bz2
 Source11:	autogen.sh
-Patch2:		%{name}-2.4.1-add-fetion-protocol.patch
+Patch2:		pidgin-2.5.3-add-fetion-protocol.patch
+Patch1:		fetion-20080929-format-strings.patch
 %endif
-Patch0:		%{name}-2.1.1-smiley.patch
+Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 # fwang: patch4 from http://developer.pidgin.im/ticket/4757
 # gw: this doesn't apply anymore, but it is not fixed yet
 Patch4:		99_qq_group_name.patch
+Patch5:		pidgin-2.5.3-format-strings.patch
+
 
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111:	%{name}-2.4.2-reread-resolvconf.patch
+Patch111:	%{name}-2.5.3-reread-resolvconf.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 
 
-# (tpg) http://developer.pidgin.im/ticket/220
-Patch117:	libpurple_gg_image_support.4.patch
 # pt: Temporary fix for a crash
-Patch118:	pidgin-2.5.1-jabber-presence.crash
+Patch118:	pidgin-2.5.3-jabber-presence.crash
 
-Patch119:	pidgin-2.5.1-present.patch
+Patch119:	pidgin-2.5.3-present.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -309,23 +310,25 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch3 -p0
 #%patch4 -p1
+%patch5 -p1
 
-%patch111 -p1
+%patch111 -p1 -b .reread-resolvconf
 
 
 %patch115 -p1
 %patch116 -p1
-%patch117 -p0
 %patch118 -p1 -b .presence
-%patch119 -p1
+%patch119 -p1 -b .present
 
 %if %build_fetion
 pushd libpurple/protocols
 tar xfj %{SOURCE10}
 rm -f fetion/Makefile
+cd fetion
+%patch1
 popd
 cp %{SOURCE11} .
-%patch2 -p1
+%patch2 -p1 -b .add-fetion-protocol
 %endif
 
 %build
@@ -566,3 +569,6 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/ssl-nss.so
 %{_libdir}/purple-2/ssl.so
 %{_libdir}/purple-2/statenotify.so
+%dir %_datadir/purple/
+%dir %_datadir/purple/ca-certs
+%_datadir/purple/ca-certs/Microsoft*
