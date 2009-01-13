@@ -364,7 +364,7 @@ cp %{SOURCE11} .
 	--with-gadu-includes=%{_includedir} \
 	--with-gadu-libs=%{_libdir} \
 	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
-	--disable-static
+	--disable-static --disable-schemas-install
 #gw parallel build doesn't work with the mono plugin
 # (tpg) this dirty hack solves this :)
 %make -j1
