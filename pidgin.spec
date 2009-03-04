@@ -60,9 +60,6 @@ Patch1:		fetion-20080929-format-strings.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
-# fwang: patch4 from http://developer.pidgin.im/ticket/4757
-# gw: this doesn't apply anymore, but it is not fixed yet
-Patch4:		99_qq_group_name.patch
 Patch5:		pidgin-2.5.3-format-strings.patch
 
 
@@ -311,7 +308,6 @@ This package contains translation files for Pidgin/Finch.
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 %patch3 -p0
-#%patch4 -p1
 %patch5 -p1
 
 %patch111 -p1 -b .reread-resolvconf
