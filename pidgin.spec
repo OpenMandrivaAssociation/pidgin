@@ -40,8 +40,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.5.4
-Release:	%mkrel 2
+Version:	2.5.5
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -582,4 +582,6 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/statenotify.so
 %dir %_datadir/purple/
 %dir %_datadir/purple/ca-certs
+%_datadir/purple/ca-certs/AOL*
 %_datadir/purple/ca-certs/Microsoft*
+%_datadir/purple/ca-certs/VeriSign*
