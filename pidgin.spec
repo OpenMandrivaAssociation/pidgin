@@ -41,7 +41,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.5.5
-Release:	%mkrel 3
+Release:	%mkrel 4
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -61,6 +61,10 @@ Patch1:		fetion-20080929-format-strings.patch
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 Patch5:		pidgin-2.5.3-format-strings.patch
+#gw from mtn, fix a crash in msn protocol:
+#http://developer.pidgin.im/ticket/8594
+#https://qa.mandriva.com/show_bug.cgi?id=49160
+Patch6:		pidgin-881df138362222308d7b078687b7576861609e9c.patch
 
 
 #gw fix reading resolv.conf in NetworkManager integration
@@ -309,6 +313,7 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch3 -p0
 %patch5 -p1
+%patch6 -p0
 
 %patch111 -p1 -b .reread-resolvconf
 
