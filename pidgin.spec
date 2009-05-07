@@ -11,7 +11,6 @@
 %define build_networkmanager 0
 %define build_fetion 1
 %define build_mono 1
-%define build_vv 0
 
 %ifarch mips mipsel
 %define build_mono 0
@@ -32,16 +31,13 @@
 %{?_without_mono: %{expand: %%global build_mono 0}}
 %{?_with_mono: %{expand: %%global build_mono 1}}
 
-%{?_without_vv: %{expand: %%global build_vv 0}}
-%{?_with_vv: %{expand: %%global build_vv 1}}
-
 %{?_without_fetion: %{expand: %%global build_fetion 0}}
 %{?_with_fetion: %{expand: %%global build_fetion 1}}
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.5.5
-Release:	%mkrel 5
+Release:	%mkrel 6
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -65,7 +61,10 @@ Patch5:		pidgin-2.5.3-format-strings.patch
 #http://developer.pidgin.im/ticket/8594
 #https://qa.mandriva.com/show_bug.cgi?id=49160
 Patch6:		pidgin-881df138362222308d7b078687b7576861609e9c.patch
-
+#gw rediffed from mtn, fix a crash in new mail notification:
+#https://qa.mandriva.com/show_bug.cgi?id=49124
+#http://developer.pidgin.im/ticket/8779
+Patch7: 	pidgin-136cd28c47ef3338b71082503a83a7ecf465df78.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.5.3-reread-resolvconf.patch
@@ -127,10 +126,6 @@ BuildConflicts:	silc-toolkit-devel
 %endif
 %if %build_mono
 BuildRequires:	mono-devel
-%endif
-%if %build_vv
-BuildRequires:	libortp-devel >= 0.8.1
-BuildRequires:	speex-devel
 %endif
 Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
@@ -314,6 +309,7 @@ This package contains translation files for Pidgin/Finch.
 %patch3 -p0
 %patch5 -p1
 %patch6 -p0
+%patch7 -p1
 
 %patch111 -p1 -b .reread-resolvconf
 
@@ -356,11 +352,6 @@ cp %{SOURCE11} .
 %endif
 %if %build_evolution
 	--enable-gevolution \
-%endif
-%if %build_vv
-	--enable-vv \
-%else
-	--disable-vv \
 %endif
 	--without-krb4 \
 	--enable-cap \
