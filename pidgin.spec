@@ -68,6 +68,7 @@ Patch116:	%{name}-2.3.1-gg-disconnect.patch
 Patch118:	pidgin-2.5.3-jabber-presence.crash
 
 Patch119:	pidgin-2.5.3-present.patch
+Patch120:	pidgin-2.5.6-fix-installation.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -308,6 +309,7 @@ This package contains translation files for Pidgin/Finch.
 %patch116 -p1
 %patch118 -p1 -b .presence
 %patch119 -p1 -b .present
+%patch120 -p1
 
 %if %build_fetion
 pushd libpurple/protocols
@@ -324,9 +326,10 @@ cp %{SOURCE11} .
 # (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
 #                  linked against gnutls
 # (tpg) should work now!
-%if %build_fetion
+#gw patch120 needs automake
+#if %build_fetion
 ./autogen.sh
-%endif
+#endif
 %configure2_5x \
 	--enable-gnutls=yes \
 	--with-perl-lib=vendor \
