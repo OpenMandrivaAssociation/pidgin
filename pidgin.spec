@@ -37,7 +37,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.5.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -69,6 +69,9 @@ Patch118:	pidgin-2.5.3-jabber-presence.crash
 
 Patch119:	pidgin-2.5.3-present.patch
 Patch120:	pidgin-2.5.6-fix-installation.patch
+#gw from Mtn, fix a MSN protocol bug (buddy add request does not get through)
+#http://developer.pidgin.im/ticket/9240
+Patch121:	34318439bd78e3289fd5c34ed85ed7018dfe4503.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -310,6 +313,7 @@ This package contains translation files for Pidgin/Finch.
 %patch118 -p1 -b .presence
 %patch119 -p1 -b .present
 %patch120 -p1
+%patch121
 
 %if %build_fetion
 pushd libpurple/protocols
