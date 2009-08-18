@@ -11,9 +11,14 @@
 %define build_networkmanager 0
 %define build_fetion 1
 %define build_mono 1
+%define build_vv 1
 
 %ifarch mips mipsel
 %define build_mono 0
+%endif
+
+%if %mdvver < 201000
+%define build_vv 0
 %endif
 
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
@@ -36,10 +41,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.5.9
-%if %mdkversion < 201000
-%define subrel  1
-%endif
+Version:	2.6.0
 Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -54,23 +56,20 @@ Source2:        one_time_password.c
 # tar cfj fetion-%{fetion_date}.tar.bz2 fetion
 Source10:	fetion-%{fetion_date}.tar.bz2
 Source11:	autogen.sh
-Patch2:		pidgin-2.5.3-add-fetion-protocol.patch
+Patch2:		pidgin-2.6.0-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
-Patch5:		pidgin-2.5.3-format-strings.patch
-
 #gw fix reading resolv.conf in NetworkManager integration
-Patch111:	%{name}-2.5.3-reread-resolvconf.patch
+Patch111:	%{name}-2.6.0-reread-resolvconf.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 
 
 # pt: Temporary fix for a crash
-Patch118:	pidgin-2.5.3-jabber-presence.crash
+Patch118:	pidgin-2.6.0-jabber-presence.crash
 
 Patch119:	pidgin-2.5.3-present.patch
-Patch120:	pidgin-2.5.6-fix-installation.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -86,6 +85,8 @@ Buildrequires:	networkmanager-devel
 %endif
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	libgstreamer-devel >= 0.10
+BuildRequires:	libgstreamer-plugins-base-devel
+BuildRequires:  libidn-devel
 BuildRequires:	perl-devel
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
@@ -121,6 +122,10 @@ BuildConflicts:	silc-toolkit-devel
 %endif
 %if %build_mono
 BuildRequires:	mono-devel
+%endif
+%if %build_vv
+BuildRequires:  farsight2-devel >= 0.0.9
+Suggests: gstreamer0.10-farsight2
 %endif
 Obsoletes:	hackgaim <= 0.60 gaim
 Provides:	hackgaim <= 0.60 gaim
@@ -302,7 +307,6 @@ This package contains translation files for Pidgin/Finch.
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 %patch3 -p0
-%patch5 -p1
 
 %patch111 -p1 -b .reread-resolvconf
 
@@ -311,7 +315,6 @@ This package contains translation files for Pidgin/Finch.
 %patch116 -p1
 %patch118 -p1 -b .presence
 %patch119 -p1 -b .present
-%patch120 -p1
 
 %if %build_fetion
 pushd libpurple/protocols
@@ -321,18 +324,16 @@ popd
 cp %{SOURCE11} .
 %patch2 -p1 -b .add-fetion-protocol
 %endif
-
-%build
-# (Abel) 0.72-3mdk Somehow it won't connect to servers if gaim is
-#                  linked against gnutls
-# (tpg) should work now!
 #gw patch120 needs automake
 #if %build_fetion
 ./autogen.sh
 #endif
+
+%build
+#gw 2.6.0, the yahoo plugin does not build otherwise
+%define _disable_ld_no_undefined 1
 %configure2_5x \
 	--enable-gnutls=yes \
-	--with-perl-lib=vendor \
 %if %build_mono
 	--enable-mono \
 %else
@@ -378,8 +379,10 @@ desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 # remove files not bundled
-rm -f %{buildroot}%{_libdir}/*/*.la
- 
+rm -f %{buildroot}%{_libdir}/*/*.la 
+rm -f %buildroot%_libdir/perl5/*/perllocal.pod \
+      %buildroot%_libdir/*/perl/auto/*/{.packlist,*.bs,autosplit.ix}
+
 %find_lang %{name}
 
 %if %mdkversion < 200900
@@ -441,10 +444,12 @@ rm -rf %{buildroot}
 %{_libdir}/pidgin/relnot.so
 %{_libdir}/pidgin/sendbutton.so
 %{_libdir}/pidgin/spellchk.so
+%{_libdir}/pidgin/themeedit.so
 %{_libdir}/pidgin/ticker.so
 %{_libdir}/pidgin/timestamp.so
 %{_libdir}/pidgin/timestamp_format.so
 %{_libdir}/pidgin/xmppconsole.so
+%{_libdir}/pidgin/xmppdisco.so
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -479,9 +484,16 @@ rm -rf %{buildroot}
 %files perl
 %defattr(-,root,root)
 %doc doc/PERL-HOWTO.dox
-%{perl_vendorarch}/*.pm
-%{perl_vendorarch}/auto/Pidgin/*
-%{perl_vendorarch}/auto/Purple/*
+%dir %_libdir/%name/perl
+%_libdir/%name/perl/Pidgin.pm
+%dir %_libdir/%name/perl/auto
+%dir %_libdir/%name/perl/auto/Pidgin/
+%_libdir/%name/perl/auto/Pidgin/Pidgin.so
+%dir %{_libdir}/purple-2/perl
+%{_libdir}/purple-2/perl/Purple.pm
+%dir %{_libdir}/purple-2/perl/auto
+%dir %{_libdir}/purple-2/perl/auto/Purple/
+%{_libdir}/purple-2/perl/auto/Purple/Purple.so
 %{_libdir}/purple-2/perl.so
 %{_mandir}/man3*/*
 
@@ -554,7 +566,9 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/libqq.so
 %{_libdir}/purple-2/libsimple.so
 %{_libdir}/purple-2/libxmpp.so
+%{_libdir}/purple-2/libymsg.so*
 %{_libdir}/purple-2/libyahoo.so
+%{_libdir}/purple-2/libyahoojp.so
 %{_libdir}/purple-2/libzephyr.so
 %{_libdir}/purple-2/log_reader.so
 %{_libdir}/purple-2/newline.so
