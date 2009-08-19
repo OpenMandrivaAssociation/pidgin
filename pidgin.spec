@@ -380,7 +380,7 @@ desktop-file-install \
 
 # remove files not bundled
 rm -f %{buildroot}%{_libdir}/*/*.la 
-rm -f %buildroot%_libdir/perl5/*/perllocal.pod \
+rm -f %buildroot%_prefix/*/perl5/*/perllocal.pod \
       %buildroot%_libdir/*/perl/auto/*/{.packlist,*.bs,autosplit.ix}
 
 %find_lang %{name}
