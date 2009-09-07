@@ -41,7 +41,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.6.1
+Version:	2.6.2
 Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -448,6 +448,9 @@ rm -rf %{buildroot}
 %{_libdir}/pidgin/ticker.so
 %{_libdir}/pidgin/timestamp.so
 %{_libdir}/pidgin/timestamp_format.so
+%if %build_vv
+%{_libdir}/pidgin/vvconfig.so
+%endif
 %{_libdir}/pidgin/xmppconsole.so
 %{_libdir}/pidgin/xmppdisco.so
 
