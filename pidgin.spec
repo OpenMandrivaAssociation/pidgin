@@ -347,6 +347,9 @@ cp %{SOURCE11} .
 %if %build_evolution
 	--enable-gevolution \
 %endif
+%if ! %build_vv
+        --disable-vv \
+%endif
 	--without-krb4 \
 	--enable-cap \
 	--with-gadu-includes=%{_includedir} \
