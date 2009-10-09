@@ -12,7 +12,7 @@
 %define build_fetion 1
 %define build_mono 1
 %define build_vv 1
-%define build_libgadu 0
+%define build_libgadu 1
 
 %ifarch mips mipsel
 %define build_mono 0
@@ -379,13 +379,13 @@ cp %{SOURCE11} .
 	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
 	--disable-static --disable-schemas-install
 #gw parallel build doesn't work with the mono plugin
-make 
+%make -j1
 
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
-cd libpurple/plugins/
+pushd libpurple/plugins/
 make one_time_password.so
-cd -
+popd
 
 
 %install
@@ -393,7 +393,7 @@ rm -rf %{buildroot}
 
 %makeinstall_std mkinstalldirs='mkdir -p'
 
-install -m 0755 libpurple/plugins/one_time_password.so $RPM_BUILD_ROOT%{_libdir}/purple-2/
+install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
 
 
 desktop-file-install \
