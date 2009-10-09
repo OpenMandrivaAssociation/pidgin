@@ -12,6 +12,7 @@
 %define build_fetion 1
 %define build_mono 1
 %define build_vv 1
+%define build_libgadu 0
 
 %ifarch mips mipsel
 %define build_mono 0
@@ -19,7 +20,9 @@
 
 %if %mdvver < 201000
 %define build_vv 0
+%define build_libgadu 1
 %endif
+
 
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
 %{?_with_evolution: %{expand: %%global build_evolution 1}}
@@ -39,10 +42,13 @@
 %{?_without_fetion: %{expand: %%global build_fetion 0}}
 %{?_with_fetion: %{expand: %%global build_fetion 1}}
 
+%{?_without_libgadu: %{expand: %%global build_libgadu 0}}
+%{?_with_libgadu: %{expand: %%global build_libgadu 1}}
+
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.6.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -60,6 +66,13 @@ Patch2:		pidgin-2.6.0-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
+
+## Patches 100+ (from Fedora): To be Included in Future Upstream
+Patch100: pidgin-2.6.2-aim-buddy-status-grab.patch
+Patch101: pidgin-2.6.2-yahoo-buddy-idle-time.patch
+Patch102: pidgin-2.6.2-yahoo-status-change-away.patch
+Patch103: pidgin-2.6.2-crash-validate-jid.patch
+
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
@@ -78,7 +91,9 @@ Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
+%if %build_libgadu
 Buildrequires:	libgadu-devel >= 1.7.1
+%endif
 #gw we have networkmanager only in contribs:
 %if %build_networkmanager
 Buildrequires:	networkmanager-devel
@@ -308,6 +323,11 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch3 -p0
 
+%patch100 -p0 -b .aim-buddy-status-grab
+%patch101 -p0 -b .yahoo-buddy-idle-time
+%patch102 -p0 -b .yahoo-status-change-away
+%patch103 -p0 -b .pidgin-2.6.2-crash-validate-jid
+
 %patch111 -p1 -b .reread-resolvconf
 
 
@@ -350,10 +370,12 @@ cp %{SOURCE11} .
 %if ! %build_vv
         --disable-vv \
 %endif
-	--without-krb4 \
-	--enable-cap \
+%if %build_libgadu
 	--with-gadu-includes=%{_includedir} \
 	--with-gadu-libs=%{_libdir} \
+%endif
+	--without-krb4 \
+	--enable-cap \
 	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
 	--disable-static --disable-schemas-install
 #gw parallel build doesn't work with the mono plugin
