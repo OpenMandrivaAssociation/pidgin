@@ -68,7 +68,6 @@ Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
-Patch100: pidgin-2.6.2-aim-buddy-status-grab.patch
 Patch101: pidgin-2.6.2-yahoo-buddy-idle-time.patch
 Patch102: pidgin-2.6.2-yahoo-status-change-away.patch
 Patch103: pidgin-2.6.2-crash-validate-jid.patch
@@ -323,10 +322,9 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch3 -p0
 
-%patch100 -p0 -b .aim-buddy-status-grab
 %patch101 -p0 -b .yahoo-buddy-idle-time
 %patch102 -p0 -b .yahoo-status-change-away
-%patch103 -p0 -b .pidgin-2.6.2-crash-validate-jid
+%patch103 -p1 -b .pidgin-2.6.2-crash-validate-jid
 
 %patch111 -p1 -b .reread-resolvconf
 
