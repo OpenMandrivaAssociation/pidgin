@@ -48,7 +48,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.6.3
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -66,6 +66,10 @@ Patch2:		pidgin-2.6.0-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
+#gw from Ubuntu: fix KDE tray icon size
+#https://qa.mandriva.com/show_bug.cgi?id=54667
+#http://developer.pidgin.im/ticket/2466
+Patch4:		62_tray_icon_size_kde.patch
 
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
 Patch101: pidgin-2.6.2-yahoo-buddy-idle-time.patch
@@ -321,6 +325,7 @@ This package contains translation files for Pidgin/Finch.
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
 %patch3 -p0
+%patch4
 
 %patch101 -p0 -b .yahoo-buddy-idle-time
 %patch102 -p0 -b .yahoo-status-change-away
