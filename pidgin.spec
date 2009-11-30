@@ -47,8 +47,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.6.3
-Release:	%mkrel 2
+Version:	2.6.4
+Release:	%mkrel 1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -62,7 +62,7 @@ Source2:        one_time_password.c
 # tar cfj fetion-%{fetion_date}.tar.bz2 fetion
 Source10:	fetion-%{fetion_date}.tar.bz2
 Source11:	autogen.sh
-Patch2:		pidgin-2.6.0-add-fetion-protocol.patch
+Patch2:		pidgin-2.6.4-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
@@ -72,9 +72,6 @@ Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 Patch4:		62_tray_icon_size_kde.patch
 
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
-Patch101: pidgin-2.6.2-yahoo-buddy-idle-time.patch
-Patch102: pidgin-2.6.2-yahoo-status-change-away.patch
-Patch103: pidgin-2.6.2-crash-validate-jid.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
@@ -327,9 +324,6 @@ This package contains translation files for Pidgin/Finch.
 %patch3 -p0
 %patch4
 
-%patch101 -p0 -b .yahoo-buddy-idle-time
-%patch102 -p0 -b .yahoo-status-change-away
-%patch103 -p1 -b .pidgin-2.6.2-crash-validate-jid
 
 %patch111 -p1 -b .reread-resolvconf
 
