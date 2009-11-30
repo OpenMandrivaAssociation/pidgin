@@ -1,3 +1,12 @@
+%if %mandriva_branch == Cooker
+# Cooker
+%define release %mkrel 1
+%else
+# Old distros
+%define subrel 1
+%define release %mkrel 0
+%endif
+
 %define major 0
 %define libname %mklibname purple %{major}
 %define develname %mklibname purple -d
@@ -48,7 +57,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.6.4
-Release:	%mkrel 1
+Release:	%release
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
