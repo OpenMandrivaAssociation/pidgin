@@ -583,6 +583,7 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/libjabber.so.0
 %{_libdir}/purple-2/libjabber.so.0.0.0
 %{_libdir}/purple-2/libmsn.so
+%{_libdir}/purple-2/libmxit.so
 %{_libdir}/purple-2/libmyspace.so
 %{_libdir}/purple-2/libnovell.so
 %{_libdir}/purple-2/liboscar.so
