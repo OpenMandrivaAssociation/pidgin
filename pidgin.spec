@@ -74,6 +74,7 @@ Source11:	autogen.sh
 Patch2:		pidgin-2.6.4-add-fetion-protocol.patch
 %endif
 Patch0:		%{name}-2.5.3-smiley.patch
+Patch1:		pidgin-2.6.4-xdg.patch
 Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 #gw from Ubuntu: fix KDE tray icon size
 #https://qa.mandriva.com/show_bug.cgi?id=54667
@@ -157,6 +158,7 @@ Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{name}-i18n = %{version}-%{release}
 Requires:	%{name}-plugins = %{version}-%{release}
 Requires:	rootcerts
+Requires:	xdg-utils
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -330,6 +332,7 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
+%patch1 -p1 -b .xdg
 %patch3 -p0
 %patch4
 
