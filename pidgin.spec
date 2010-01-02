@@ -1,6 +1,6 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 3
 %else
 # Old distros
 %define subrel 1
@@ -32,6 +32,9 @@
 %define build_libgadu 1
 %endif
 
+%if %mdvver >= 201000
+%define build_evolution 0
+%endif
 
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
 %{?_with_evolution: %{expand: %%global build_evolution 1}}
