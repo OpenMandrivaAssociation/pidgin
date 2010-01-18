@@ -207,6 +207,7 @@ Requires:	%{name} = %{version}-%{release}
 %description tcl
 Purple can use tcl script as plugin, this plugin enable them.
 
+%if %build_evolution
 %package gevolution
 Summary:	Pidgin extension, for Evolution integration
 Group:		Networking/Instant messaging
@@ -216,6 +217,7 @@ Requires:	%{name} = %{version}-%{release}
 
 %description gevolution
 This pidgin plugin allows you to have pidgin working together with evolution.
+%endif
 
 %package silc
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
