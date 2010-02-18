@@ -59,7 +59,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.6.5
+Version:	2.6.6
 Release:	%release
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -597,15 +597,11 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/libicq.so
 %{_libdir}/purple-2/libirc.so
 %{_libdir}/purple-2/libjabber.so
-%{_libdir}/purple-2/libjabber.so.0
-%{_libdir}/purple-2/libjabber.so.0.0.0
 %{_libdir}/purple-2/libmsn.so
 %{_libdir}/purple-2/libmxit.so
 %{_libdir}/purple-2/libmyspace.so
 %{_libdir}/purple-2/libnovell.so
 %{_libdir}/purple-2/liboscar.so
-%{_libdir}/purple-2/liboscar.so.0
-%{_libdir}/purple-2/liboscar.so.0.0.0
 %{_libdir}/purple-2/libqq.so
 %{_libdir}/purple-2/libsimple.so
 %{_libdir}/purple-2/libxmpp.so
