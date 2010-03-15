@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 1
+%define release %mkrel 2
 %else
 # Old distros
-%define subrel 1
+%define subrel 2
 %define release %mkrel 0
 %endif
 
@@ -85,6 +85,9 @@ Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 Patch4:		62_tray_icon_size_kde.patch
 
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
+#gw these two fix the Oscar clientlogin using https
+Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
+Patch101: pidgin-2.6.6-clientLogin-use-https.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
@@ -341,6 +344,8 @@ This package contains translation files for Pidgin/Finch.
 %patch3 -p0
 %patch4
 
+%patch100 -p0
+%patch101 -p0
 
 %patch111 -p1 -b .reread-resolvconf
 
