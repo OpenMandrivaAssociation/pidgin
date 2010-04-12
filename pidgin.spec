@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 3
+%define release %mkrel 4
 %else
 # Old distros
-%define subrel 2
+%define subrel 3
 %define release %mkrel 0
 %endif
 
@@ -84,6 +84,10 @@ Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
 #http://developer.pidgin.im/ticket/2466
 Patch4:		62_tray_icon_size_kde.patch
 
+#gw patch for http://developer.pidgin.im/ticket/11431
+#https://qa.mandriva.com/show_bug.cgi?id=58439
+#signals don't work in perl plugins
+Patch5:		perl_va_args-2.patch
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
 #gw these two fix the Oscar clientlogin using https
 Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
@@ -343,6 +347,7 @@ This package contains translation files for Pidgin/Finch.
 %patch1 -p1 -b .xdg
 %patch3 -p0
 %patch4
+%patch5
 
 %patch100 -p0
 %patch101 -p0
