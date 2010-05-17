@@ -1,6 +1,6 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 4
+%define release %mkrel 5
 %else
 # Old distros
 %define subrel 3
@@ -92,6 +92,9 @@ Patch5:		perl_va_args-2.patch
 #gw these two fix the Oscar clientlogin using https
 Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
 Patch101: pidgin-2.6.6-clientLogin-use-https.patch
+#gw security patch for msn
+#http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1624
+Patch102: pidgin-CVE-2010-1624.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
@@ -351,6 +354,7 @@ This package contains translation files for Pidgin/Finch.
 
 %patch100 -p0
 %patch101 -p0
+%patch102
 
 %patch111 -p1 -b .reread-resolvconf
 
