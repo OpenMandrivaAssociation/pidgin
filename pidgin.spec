@@ -118,6 +118,8 @@ BuildRequires:	gtk+2-devel
 Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
+#gw for finch:
+Buildrequires:	python-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
 %if %build_libgadu
 Buildrequires:	libgadu-devel >= 1.7.1
