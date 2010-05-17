@@ -88,6 +88,11 @@ Patch4:		62_tray_icon_size_kde.patch
 #https://qa.mandriva.com/show_bug.cgi?id=58439
 #signals don't work in perl plugins
 Patch5:		perl_va_args-2.patch
+#gw fix build with mono 2.6.4 which does not have the nessessary glib dep
+#in the pkgconfig file
+#also add missing include
+Patch6:		pidgin-2.7.0-mono-build.patch
+
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
 #gw these two fix the Oscar clientlogin using https
 Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
@@ -351,6 +356,7 @@ This package contains translation files for Pidgin/Finch.
 %patch3 -p0
 %patch4
 %patch5
+%patch6 -p1
 
 %patch100 -p0
 %patch101 -p0
