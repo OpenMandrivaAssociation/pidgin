@@ -95,11 +95,9 @@ Patch6:		pidgin-2.7.0-mono-build.patch
 
 ## Patches 100+ (from Fedora): To be Included in Future Upstream
 #gw these two fix the Oscar clientlogin using https
+#https://qa.mandriva.com/show_bug.cgi?id=59476
 Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
 Patch101: pidgin-2.6.6-clientLogin-use-https.patch
-#gw security patch for msn
-#http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1624
-Patch102: pidgin-CVE-2010-1624.patch
 
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
@@ -111,6 +109,7 @@ Patch116:	%{name}-2.3.1-gg-disconnect.patch
 Patch118:	pidgin-2.6.0-jabber-presence.crash
 
 Patch119:	pidgin-2.5.3-present.patch
+Patch120: pidgin-CVE-2010-1624.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -362,7 +361,6 @@ This package contains translation files for Pidgin/Finch.
 
 %patch100 -p0
 %patch101 -p0
-%patch102
 
 %patch111 -p1 -b .reread-resolvconf
 
@@ -371,6 +369,7 @@ This package contains translation files for Pidgin/Finch.
 %patch116 -p1
 %patch118 -p1 -b .presence
 %patch119 -p1 -b .present
+%patch120 -p0 -b .CVE-2010-1624
 
 %if %build_fetion
 pushd libpurple/protocols
