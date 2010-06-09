@@ -368,7 +368,10 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 %patch118 -p1 -b .presence
+%if %mdvver > 200900
+# (oe): does not work on 2008.0
 %patch119 -p1 -b .present
+%endif
 %patch120 -p0 -b .CVE-2010-1624
 
 %if %build_fetion
