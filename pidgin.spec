@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 5
+%define release %mkrel 1
 %else
 # Old distros
-%define subrel 3
+%define subrel 1
 %define release %mkrel 0
 %endif
 
@@ -19,7 +19,8 @@
 %define build_meanwhile 1
 %define build_networkmanager 0
 %define build_fetion 1
-%define build_mono 1
+#gw http://developer.pidgin.im/ticket/11936#comment:1
+%define build_mono 0
 %define build_vv 1
 %define build_libgadu 1
 
@@ -59,7 +60,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.6.6
+Version:	2.7.1
 Release:	%release
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -74,46 +75,25 @@ Source2:        one_time_password.c
 # tar cfj fetion-%{fetion_date}.tar.bz2 fetion
 Source10:	fetion-%{fetion_date}.tar.bz2
 Source11:	autogen.sh
-Patch2:		pidgin-2.6.4-add-fetion-protocol.patch
+Patch2:		pidgin-2.7.0-add-fetion-protocol.patch
 %endif
-Patch0:		%{name}-2.5.3-smiley.patch
+Patch0:		pidgin-2.7.0-smiley.patch
 Patch1:		pidgin-2.6.4-xdg.patch
-Patch3:		%{name}-2.4.2-set-jabber-as-module.patch
-#gw from Ubuntu: fix KDE tray icon size
-#https://qa.mandriva.com/show_bug.cgi?id=54667
-#http://developer.pidgin.im/ticket/2466
-Patch4:		62_tray_icon_size_kde.patch
-
-#gw patch for http://developer.pidgin.im/ticket/11431
-#https://qa.mandriva.com/show_bug.cgi?id=58439
-#signals don't work in perl plugins
-Patch5:		perl_va_args-2.patch
+Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
 #in the pkgconfig file
 #also add missing include
 Patch6:		pidgin-2.7.0-mono-build.patch
-
-## Patches 100+ (from Fedora): To be Included in Future Upstream
-#gw these two fix the Oscar clientlogin using https
-#https://qa.mandriva.com/show_bug.cgi?id=59476
-Patch100: pidgin-2.6.6-clientLogin-proxy-fix.patch
-Patch101: pidgin-2.6.6-clientLogin-use-https.patch
-
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
 
-
-# pt: Temporary fix for a crash
-Patch118:	pidgin-2.6.0-jabber-presence.crash
-
 Patch119:	pidgin-2.5.3-present.patch
-Patch120: pidgin-CVE-2010-1624.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2-devel >= 2.10
 Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
 Buildrequires:	libncursesw-devel
@@ -355,24 +335,18 @@ This package contains translation files for Pidgin/Finch.
 %patch0 -p1 -b .smiley
 %patch1 -p1 -b .xdg
 %patch3 -p0
-%patch4
-%patch5
-%patch6 -p1
 
-%patch100 -p0
-%patch101 -p0
+%patch6 -p1
 
 %patch111 -p1 -b .reread-resolvconf
 
 
 %patch115 -p1
 %patch116 -p1
-%patch118 -p1 -b .presence
 %if %mdvver > 200900
 # (oe): does not work on 2008.0
 %patch119 -p1 -b .present
 %endif
-%patch120 -p0 -b .CVE-2010-1624
 
 %if %build_fetion
 pushd libpurple/protocols
@@ -382,13 +356,13 @@ popd
 cp %{SOURCE11} .
 %patch2 -p1 -b .add-fetion-protocol
 %endif
-#gw patch120 needs automake
+#gw patch3 needs automake
 #if %build_fetion
 ./autogen.sh
 #endif
 
 %build
-#gw 2.6.0, the yahoo plugin does not build otherwise
+#gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
 %configure2_5x \
 	--enable-gnutls=yes \
@@ -448,35 +422,8 @@ rm -f %buildroot%_prefix/*/perl5/*/perllocal.pod \
 
 %find_lang %{name}
 
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%post_install_gconf_schemas purple
-%update_icon_cache hicolor
-%endif
-
 %preun
 %preun_uninstall_gconf_schemas purple
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%clean_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{lib_console_app} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{lib_console_app} -p /sbin/ldconfig
-%endif
 
 %clean
 rm -rf %{buildroot}
