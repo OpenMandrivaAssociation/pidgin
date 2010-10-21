@@ -60,7 +60,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.7.3
+Version:	2.7.4
 Release:	%release
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -78,7 +78,6 @@ Source11:	autogen.sh
 Patch2:		pidgin-2.7.0-add-fetion-protocol.patch
 %endif
 Patch0:		pidgin-2.7.0-smiley.patch
-Patch1:		pidgin-2.6.4-xdg.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
 #in the pkgconfig file
@@ -88,8 +87,6 @@ Patch6:		pidgin-2.7.0-mono-build.patch
 Patch111:	%{name}-2.6.0-reread-resolvconf.patch
 Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
 Patch116:	%{name}-2.3.1-gg-disconnect.patch
-
-Patch119:	pidgin-2.5.3-present.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
@@ -333,20 +330,11 @@ This package contains translation files for Pidgin/Finch.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .smiley
-%patch1 -p1 -b .xdg
 %patch3 -p0
-
 %patch6 -p1
-
 %patch111 -p1 -b .reread-resolvconf
-
-
 %patch115 -p1
 %patch116 -p1
-%if %mdvver > 200900
-# (oe): does not work on 2008.0
-%patch119 -p1 -b .present
-%endif
 
 %if %build_fetion
 pushd libpurple/protocols
