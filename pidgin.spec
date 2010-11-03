@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 3
 %else
 # Old distros
-%define subrel 2
+%define subrel 3
 %define release %mkrel 0
 %endif
 
