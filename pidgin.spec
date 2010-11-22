@@ -3,7 +3,7 @@
 %define release %mkrel 1
 %else
 # Old distros
-%define subrel 3
+%define subrel 1
 %define release %mkrel 0
 %endif
 
