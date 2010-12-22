@@ -90,6 +90,10 @@ Patch116:	%{name}-2.3.1-gg-disconnect.patch
 BuildRequires:	automake
 BuildRequires:	intltool
 BuildRequires:	autoconf
+BuildRequires:	libxext-devel
+BuildRequires:	libsm-devel
+BuildRequires:	libice-devel
+BuildRequires:	libx11-devel
 BuildRequires:	gtk+2-devel >= 2.10
 Buildrequires:	gtkspell-devel >= 2.0.2
 Buildrequires:	sqlite3-devel
