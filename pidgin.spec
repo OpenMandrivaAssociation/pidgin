@@ -132,6 +132,7 @@ BuildRequires:	dbus-devel >= 0.50
 BuildRequires:	dbus-glib-devel
 BuildRequires:	graphviz
 BuildRequires:	libxslt-proc
+BuildRequires:	GConf2
 %if %build_meanwhile
 BuildRequires:	meanwhile-devel >= 1.0.0
 %else
