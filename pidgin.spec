@@ -584,3 +584,4 @@ rm -rf %{buildroot}
 %_datadir/purple/ca-certs/AOL*
 %_datadir/purple/ca-certs/Microsoft*
 %_datadir/purple/ca-certs/VeriSign*
+%_datadir/purple/ca-certs/DigiCert*
