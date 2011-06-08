@@ -328,10 +328,8 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1
 %patch116 -p1
 
-#gw patch3 needs automake
-./autogen.sh
-
 %build
+autoreconf -fi -Im4macros
 #gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
 %configure2_5x \
@@ -360,8 +358,7 @@ This package contains translation files for Pidgin/Finch.
 	--enable-cap \
 	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
 	--disable-static --disable-schemas-install
-#gw parallel build doesn't work with the mono plugin
-%make -j1
+%make
 
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
