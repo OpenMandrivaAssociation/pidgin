@@ -564,7 +564,6 @@ rm -rf %{buildroot}
 %{_libdir}/purple-2/libmyspace.so
 %{_libdir}/purple-2/libnovell.so
 %{_libdir}/purple-2/liboscar.so
-%{_libdir}/purple-2/libqq.so
 %{_libdir}/purple-2/libsimple.so
 %{_libdir}/purple-2/libxmpp.so
 %{_libdir}/purple-2/libymsg.so*
