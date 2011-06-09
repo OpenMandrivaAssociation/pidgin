@@ -27,14 +27,6 @@
 %define build_mono 0
 %endif
 
-%if %mdvver < 201000
-%define build_vv 0
-%endif
-
-%if %mdvver >= 201000
-%define build_evolution 0
-%endif
-
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
 %{?_with_evolution: %{expand: %%global build_evolution 1}}
 
@@ -388,35 +380,8 @@ rm -f %buildroot%_prefix/*/perl5/*/perllocal.pod \
 
 %find_lang %{name}
 
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%post_install_gconf_schemas purple
-%update_icon_cache hicolor
-%endif
-
 %preun
 %preun_uninstall_gconf_schemas purple
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%clean_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{lib_console_app} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{lib_console_app} -p /sbin/ldconfig
-%endif
 
 %clean
 rm -rf %{buildroot}
