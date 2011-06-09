@@ -1,10 +1,10 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 1
+%define release %mkrel 2
 %else
 # Old distros
 %define subrel 1
-%define release %mkrel 1
+%define release %mkrel 0
 %endif
 
 %define major 0
@@ -21,7 +21,7 @@
 #gw http://developer.pidgin.im/ticket/11936#comment:1
 %define build_mono 0
 %define build_vv 1
-%define build_libgadu 1
+%define build_libgadu 0
 
 %ifarch mips mipsel
 %define build_mono 0
@@ -29,7 +29,6 @@
 
 %if %mdvver < 201000
 %define build_vv 0
-%define build_libgadu 1
 %endif
 
 %if %mdvver >= 201000
@@ -88,8 +87,12 @@ Buildrequires:	libncursesw-devel
 #gw for finch:
 Buildrequires:	python-devel
 # (tpg) libgadu is now in main, pidgin's one is really old
+# gw pidgin's internal libgadu was updated recently
+# build against external version if possible, keep in mind older distros
+# might have older libgadu
 %if %build_libgadu
-Buildrequires:	libgadu-devel >= 1.7.1
+#gw configure check is used unless --with-* options are used:
+Buildrequires:	libgadu-devel >= 1.11.0
 %endif
 #gw we have networkmanager only in contribs:
 %if %build_networkmanager
@@ -349,10 +352,6 @@ autoreconf -fi -Im4macros
 %endif
 %if ! %build_vv
         --disable-vv \
-%endif
-%if %build_libgadu
-	--with-gadu-includes=%{_includedir} \
-	--with-gadu-libs=%{_libdir} \
 %endif
 	--without-krb4 \
 	--enable-cap \
