@@ -316,12 +316,12 @@ This package contains translation files for Pidgin/Finch.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .smiley
-%patch3 -p0
-%patch6 -p1
-%patch111 -p1 -b .reread-resolvconf
-%patch115 -p1
-%patch116 -p1
+#%patch0 -p1 -b .smiley
+#%patch3 -p0
+#%patch6 -p1
+#%patch111 -p1 -b .reread-resolvconf
+#%patch115 -p1
+#%patch116 -p1
 
 %build
 autoreconf -fi -Im4macros
