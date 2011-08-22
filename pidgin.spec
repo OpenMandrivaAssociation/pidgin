@@ -63,7 +63,7 @@ Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 Patch6:		pidgin-2.7.0-mono-build.patch
 #gw fix reading resolv.conf in NetworkManager integration
 Patch111:	%{name}-2.8.0-reread-resolvconf.patch
-Patch115:	%{name}-2.3.1-gg-search-by-uin.patch
+Patch115:	%{name}-2.10.0-gg-search-by-uin.patch
 Patch116:	%{name}-2.8.0-gg-disconnect.patch
 BuildRequires:	automake
 BuildRequires:	intltool
@@ -316,12 +316,12 @@ This package contains translation files for Pidgin/Finch.
 
 %prep
 %setup -q -n %{name}-%{version}
-#%patch0 -p1 -b .smiley
-#%patch3 -p0
-#%patch6 -p1
-#%patch111 -p1 -b .reread-resolvconf
-#%patch115 -p1
-#%patch116 -p1
+%patch0 -p1 -b .smiley
+%patch3 -p0
+%patch6 -p1
+%patch111 -p1 -b .reread-resolvconf
+%patch115 -p1 -b .gg-search
+%patch116 -p1
 
 %build
 autoreconf -fi -Im4macros
