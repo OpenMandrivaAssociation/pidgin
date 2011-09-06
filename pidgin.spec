@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 2
+%define release %mkrel 3
 %else
 # Old distros
-%define subrel 1
+%define subrel 2
 %define release %mkrel 0
 %endif
 
@@ -25,6 +25,10 @@
 
 %ifarch mips mipsel
 %define build_mono 0
+%endif
+
+%if %mdvver < 201020
+%define build_vv 0
 %endif
 
 %{?_without_evolution: %{expand: %%global build_evolution 0}}
