@@ -93,8 +93,8 @@ BuildRequires:	pkgconfig(meanwhile) >= 1.0.0
 %endif
 %if %build_evolution
 BuildRequires:	pkgconfig(evolution-data-server-1.2)
-BuildRequires:	pkconfig(libebook-1.0)
-BuildRequires:  pkconfig(libedata-book-1.0)
+BuildRequires:	pkgconfig(libebook-1.2)
+BuildRequires:  pkgconfig(libedata-book-1.2)
 %endif
 %if %build_silc
 BuildRequires:	pkgconfig(silc) >= 0.9.12
