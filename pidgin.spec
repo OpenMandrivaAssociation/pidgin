@@ -1,26 +1,21 @@
-%if %mandriva_branch == Cooker
-# Cooker
-%define release 1
-%else
-# Old distros
-%define subrel 1
-%define release %mkrel 0
-%endif
-
 %define major 0
 %define libname %mklibname purple %{major}
+%define libclient %mklibname purple-client %{major}
+%define libgnt %mklibname gnt %{major}
 %define develname %mklibname purple -d
-
-%define console_app finch
-%define lib_console_app %mklibname %{console_app} %{major}
 
 %define build_evolution 1
 %define build_silc 1
 %define build_meanwhile 1
-%define build_networkmanager 0
+%define build_networkmanager 1
 #gw http://developer.pidgin.im/ticket/11936#comment:1
 %define build_mono 0
 %define build_vv 1
+# (tpg) libgadu is now in main, pidgin's one is really old
+# gw pidgin's internal libgadu was updated recently
+# build against external version if possible, keep in mind older distros
+# might have older libgadu
+#gw configure check is used unless --with-* options are used:
 %define build_libgadu 0
 
 %ifarch mips mipsel
@@ -31,34 +26,16 @@
 %define build_vv 0
 %endif
 
-%{?_without_evolution: %{expand: %%global build_evolution 0}}
-%{?_with_evolution: %{expand: %%global build_evolution 1}}
-
-%{?_without_silc: %{expand: %%global build_silc 0}}
-%{?_with_silc: %{expand: %%global build_silc 1}}
-
-%{?_without_meanwhile: %{expand: %%global build_meanwhile 0}}
-%{?_with_meanwhile: %{expand: %%global build_meanwhile 1}}
-
-%{?_without_networkmanager: %{expand: %%global build_networkmanager 0}}
-%{?_with_networkmanager: %{expand: %%global build_networkmanager 1}}
-
-%{?_without_mono: %{expand: %%global build_mono 0}}
-%{?_with_mono: %{expand: %%global build_mono 1}}
-
-%{?_without_libgadu: %{expand: %%global build_libgadu 0}}
-%{?_with_libgadu: %{expand: %%global build_libgadu 1}}
-
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.1
-Release:	%release
+Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
-Source2:        one_time_password.c
+Source2:	one_time_password.c
 Patch0:		pidgin-2.7.0-smiley.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
@@ -69,79 +46,68 @@ Patch6:		pidgin-2.7.0-mono-build.patch
 Patch111:	%{name}-2.8.0-reread-resolvconf.patch
 Patch115:	%{name}-2.10.0-gg-search-by-uin.patch
 Patch116:	%{name}-2.8.0-gg-disconnect.patch
-BuildRequires:	automake
+
+BuildRequires:	desktop-file-utils
+BuildRequires:	doxygen
+BuildRequires:	GConf2
+BuildRequires:	graphviz
 BuildRequires:	intltool
-BuildRequires:	autoconf
-BuildRequires:	libxext-devel
-BuildRequires:	libsm-devel
-BuildRequires:	libice-devel
-BuildRequires:	libx11-devel
-BuildRequires:	gtk+2-devel >= 2.10
-Buildrequires:	gtkspell-devel >= 2.0.2
-Buildrequires:	sqlite3-devel
-Buildrequires:	libncursesw-devel
-#gw for finch:
-Buildrequires:	python-devel
-# (tpg) libgadu is now in main, pidgin's one is really old
-# gw pidgin's internal libgadu was updated recently
-# build against external version if possible, keep in mind older distros
-# might have older libgadu
-%if %build_libgadu
-#gw configure check is used unless --with-* options are used:
-Buildrequires:	libgadu-devel >= 1.11.0
-%endif
-#gw we have networkmanager only in contribs:
-%if %build_networkmanager
-Buildrequires:	networkmanager-devel
-%endif
-BuildRequires:	libxscrnsaver-devel
-BuildRequires:	libgstreamer-devel >= 0.10
-BuildRequires:	libgstreamer-plugins-base-devel
-BuildRequires:  libidn-devel
+BuildRequires:	xsltproc
+BuildRequires:	expat-devel
+BuildRequires:	gettext-devel
+BuildRequires:	krb5-devel
 BuildRequires:	perl-devel
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
-BuildRequires:	startup-notification-devel >= 0.5
-BuildRequires:	libnss-devel
-BuildRequires:	libnspr-devel
-BuildRequires:	krb5-devel
-BuildRequires:	libjack-devel
-BuildRequires:	libsamplerate-devel
-BuildRequires:	gettext-devel
-BuildRequires:	libexpat-devel
-BuildRequires:	avahi-glib-devel
-BuildRequires:	avahi-client-devel
-BuildRequires:	doxygen
-BuildRequires:	desktop-file-utils
-BuildRequires:	gnutls-devel
-BuildRequires:	dbus-devel >= 0.50
-BuildRequires:	dbus-glib-devel
-BuildRequires:	graphviz
-BuildRequires:	libxslt-proc
-BuildRequires:	GConf2
+BuildRequires:	pkgconfig(avahi-glib)
+BuildRequires:	pkgconfig(avahi-client)
+BuildRequires:	pkgconfig(gnutls)
+
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gstreamer-0.10)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(gtk+-2.0)
+Buildrequires:	pkgconfig(gtkspell-2.0) >= 2.0.2
+BuildRequires:	pkgconfig(ice)
+BuildRequires:	pkgconfig(jack)
+BuildRequires:  pkgconfig(libidn)
+BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
+Buildrequires:	pkgconfig(ncursesw)
+BuildRequires:	pkgconfig(nss)
+BuildRequires:	pkgconfig(nspr)
+Buildrequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(samplerate)
+BuildRequires:	pkgconfig(sm)
+Buildrequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(xscrnsaver)
+BuildRequires:	pkgconfig(x11)
+%if %build_libgadu
+Buildrequires:	pkgconfig(libgadu) >= 1.11.0
+%endif
+%if %build_networkmanager
+Buildrequires:	pkgconfig(libnm-util)
+%endif
 %if %build_meanwhile
-BuildRequires:	meanwhile-devel >= 1.0.0
-%else
-BuildConflicts:	meanwhile-devel
+BuildRequires:	pkgconfig(meanwhile) >= 1.0.0
 %endif
 %if %build_evolution
-BuildRequires:	evolution-data-server-devel
+BuildRequires:	pkgconfig(evolution-data-server-1.2)
+BuildRequires:	pkconfig(libebook-1.0)
+BuildRequires:  pkconfig(libedata-book-1.0)
 %endif
 %if %build_silc
-BuildRequires:	silc-toolkit-devel >= 0.9.12
-%else
-BuildConflicts:	silc-toolkit-devel
+BuildRequires:	pkgconfig(silc) >= 0.9.12
+BuildRequires:	pkgconfig(silcclient) >= 0.9.12
 %endif
 %if %build_mono
-BuildRequires:	mono-devel
+BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
-BuildRequires:  farsight2-devel >= 0.0.9
+BuildRequires:  pkgconfig(farsight2-0.10)
 Suggests: gstreamer0.10-farsight2
 %endif
-Obsoletes:	hackgaim <= 0.60 gaim
-Provides:	hackgaim <= 0.60 gaim
-Requires:	%{libname} >= %{version}-%{release}
+
 Requires:	%{name}-i18n = %{version}-%{release}
 Requires:	%{name}-plugins = %{version}-%{release}
 Requires:	rootcerts
@@ -164,7 +130,7 @@ Microsoft Corporation, Yahoo! Inc., or ICQ Inc.
 %package plugins
 Summary:	Pidgin plugins shared by the Purple and Finch
 Group:		Networking/Instant messaging
-Conflicts:	%{name} < 2.4.1-3mdv
+Conflicts:	%{name} < 2.4.1-3
 
 %description plugins
 This contains the parts of Pidgin that are shared between the Purple and
@@ -173,8 +139,6 @@ Finch Instant Messengers.
 %package perl
 Summary:	Purple extension, to use perl scripting
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-perl
-Provides:	gaim-perl
 Requires:	%{name} >= %{version}-%{release}
 
 %description perl
@@ -183,8 +147,6 @@ Purple can use perl script as plugin, this plugin enable them.
 %package tcl
 Summary:	Purple extension, to use tcl scripting
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-tcl
-Provides:	gaim-tcl
 Requires:	%{name} >= %{version}-%{release}
 
 %description tcl
@@ -194,8 +156,6 @@ Purple can use tcl script as plugin, this plugin enable them.
 %package gevolution
 Summary:	Pidgin extension, for Evolution integration
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-gevolution
-Provides:	gaim-gevolution
 Requires:	%{name} >= %{version}-%{release}
 
 %description gevolution
@@ -205,8 +165,6 @@ This pidgin plugin allows you to have pidgin working together with evolution.
 %package silc
 Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-silc
-Provides:	gaim-silc
 Requires:	%{name} >= %{version}-%{release}
 
 %description silc
@@ -217,11 +175,9 @@ plugin for live video conference.
 Summary:	Development files for pidgin
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} >= %{version}-%{release}
-Requires:	%{lib_console_app} = %{version}-%{release}
-Requires:	pidgin-client = %version-%release
-Provides:	libpidgin-devel = %{version}-%{release}
+Requires:	%{libgnt} = %{version}-%{release}
+Requires:	%{libclient} = %{version}-%{release}
 Provides:	pidgin-devel = %{version}-%{release}
-Obsoletes:	gaim-devel
 
 %description -n %{develname}
 The pidgin-devel package contains the header files, developer
@@ -236,31 +192,33 @@ Group:		System/Libraries
 libpurple contains the core IM support for IM clients such as Pidgin
 and Finch.
 
-libpurple supports a variety of messaging protocols including AIM, MSN,
-Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
-Lotus Sametime, SILC, Simple and Zephyr.
+%package -n %{libclient}
+Summary:	The libpurple-client library for %{name}-client
+Group:		System/Libraries
+Conflicts:	%{name}-client < 2.10.1-1
 
-%package -n %{lib_console_app}
+%description -n %{libclient}
+libpurple-client contains the shared library for %{name}-client.
+
+%package -n %{libgnt}
 Summary:	The libgnt library for the Finch IM client
 Group:		System/Libraries
-Conflicts:	%mklibname gaim 0
+%rename %{_lib}finch0
 
-%description -n %{lib_console_app}
+%description -n %{libgnt}
 libgnt contains the core IM support for the Finch IM client.
 
 libgnt supports a variety of messaging protocols including AIM, MSN,
 Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
 Lotus Sametime, SILC, Simple and Zephyr.
 
-%package -n %{console_app}
+%package -n finch
 Summary:	A text-based user interface for Pidgin
 Group:		Networking/Instant messaging
-Requires:	%{name} >= %{version}-%{release}
-Requires:	%{lib_console_app} >= %{version}-%{release}
 Requires:	%{name}-i18n >= %{version}-%{release}
 Requires:	%{name}-plugins >= %{version}-%{release}
 
-%description -n	%{console_app}
+%description -n	finch
 A text-based user interface for using libpurple. This can be run from a
 standard text console or from a terminal within X Windows.  It
 uses ncurses and our homegrown gnt library for drawing windows
@@ -269,8 +227,6 @@ and text.
 %package bonjour
 Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-bonjour
-Provides:	gaim-bonjour
 Requires:	%{name} >= %{version}-%{release}
 
 %description bonjour
@@ -279,8 +235,6 @@ Bonjour plugin for purple.
 %package meanwhile
 Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-meanwhile
-Provides:	gaim-meanwhile
 Requires:	%{name} >= %{version}-%{release}
 
 %description meanwhile
@@ -290,8 +244,6 @@ Lotus Sametime Community Client plugin for purple.
 Summary:	Plugin and sample client to control purple clients
 Group:		Networking/Instant messaging
 Requires:	dbus-python
-Obsoletes:	libgaim-remote0, gaim-client
-Provides:	libgaim-remote0, gaim-client
 Requires:	%{name} >= %{version}-%{release}
 
 %description client
@@ -301,8 +253,6 @@ Applications and library to control purple clients remotely.
 %package mono
 Summary:	Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
-Obsoletes:	gaim-mono
-Provides:	gaim-mono
 Requires:	%{name} >= %{version}-%{release}
 
 %description mono
@@ -312,13 +262,12 @@ Purple can use plugins developed with Mono.
 %package i18n
 Summary:	Translation files for Pidgin/Finch
 Group:		Networking/Instant messaging
-Obsoletes:	%{name} < 2.1.0
 
 %description i18n
 This package contains translation files for Pidgin/Finch.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1 -b .smiley
 %patch3 -p0
 %patch6 -p1
@@ -346,12 +295,13 @@ autoreconf -fi -Im4macros
 	--enable-gevolution \
 %endif
 %if ! %build_vv
-        --disable-vv \
+	--disable-vv \
 %endif
 	--without-krb4 \
 	--enable-cap \
-	--with-system-ssl-certs=%_sysconfdir/pki/tls/rootcerts/ \
-	--disable-static --disable-schemas-install
+	--with-system-ssl-certs=%{_sysconfdir}/pki/tls/rootcerts/ \
+	--disable-static \
+	--disable-schemas-install
 %make
 
 # one_time_password plugin, to be merged upstream soon
@@ -360,14 +310,12 @@ pushd libpurple/plugins/
 make one_time_password.so
 popd
 
-
 %install
 rm -rf %{buildroot}
 
 %makeinstall_std mkinstalldirs='mkdir -p'
 
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
-
 
 desktop-file-install \
   --remove-category="Application" \
@@ -378,14 +326,16 @@ desktop-file-install \
 
 # remove files not bundled
 rm -f %{buildroot}%{_libdir}/*/*.la 
-rm -f %buildroot%_prefix/*/perl5/*/perllocal.pod \
-      %buildroot%_libdir/*/perl/auto/*/{.packlist,*.bs,autosplit.ix}
+rm -f %{buildroot}%{_prefix}/*/perl5/*/perllocal.pod \
+      %{buildroot}%{_libdir}/*/perl/auto/*/{.packlist,*.bs,autosplit.ix}
 rm -f %{buildroot}%{_libdir}/*.*a
 
 %find_lang %{name}
 
 %preun
 %preun_uninstall_gconf_schemas purple
+
+%files i18n -f %{name}.lang
 
 %files
 %doc AUTHORS COPYRIGHT ChangeLog
@@ -434,25 +384,33 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %files -n %{libname}
 %{_libdir}/libpurple.so.%{major}*
 
-%files -n %{console_app}
-%doc %{_mandir}/man1/%{console_app}.*
-%{_bindir}/%{console_app}
+%files -n %{libclient}
+%{_libdir}/libpurple-client.so.%{major}*
+
+%files -n %{libgnt}
+%{_libdir}/libgnt.so.%{major}*
+
+%files client
+%{_bindir}/purple-remote
+%{_bindir}/purple-send
+%{_bindir}/purple-send-async
+%{_bindir}/purple-client-example
+%{_bindir}/purple-url-handler
+%{_libdir}/purple-2/dbus-example.so
+
+%files -n finch
+%doc %{_mandir}/man1/finch.*
+%{_bindir}/finch
 %{_libdir}/finch/
 %{_libdir}/gnt/
 
-%files -n %{lib_console_app}
-%{_libdir}/libgnt.so.%{major}*
-
-%files bonjour
-%{_libdir}/purple-2/libbonjour.so
-
 %files perl
 %doc doc/PERL-HOWTO.dox
-%dir %_libdir/%name/perl
-%_libdir/%name/perl/Pidgin.pm
-%dir %_libdir/%name/perl/auto
-%dir %_libdir/%name/perl/auto/Pidgin/
-%_libdir/%name/perl/auto/Pidgin/Pidgin.so
+%dir %{_libdir}/%{name}/perl
+%{_libdir}/%{name}/perl/Pidgin.pm
+%dir %{_libdir}/%{name}/perl/auto
+%dir %{_libdir}/%{name}/perl/auto/Pidgin/
+%{_libdir}/%{name}/perl/auto/Pidgin/Pidgin.so
 %dir %{_libdir}/purple-2/perl
 %{_libdir}/purple-2/perl/Purple.pm
 %dir %{_libdir}/purple-2/perl/auto
@@ -460,6 +418,9 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/perl/auto/Purple/Purple.so
 %{_libdir}/purple-2/perl.so
 %{_mandir}/man3*/*
+
+%files bonjour
+%{_libdir}/purple-2/libbonjour.so
 
 %files tcl
 %doc doc/TCL-HOWTO.dox
@@ -481,22 +442,11 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/libsametime.so
 %endif
 
-%files client
-%{_bindir}/purple-remote
-%{_bindir}/purple-send
-%{_bindir}/purple-send-async
-%{_bindir}/purple-client-example
-%{_bindir}/purple-url-handler
-%{_libdir}/libpurple-client.so.0*
-%{_libdir}/purple-2/dbus-example.so
-
 %if %build_mono
 %files mono
 %{_libdir}/purple-2/mono.so
 %{_libdir}/purple-2/*.dll
 %endif
-
-%files i18n -f %{name}.lang
 
 %files plugins
 %dir %{_libdir}/purple-2
@@ -529,9 +479,10 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/ssl-nss.so
 %{_libdir}/purple-2/ssl.so
 %{_libdir}/purple-2/statenotify.so
-%dir %_datadir/purple/
-%dir %_datadir/purple/ca-certs
-%_datadir/purple/ca-certs/AOL*
-%_datadir/purple/ca-certs/Microsoft*
-%_datadir/purple/ca-certs/VeriSign*
-%_datadir/purple/ca-certs/DigiCert*
+%dir %{_datadir}/purple/
+%dir %{_datadir}/purple/ca-certs
+%{_datadir}/purple/ca-certs/AOL*
+%{_datadir}/purple/ca-certs/Microsoft*
+%{_datadir}/purple/ca-certs/VeriSign*
+%{_datadir}/purple/ca-certs/DigiCert*
+
