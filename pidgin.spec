@@ -1,9 +1,9 @@
 %if %mandriva_branch == Cooker
 # Cooker
-%define release %mkrel 3
+%define release 1
 %else
 # Old distros
-%define subrel 2
+%define subrel 1
 %define release %mkrel 0
 %endif
 
@@ -51,7 +51,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.10.0
+Version:	2.10.1
 Release:	%release
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -146,7 +146,6 @@ Requires:	%{name}-i18n = %{version}-%{release}
 Requires:	%{name}-plugins = %{version}-%{release}
 Requires:	rootcerts
 Requires:	xdg-utils
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Pidgin allows you to talk to anyone using a variety of messaging
@@ -176,7 +175,7 @@ Summary:	Purple extension, to use perl scripting
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-perl
 Provides:	gaim-perl
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description perl
 Purple can use perl script as plugin, this plugin enable them.
@@ -186,7 +185,7 @@ Summary:	Purple extension, to use tcl scripting
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-tcl
 Provides:	gaim-tcl
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description tcl
 Purple can use tcl script as plugin, this plugin enable them.
@@ -197,7 +196,7 @@ Summary:	Pidgin extension, for Evolution integration
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-gevolution
 Provides:	gaim-gevolution
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description gevolution
 This pidgin plugin allows you to have pidgin working together with evolution.
@@ -208,7 +207,7 @@ Summary:	Purple extension, to use SILC (Secure Internet Live Conferencing)
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-silc
 Provides:	gaim-silc
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description silc
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
@@ -217,7 +216,7 @@ plugin for live video conference.
 %package -n %{develname}
 Summary:	Development files for pidgin
 Group:		Development/GNOME and GTK+
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{lib_console_app} = %{version}-%{release}
 Requires:	pidgin-client = %version-%release
 Provides:	libpidgin-devel = %{version}-%{release}
@@ -256,10 +255,10 @@ Lotus Sametime, SILC, Simple and Zephyr.
 %package -n %{console_app}
 Summary:	A text-based user interface for Pidgin
 Group:		Networking/Instant messaging
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 Requires:	%{lib_console_app} >= %{version}-%{release}
-Requires:	%{name}-i18n = %{version}-%{release}
-Requires:	%{name}-plugins = %{version}-%{release}
+Requires:	%{name}-i18n >= %{version}-%{release}
+Requires:	%{name}-plugins >= %{version}-%{release}
 
 %description -n	%{console_app}
 A text-based user interface for using libpurple. This can be run from a
@@ -272,7 +271,7 @@ Summary:	Bonjour plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-bonjour
 Provides:	gaim-bonjour
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description bonjour
 Bonjour plugin for purple.
@@ -282,7 +281,7 @@ Summary:	Lotus Sametime Community Client plugin for Purple
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-meanwhile
 Provides:	gaim-meanwhile
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description meanwhile
 Lotus Sametime Community Client plugin for purple.
@@ -293,7 +292,7 @@ Group:		Networking/Instant messaging
 Requires:	dbus-python
 Obsoletes:	libgaim-remote0, gaim-client
 Provides:	libgaim-remote0, gaim-client
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description client
 Applications and library to control purple clients remotely.
@@ -304,7 +303,7 @@ Summary:	Purple extension, to use Mono plugins
 Group:		Networking/Instant messaging
 Obsoletes:	gaim-mono
 Provides:	gaim-mono
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 
 %description mono
 Purple can use plugins developed with Mono.
@@ -381,17 +380,14 @@ desktop-file-install \
 rm -f %{buildroot}%{_libdir}/*/*.la 
 rm -f %buildroot%_prefix/*/perl5/*/perllocal.pod \
       %buildroot%_libdir/*/perl/auto/*/{.packlist,*.bs,autosplit.ix}
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %find_lang %{name}
 
 %preun
 %preun_uninstall_gconf_schemas purple
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc AUTHORS COPYRIGHT ChangeLog
 %doc NEWS README README.MTN doc/the_penguin.txt
 %{_mandir}/man1/pidgin.*
@@ -427,7 +423,6 @@ rm -rf %{buildroot}
 %{_libdir}/pidgin/xmppdisco.so
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc ChangeLog.API HACKING PLUGIN_HOWTO
 %{_includedir}/*
 %{_datadir}/aclocal/purple.m4
@@ -435,29 +430,23 @@ rm -rf %{buildroot}
 %{_libdir}/libpurple.so
 %{_libdir}/libgnt.so
 %{_libdir}/libpurple-client.so
-%{_libdir}/lib*.la
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/libpurple.so.%{major}*
 
 %files -n %{console_app}
-%defattr(-, root, root)
 %doc %{_mandir}/man1/%{console_app}.*
 %{_bindir}/%{console_app}
 %{_libdir}/finch/
 %{_libdir}/gnt/
 
 %files -n %{lib_console_app}
-%defattr(-, root, root)
 %{_libdir}/libgnt.so.%{major}*
 
 %files bonjour
-%defattr(-,root,root)
 %{_libdir}/purple-2/libbonjour.so
 
 %files perl
-%defattr(-,root,root)
 %doc doc/PERL-HOWTO.dox
 %dir %_libdir/%name/perl
 %_libdir/%name/perl/Pidgin.pm
@@ -473,31 +462,26 @@ rm -rf %{buildroot}
 %{_mandir}/man3*/*
 
 %files tcl
-%defattr(-,root,root)
 %doc doc/TCL-HOWTO.dox
 %{_libdir}/purple-2/tcl.so
 
 %if %build_silc
 %files silc
-%defattr(-,root,root)
 %doc libpurple/protocols/silc/README
 %{_libdir}/purple-2/libsilcpurple.so
 %endif
 
 %if %build_evolution
 %files gevolution
-%defattr(-,root,root)
 %{_libdir}/%{name}/gevolution.so
 %endif
 
 %if %build_meanwhile
 %files meanwhile
-%defattr(-,root,root)
 %{_libdir}/purple-2/libsametime.so
 %endif
 
 %files client
-%defattr(-,root,root)
 %{_bindir}/purple-remote
 %{_bindir}/purple-send
 %{_bindir}/purple-send-async
@@ -508,7 +492,6 @@ rm -rf %{buildroot}
 
 %if %build_mono
 %files mono
-%defattr(-,root,root)
 %{_libdir}/purple-2/mono.so
 %{_libdir}/purple-2/*.dll
 %endif
@@ -516,7 +499,6 @@ rm -rf %{buildroot}
 %files i18n -f %{name}.lang
 
 %files plugins
-%defattr(-,root,root)
 %dir %{_libdir}/purple-2
 %{_libdir}/purple-2/autoaccept.so
 %{_libdir}/purple-2/buddynote.so
