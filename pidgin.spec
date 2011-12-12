@@ -1,3 +1,6 @@
+#gw 2.7.0, the yahoo plugin does not build otherwise
+%define _disable_ld_no_undefined 1
+
 %define major 0
 %define libname %mklibname purple %{major}
 %define libclient %mklibname purple-client %{major}
@@ -8,6 +11,7 @@
 %define build_silc 1
 %define build_meanwhile 1
 %define build_networkmanager 1
+%define build_perl 0
 #gw http://developer.pidgin.im/ticket/11936#comment:1
 %define build_mono 0
 %define build_vv 1
@@ -56,7 +60,6 @@ BuildRequires:	xsltproc
 BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
 BuildRequires:	krb5-devel
-BuildRequires:	perl-devel
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
 BuildRequires:	pkgconfig(avahi-glib)
@@ -99,6 +102,9 @@ BuildRequires:  pkgconfig(libedata-book-1.2)
 %if %build_silc
 BuildRequires:	pkgconfig(silc) >= 0.9.12
 BuildRequires:	pkgconfig(silcclient) >= 0.9.12
+%endif
+%if %build_perl
+BuildRequires:	perl-devel
 %endif
 %if %build_mono
 BuildRequires:	pkgconfig(mono)
@@ -275,12 +281,16 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1 -b .gg-search
 %patch116 -p1
 
-%build
 autoreconf -fi -Im4macros
-#gw 2.7.0, the yahoo plugin does not build otherwise
-%define _disable_ld_no_undefined 1
+
+%build
 %configure2_5x \
 	--enable-gnutls=yes \
+%if %build_perl
+	--enable-perl \
+%else
+	--disable-perl \
+%endif
 %if %build_mono
 	--enable-mono \
 %else
@@ -302,6 +312,7 @@ autoreconf -fi -Im4macros
 	--with-system-ssl-certs=%{_sysconfdir}/pki/tls/rootcerts/ \
 	--disable-static \
 	--disable-schemas-install
+
 %make
 
 # one_time_password plugin, to be merged upstream soon
@@ -404,6 +415,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/finch/
 %{_libdir}/gnt/
 
+%if %build_perl
 %files perl
 %doc doc/PERL-HOWTO.dox
 %dir %{_libdir}/%{name}/perl
@@ -418,6 +430,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/perl/auto/Purple/Purple.so
 %{_libdir}/purple-2/perl.so
 %{_mandir}/man3*/*
+%endif
 
 %files bonjour
 %{_libdir}/purple-2/libbonjour.so
