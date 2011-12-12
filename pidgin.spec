@@ -116,6 +116,7 @@ Suggests: gstreamer0.10-farsight2
 
 Requires:	%{name}-i18n = %{version}-%{release}
 Requires:	%{name}-plugins = %{version}-%{release}
+Requires:	%{name}-client >= %{version}-%{release}
 Requires:	rootcerts
 Requires:	xdg-utils
 
@@ -223,6 +224,7 @@ Summary:	A text-based user interface for Pidgin
 Group:		Networking/Instant messaging
 Requires:	%{name}-i18n >= %{version}-%{release}
 Requires:	%{name}-plugins >= %{version}-%{release}
+Requires:	%{name}-client >= %{version}-%{release}
 
 %description -n	finch
 A text-based user interface for using libpurple. This can be run from a
@@ -250,7 +252,6 @@ Lotus Sametime Community Client plugin for purple.
 Summary:	Plugin and sample client to control purple clients
 Group:		Networking/Instant messaging
 Requires:	dbus-python
-Requires:	%{name} >= %{version}-%{release}
 
 %description client
 Applications and library to control purple clients remotely.
