@@ -11,7 +11,7 @@
 %define build_silc 1
 %define build_meanwhile 1
 %define build_networkmanager 1
-%define build_perl 0
+%define build_perl 1
 #gw http://developer.pidgin.im/ticket/11936#comment:1
 %define build_mono 0
 %define build_vv 1
@@ -33,7 +33,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -50,6 +50,7 @@ Patch6:		pidgin-2.7.0-mono-build.patch
 Patch111:	%{name}-2.8.0-reread-resolvconf.patch
 Patch115:	%{name}-2.10.0-gg-search-by-uin.patch
 Patch116:	%{name}-2.8.0-gg-disconnect.patch
+Patch117:	pidgin-2.10.1-fix-perl-module-build.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
@@ -281,6 +282,7 @@ This package contains translation files for Pidgin/Finch.
 %patch111 -p1 -b .reread-resolvconf
 %patch115 -p1 -b .gg-search
 %patch116 -p1
+%patch117 -p1 -b .perl_buildfix~
 
 autoreconf -fi -Im4macros
 
