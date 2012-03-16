@@ -33,7 +33,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -51,6 +51,9 @@ Patch111:	%{name}-2.8.0-reread-resolvconf.patch
 Patch115:	%{name}-2.10.0-gg-search-by-uin.patch
 Patch116:	%{name}-2.8.0-gg-disconnect.patch
 Patch117:	pidgin-2.10.1-fix-perl-module-build.patch
+# since libtool drops soname for unversioned modules now, we need to explicitly
+# add soname to plugins that other plugins links against it
+Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
@@ -287,6 +290,7 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1 -b .gg-search
 %patch116 -p1
 %patch117 -p1 -b .perl_buildfix~
+%patch118 -p1 -b .soname~
 
 autoreconf -fi -Im4macros
 
