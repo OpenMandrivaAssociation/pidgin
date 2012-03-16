@@ -79,7 +79,11 @@ BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
 Buildrequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(nspr)
+%if %mdkversion >= 201100
 Buildrequires:	pkgconfig(python)
+%else
+BuildRequires:	python-devel
+%endif
 BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sm)
 Buildrequires:	pkgconfig(sqlite3)
