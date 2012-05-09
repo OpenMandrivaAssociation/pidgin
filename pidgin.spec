@@ -7,7 +7,7 @@
 %define libgnt %mklibname gnt %{major}
 %define develname %mklibname purple -d
 
-%define build_evolution 1
+%define build_evolution 0
 %define build_silc 1
 %define build_meanwhile 1
 %define build_networkmanager 1
@@ -28,6 +28,10 @@
 
 %if %mdvver < 201020
 %define build_vv 0
+%endif
+
+%if %mdvver <= 201100
+%define build_evolution 1
 %endif
 
 Summary:	A GTK+ based multiprotocol instant messaging client
