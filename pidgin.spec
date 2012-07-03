@@ -38,7 +38,7 @@ Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.4
 %if %mdvver >= 201100
-Release:	%mkrel 1
+Release:	%mkrel 2
 %else
 Release:	%mkrel 2
 %endif
@@ -126,8 +126,8 @@ BuildRequires:	perl-devel
 BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
-BuildRequires:  pkgconfig(farsight2-0.10)
-Suggests: gstreamer0.10-farsight2
+BuildRequires:  pkgconfig(farstream-0.1)
+Suggests: gstreamer0.10-farstream
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
