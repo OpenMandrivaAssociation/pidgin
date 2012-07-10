@@ -36,7 +36,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.10.5
+Version:	2.10.6
 %if %mdvver >= 201100
 Release:	%mkrel 1
 %else
