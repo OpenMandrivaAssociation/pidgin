@@ -126,8 +126,13 @@ BuildRequires:	perl-devel
 BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
+%if %mdvver >= 201200
 BuildRequires:  pkgconfig(farstream-0.1)
 Suggests: gstreamer0.10-farstream
+%else
+BuildRequires:  pkgconfig(farsight2-0.10)
+Suggests: gstreamer0.10-farsight2
+%endif
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
