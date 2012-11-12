@@ -1,0 +1,22 @@
+--- pidgin-2.10.2/libpurple/protocols/jabber/Makefile.am.soname~	2012-03-16 20:23:40.918123912 +0100
++++ pidgin-2.10.2/libpurple/protocols/jabber/Makefile.am	2012-03-16 20:24:42.355199920 +0100
+@@ -93,7 +93,7 @@ JABBERSOURCES = \
+ 
+ AM_CFLAGS = $(st)
+ 
+-libjabber_la_LDFLAGS = -module -avoid-version
++libjabber_la_LDFLAGS = -module -avoid-version -Wl,-soname=libjabber.so
+ libxmpp_la_LDFLAGS = -module -avoid-version
+ 
+ if USE_CYRUS_SASL
+--- pidgin-2.10.2/libpurple/protocols/oscar/Makefile.am.soname~	2012-03-16 20:15:58.733552100 +0100
++++ pidgin-2.10.2/libpurple/protocols/oscar/Makefile.am	2012-03-16 20:15:58.753552126 +0100
+@@ -52,7 +52,7 @@ AM_CFLAGS = $(st)
+ 
+ libaim_la_LDFLAGS = -module -avoid-version
+ libicq_la_LDFLAGS = -module -avoid-version
+-liboscar_la_LDFLAGS = -module -avoid-version
++liboscar_la_LDFLAGS = -module -avoid-version -Wl,-soname=liboscar.so
+ if STATIC_OSCAR
+ 
+ st = -DPURPLE_STATIC_PRPL
