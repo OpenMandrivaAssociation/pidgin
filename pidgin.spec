@@ -26,22 +26,10 @@
 %define build_mono 0
 %endif
 
-%if %mdvver < 201020
-%define build_vv 0
-%endif
-
-%if %mdvver <= 201100
-%define build_evolution 1
-%endif
-
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.6
-%if %mdvver >= 201100
-Release:	%mkrel 1
-%else
-Release:	%mkrel 1
-%endif
+Release:	3
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -90,11 +78,7 @@ BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
 Buildrequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(nspr)
-%if %mdkversion >= 201100
 Buildrequires:	pkgconfig(python)
-%else
-BuildRequires:	python-devel
-%endif
 BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sm)
 Buildrequires:	pkgconfig(sqlite3)
@@ -126,13 +110,8 @@ BuildRequires:	perl-devel
 BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
-%if %mdvver >= 201200
 BuildRequires:  pkgconfig(farstream-0.1)
 Suggests: gstreamer0.10-farstream
-%else
-BuildRequires:  pkgconfig(farsight2-0.10)
-Suggests: gstreamer0.10-farsight2
-%endif
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
@@ -522,4 +501,3 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_datadir}/purple/ca-certs/Microsoft*
 %{_datadir}/purple/ca-certs/VeriSign*
 %{_datadir}/purple/ca-certs/DigiCert*
-
