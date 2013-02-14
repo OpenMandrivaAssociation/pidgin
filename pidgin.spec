@@ -1,35 +1,30 @@
 #gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
 
-%define major 0
-%define libname %mklibname purple %{major}
-%define libclient %mklibname purple-client %{major}
-%define libgnt %mklibname gnt %{major}
-%define develname %mklibname purple -d
-
 %define build_evolution 0
-%define build_silc 1
+%define build_libgadu 1
 %define build_meanwhile 1
-%define build_networkmanager 1
-%define build_perl 1
 #gw http://developer.pidgin.im/ticket/11936#comment:1
 %define build_mono 0
-%define build_vv 1
-# (tpg) libgadu is now in main, pidgin's one is really old
-# gw pidgin's internal libgadu was updated recently
-# build against external version if possible, keep in mind older distros
-# might have older libgadu
-#gw configure check is used unless --with-* options are used:
-%define build_libgadu 0
-
 %ifarch mips mipsel
 %define build_mono 0
 %endif
+%define build_networkmanager 1
+%define build_perl 1
+%define build_silc 1
+%define build_vv 1
+
+%define gstapi	0.10
+%define major	0
+%define libname %mklibname purple %{major}
+%define libclient %mklibname purple-client %{major}
+%define libgnt %mklibname gnt %{major}
+%define devname %mklibname purple -d
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.10.6
-Release:	3
+Version:	2.10.7
+Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -67,29 +62,29 @@ BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	libgcrypt-devel
 BuildRequires:	pkgconfig(dbus-glib-1)
-BuildRequires:	pkgconfig(gstreamer-0.10)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(gstreamer-%{gstapi})
+BuildRequires:	pkgconfig(gstreamer-plugins-base-%{gstapi})
 BuildRequires:	pkgconfig(gtk+-2.0)
-Buildrequires:	pkgconfig(gtkspell-2.0) >= 2.0.2
+BuildRequires:	pkgconfig(gtkspell-2.0) >= 2.0.2
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
-Buildrequires:	pkgconfig(ncursesw)
+BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(nspr)
-Buildrequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sm)
-Buildrequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xscrnsaver)
 BuildRequires:	pkgconfig(x11)
 %if %build_libgadu
-Buildrequires:	pkgconfig(libgadu) >= 1.11.0
+BuildRequires:	pkgconfig(libgadu) >= 1.11.0
 %endif
 %if %build_networkmanager
-Buildrequires:	pkgconfig(libnm-util)
+BuildRequires:	pkgconfig(libnm-util)
 %endif
 %if %build_meanwhile
 BuildRequires:	pkgconfig(meanwhile) >= 1.0.0
@@ -111,7 +106,7 @@ BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
 BuildRequires:  pkgconfig(farstream-0.1)
-Suggests: gstreamer0.10-farstream
+Suggests: gstreamer%{gstapi}-farstream
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
@@ -178,7 +173,7 @@ Requires:	%{name} >= %{version}-%{release}
 This purple plugin allows you to use SILC (Secure Internet Live Conferencing)
 plugin for live video conference.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Development files for pidgin
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} >= %{version}-%{release}
@@ -186,7 +181,7 @@ Requires:	%{libgnt} = %{version}-%{release}
 Requires:	%{libclient} = %{version}-%{release}
 Provides:	pidgin-devel = %{version}-%{release}
 
-%description -n %{develname}
+%description -n %{devname}
 The pidgin-devel package contains the header files, developer
 documentation, and libraries required for development of Pidgin scripts
 and plugins.
@@ -325,8 +320,6 @@ make one_time_password.so
 popd
 
 %install
-rm -rf %{buildroot}
-
 %makeinstall_std mkinstalldirs='mkdir -p'
 
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
@@ -353,7 +346,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 
 %files
 %doc AUTHORS COPYRIGHT ChangeLog
-%doc NEWS README README.MTN doc/the_penguin.txt
+%doc NEWS README doc/the_penguin.txt
 %{_mandir}/man1/pidgin.*
 %{_sysconfdir}/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
@@ -386,7 +379,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/pidgin/xmppconsole.so
 %{_libdir}/pidgin/xmppdisco.so
 
-%files -n %{develname}
+%files -n %{devname}
 %doc ChangeLog.API HACKING PLUGIN_HOWTO
 %{_includedir}/*
 %{_datadir}/aclocal/purple.m4
@@ -501,3 +494,4 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_datadir}/purple/ca-certs/Microsoft*
 %{_datadir}/purple/ca-certs/VeriSign*
 %{_datadir}/purple/ca-certs/DigiCert*
+
