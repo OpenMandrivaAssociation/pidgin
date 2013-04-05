@@ -14,8 +14,8 @@
 %define build_silc 1
 %define build_vv 1
 
-%define gstapi	0.10
-%define major	0
+%define gstapi 0.10
+%define major 0
 %define libname %mklibname purple %{major}
 %define libclient %mklibname purple-client %{major}
 %define libgnt %mklibname gnt %{major}
@@ -68,7 +68,7 @@ BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(gtkspell-2.0) >= 2.0.2
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(jack)
-BuildRequires:  pkgconfig(libidn)
+BuildRequires:	pkgconfig(libidn)
 BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
 BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(nss)
@@ -92,7 +92,7 @@ BuildRequires:	pkgconfig(meanwhile) >= 1.0.0
 %if %build_evolution
 BuildRequires:	pkgconfig(evolution-data-server-1.2)
 BuildRequires:	pkgconfig(libebook-1.2)
-BuildRequires:  pkgconfig(libedata-book-1.2)
+BuildRequires:	pkgconfig(libedata-book-1.2)
 %endif
 %if %build_silc
 BuildRequires:	pkgconfig(silc) >= 0.9.12
@@ -105,8 +105,8 @@ BuildRequires:	perl-devel
 BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
-BuildRequires:  pkgconfig(farstream-0.1)
-Suggests: gstreamer%{gstapi}-farstream
+BuildRequires:	pkgconfig(farstream-0.2)
+Suggests:	gstreamer%{gstapi}-farstream
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
