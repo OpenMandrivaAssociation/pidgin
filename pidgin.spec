@@ -12,7 +12,7 @@
 %define build_networkmanager 1
 %define build_perl 1
 %define build_silc 1
-%define build_vv 1
+%define build_vv 0
 
 %define gstapi 0.10
 %define major 0
@@ -24,7 +24,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.7
-Release:	1
+Release:	2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
