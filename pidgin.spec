@@ -24,7 +24,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.7
-Release:	2
+Release:	3
 Group:		Networking/Instant messaging
 License:	GPLv2+
 URL:		http://www.pidgin.im/
@@ -246,7 +246,7 @@ Lotus Sametime Community Client plugin for purple.
 %package client
 Summary:	Plugin and sample client to control purple clients
 Group:		Networking/Instant messaging
-Requires:	dbus-python
+Requires:	python-dbus
 
 %description client
 Applications and library to control purple clients remotely.
