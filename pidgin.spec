@@ -27,7 +27,7 @@ Version:	2.10.7
 Release:	4
 Group:		Networking/Instant messaging
 License:	GPLv2+
-URL:		http://www.pidgin.im/
+Url:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
 Source2:	one_time_password.c
@@ -55,12 +55,9 @@ BuildRequires:	xsltproc
 BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
 BuildRequires:	krb5-devel
-BuildRequires:	tk-devel
-BuildRequires:	tcl-devel
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(gnutls)
-BuildRequires:	libgcrypt-devel
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(gstreamer-%{gstapi})
 BuildRequires:	pkgconfig(gstreamer-plugins-base-%{gstapi})
@@ -68,6 +65,7 @@ BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(gtkspell-2.0) >= 2.0.2
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(libidn)
 BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
 BuildRequires:	pkgconfig(ncursesw)
@@ -77,6 +75,8 @@ BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(samplerate)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(tcl)
+BuildRequires:	pkgconfig(tk)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xscrnsaver)
 BuildRequires:	pkgconfig(x11)
@@ -325,11 +325,12 @@ popd
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
 
 desktop-file-install \
-  --remove-category="Application" \
-  --add-category="GTK" \
-  --add-category="Network" \
-  --add-category="InstantMessaging" \
-  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
+	--remove-category="Application" \
+	--add-category="GTK" \
+	--add-category="Network" \
+	--add-category="InstantMessaging" \
+	--dir %{buildroot}%{_datadir}/applications \
+	%{buildroot}%{_datadir}/applications/*
 
 # remove files not bundled
 rm -f %{buildroot}%{_libdir}/*/*.la 
