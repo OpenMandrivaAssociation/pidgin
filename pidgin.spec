@@ -24,13 +24,14 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.9
-Release:	3
+Release:	4
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
-Source2:	one_time_password.c
+Source2:	one_time_password.cA
+Source100:	%{name}.rpmlintrc
 Patch0:		pidgin-2.7.0-smiley.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
