@@ -30,7 +30,7 @@ License:	GPLv2+
 Url:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
-Source2:	one_time_password.cA
+Source2:	one_time_password.c
 Source100:	%{name}.rpmlintrc
 Patch0:		pidgin-2.7.0-smiley.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
