@@ -14,7 +14,7 @@
 %define build_silc 1
 %define build_vv 0
 
-%define gstapi 0.10
+%define gstapi 1.0
 %define major 0
 %define libname %mklibname purple %{major}
 %define libclient %mklibname purple-client %{major}
@@ -24,7 +24,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.9
-Release:	4
+Release:	5
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
@@ -46,6 +46,7 @@ Patch117:	pidgin-2.10.1-fix-perl-module-build.patch
 # since libtool drops soname for unversioned modules now, we need to explicitly
 # add soname to plugins that other plugins links against it
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
+Patch119:	pidgin-gstreamer1.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
@@ -279,6 +280,7 @@ This package contains translation files for Pidgin/Finch.
 %patch116 -p1
 %patch117 -p1 -b .perl_buildfix~
 %patch118 -p1 -b .soname~
+%patch119 -p1 -b .gst1
 
 autoreconf -fi -Im4macros
 
