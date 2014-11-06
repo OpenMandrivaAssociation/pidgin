@@ -24,7 +24,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.9
-Release:	5
+Release:	6
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
@@ -285,7 +285,7 @@ This package contains translation files for Pidgin/Finch.
 autoreconf -fi -Im4macros
 
 %build
-%configure2_5x \
+%configure \
 	--enable-gnutls=yes \
 %if %build_perl
 	--enable-perl \
