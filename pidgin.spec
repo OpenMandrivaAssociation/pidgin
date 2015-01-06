@@ -350,7 +350,6 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %doc AUTHORS COPYRIGHT ChangeLog
 %doc NEWS README doc/the_penguin.txt
 %{_mandir}/man1/pidgin.*
-%{_sysconfdir}/gconf/schemas/purple.schemas
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
