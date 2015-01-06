@@ -55,6 +55,7 @@ BuildRequires:	xsltproc
 BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
 BuildRequires:	krb5-devel
+BuildRequires:	openssl
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(gnutls)
