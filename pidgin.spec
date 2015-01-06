@@ -23,8 +23,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.10.9
-Release:	7
+Version:	2.10.11
+Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
@@ -42,7 +42,6 @@ Patch6:		pidgin-2.7.0-mono-build.patch
 Patch111:	%{name}-2.8.0-reread-resolvconf.patch
 Patch115:	%{name}-2.10.0-gg-search-by-uin.patch
 Patch116:	%{name}-2.8.0-gg-disconnect.patch
-Patch117:	pidgin-2.10.1-fix-perl-module-build.patch
 # since libtool drops soname for unversioned modules now, we need to explicitly
 # add soname to plugins that other plugins links against it
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
@@ -50,7 +49,6 @@ Patch119:	pidgin-gstreamer1.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
-BuildRequires:	GConf2
 BuildRequires:	graphviz
 BuildRequires:	intltool
 BuildRequires:	xsltproc
@@ -278,7 +276,6 @@ This package contains translation files for Pidgin/Finch.
 %patch111 -p1 -b .reread-resolvconf
 %patch115 -p1 -b .gg-search
 %patch116 -p1
-%patch117 -p1 -b .perl_buildfix~
 %patch118 -p1 -b .soname~
 %patch119 -p1 -b .gst1
 
@@ -356,6 +353,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
@@ -492,6 +490,8 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/ssl-nss.so
 %{_libdir}/purple-2/ssl.so
 %{_libdir}/purple-2/statenotify.so
+%{_libdir}/purple-2/nss-prefs.so
+
 %dir %{_datadir}/purple/
 %dir %{_datadir}/purple/ca-certs
 %{_datadir}/purple/ca-certs/AOL*
