@@ -1,6 +1,9 @@
 #gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
 
+# arm 7 test
+%define _xz_threads 0
+
 %define build_evolution 0
 %define build_libgadu 1
 %define build_meanwhile 1
