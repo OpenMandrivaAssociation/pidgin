@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   pidgin-2.10.9.tar.bz2: f3de8fd94dba1f4c98d5402a02430f9f323e665a
+sources:
+  pidgin-2.10.11.tar.bz2: 5e0062b81bdb01300804e12bc0b6a04a91984631
