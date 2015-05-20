@@ -1,6 +1,9 @@
 #gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
 
+# arm 7 test
+%define _xz_threads 0
+
 %define build_evolution 0
 %define build_libgadu 1
 %define build_meanwhile 1
@@ -14,7 +17,7 @@
 %define build_silc 1
 %define build_vv 0
 
-%define gstapi 0.10
+%define gstapi 1.0
 %define major 0
 %define libname %mklibname purple %{major}
 %define libclient %mklibname purple-client %{major}
@@ -24,13 +27,14 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.10.11
-Release:	0.1
+Release:	0.2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
 Source2:	one_time_password.c
+Source100:	%{name}.rpmlintrc
 Patch0:		pidgin-2.7.0-smiley.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
@@ -44,6 +48,7 @@ Patch116:	%{name}-2.8.0-gg-disconnect.patch
 # since libtool drops soname for unversioned modules now, we need to explicitly
 # add soname to plugins that other plugins links against it
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
+Patch119:	pidgin-gstreamer1.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
@@ -276,6 +281,7 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1 -b .gg-search
 %patch116 -p1
 %patch118 -p1 -b .soname~
+%patch119 -p1 -b .gst1
 
 autoreconf -fi -Im4macros
 
