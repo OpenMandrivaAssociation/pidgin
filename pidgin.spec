@@ -26,7 +26,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.10.12
+Version:	2.12.0
 Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
@@ -471,16 +471,10 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/libicq.so
 %{_libdir}/purple-2/libirc.so
 %{_libdir}/purple-2/libjabber.so
-%{_libdir}/purple-2/libmsn.so
-%{_libdir}/purple-2/libmxit.so
-%{_libdir}/purple-2/libmyspace.so
 %{_libdir}/purple-2/libnovell.so
 %{_libdir}/purple-2/liboscar.so
 %{_libdir}/purple-2/libsimple.so
 %{_libdir}/purple-2/libxmpp.so
-%{_libdir}/purple-2/libymsg.so*
-%{_libdir}/purple-2/libyahoo.so
-%{_libdir}/purple-2/libyahoojp.so
 %{_libdir}/purple-2/libzephyr.so
 %{_libdir}/purple-2/log_reader.so
 %{_libdir}/purple-2/newline.so
@@ -492,11 +486,4 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/ssl.so
 %{_libdir}/purple-2/statenotify.so
 %{_libdir}/purple-2/nss-prefs.so
-
-%dir %{_datadir}/purple/
-%dir %{_datadir}/purple/ca-certs
-%{_datadir}/purple/ca-certs/AOL*
-%{_datadir}/purple/ca-certs/Microsoft*
-%{_datadir}/purple/ca-certs/VeriSign*
-%{_datadir}/purple/ca-certs/DigiCert*
 
