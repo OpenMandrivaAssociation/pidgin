@@ -376,6 +376,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/pidgin/ticker.so
 %{_libdir}/pidgin/timestamp.so
 %{_libdir}/pidgin/timestamp_format.so
+%{_libdir}/pidgin/transparency.so
 %if %build_vv
 %{_libdir}/pidgin/vvconfig.so
 %endif
