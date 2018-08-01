@@ -71,6 +71,7 @@ BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(libidn)
 BuildRequires:	pkgconfig(libstartup-notification-1.0) >= 0.5
+BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(nspr)
