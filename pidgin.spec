@@ -13,7 +13,7 @@
 %define build_mono 0
 %endif
 %define build_networkmanager 1
-%define build_perl 1
+%define build_perl 0
 %define build_silc 1
 %define build_vv 0
 
