@@ -12,7 +12,7 @@
 %ifarch mips mipsel
 %define build_mono 0
 %endif
-%define build_networkmanager 1
+%define build_networkmanager 0
 %define build_perl 0
 %define build_silc 1
 %define build_vv 0
@@ -86,9 +86,6 @@ BuildRequires:	pkgconfig(xscrnsaver)
 BuildRequires:	pkgconfig(x11)
 %if %build_libgadu
 BuildRequires:	pkgconfig(libgadu) >= 1.11.0
-%endif
-%if %build_networkmanager
-BuildRequires:	pkgconfig(libnm-util)
 %endif
 %if %build_meanwhile
 BuildRequires:	pkgconfig(meanwhile) >= 1.0.0
