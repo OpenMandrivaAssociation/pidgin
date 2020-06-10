@@ -279,6 +279,7 @@ This package contains translation files for Pidgin/Finch.
 %patch115 -p1 -b .gg-search
 %patch116 -p1
 %patch118 -p1 -b .soname~
+%patch119 -p1
 
 autoreconf -fi -Im4macros
 
