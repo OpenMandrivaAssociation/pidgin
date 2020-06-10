@@ -48,6 +48,7 @@ Patch116:	%{name}-2.8.0-gg-disconnect.patch
 # since libtool drops soname for unversioned modules now, we need to explicitly
 # add soname to plugins that other plugins links against it
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
+Patch119:	pidgin-2.14.0-gold.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
