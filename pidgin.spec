@@ -284,6 +284,8 @@ This package contains translation files for Pidgin/Finch.
 autoreconf -fi -Im4macros
 
 %build
+export CC=gcc
+export CXX=g++
 %configure \
 	--enable-gnutls=yes \
 %if %build_perl
