@@ -15,13 +15,12 @@
 %define build_networkmanager 0
 %define build_perl 0
 %define build_silc 1
-%define build_vv 0
+%define build_vv 1
 
 %define gstapi 1.0
 %define major 0
 %define libname %mklibname purple %{major}
 %define libclient %mklibname purple-client %{major}
-%define libgnt %mklibname gnt %{major}
 %define devname %mklibname purple -d
 
 Summary:	A GTK+ based multiprotocol instant messaging client
@@ -36,6 +35,7 @@ Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 Source2:	one_time_password.c
 Source100:	%{name}.rpmlintrc
 Patch0:		pidgin-2.7.0-smiley.patch
+Patch1:		stupid-gdumbasses-cant-even-place-endif-correctly.patch
 Patch3:		pidgin-2.4.2-set-jabber-as-module.patch
 #gw fix build with mono 2.6.4 which does not have the nessessary glib dep
 #in the pkgconfig file
@@ -179,7 +179,6 @@ plugin for live video conference.
 Summary:	Development files for pidgin
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} >= %{version}-%{release}
-Requires:	%{libgnt} = %{version}-%{release}
 Requires:	%{libclient} = %{version}-%{release}
 Provides:	pidgin-devel = %{version}-%{release}
 
@@ -203,31 +202,6 @@ Conflicts:	%{name}-client < 2.10.1-1
 
 %description -n %{libclient}
 libpurple-client contains the shared library for %{name}-client.
-
-%package -n %{libgnt}
-Summary:	The libgnt library for the Finch IM client
-Group:		System/Libraries
-%rename %{_lib}finch0
-
-%description -n %{libgnt}
-libgnt contains the core IM support for the Finch IM client.
-
-libgnt supports a variety of messaging protocols including AIM, MSN,
-Yahoo!, Jabber, Bonjour, Gadu-Gadu, ICQ, IRC, Novell Groupwise, QQ,
-Lotus Sametime, SILC, Simple and Zephyr.
-
-%package -n finch
-Summary:	A text-based user interface for Pidgin
-Group:		Networking/Instant messaging
-Requires:	%{name}-i18n >= %{version}-%{release}
-Requires:	%{name}-plugins >= %{version}-%{release}
-Requires:	%{name}-client >= %{version}-%{release}
-
-%description -n	finch
-A text-based user interface for using libpurple. This can be run from a
-standard text console or from a terminal within X Windows.  It
-uses ncurses and our homegrown gnt library for drawing windows
-and text.
 
 %package bonjour
 Summary:	Bonjour plugin for Purple
@@ -391,7 +365,6 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_datadir}/aclocal/purple.m4
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/libpurple.so
-%{_libdir}/libgnt.so
 %{_libdir}/libpurple-client.so
 
 %files -n %{libname}
@@ -400,9 +373,6 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %files -n %{libclient}
 %{_libdir}/libpurple-client.so.%{major}*
 
-%files -n %{libgnt}
-%{_libdir}/libgnt.so.%{major}*
-
 %files client
 %{_bindir}/purple-remote
 %{_bindir}/purple-send
@@ -410,12 +380,6 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_bindir}/purple-client-example
 %{_bindir}/purple-url-handler
 %{_libdir}/purple-2/dbus-example.so
-
-%files -n finch
-%doc %{_mandir}/man1/finch.*
-%{_bindir}/finch
-%{_libdir}/finch/
-%{_libdir}/gnt/
 
 %if %build_perl
 %files perl
