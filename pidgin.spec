@@ -26,7 +26,7 @@
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
 Version:	2.14.1
-Release:	1
+Release:	2
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
@@ -108,7 +108,7 @@ BuildRequires:	pkgconfig(mono)
 %endif
 %if %build_vv
 BuildRequires:	pkgconfig(farstream-0.2)
-Suggests:	gstreamer%{gstapi}-farstream
+Recommends:	gstreamer%{gstapi}-farstream
 %endif
 
 Requires:	%{name}-i18n = %{version}-%{release}
@@ -289,7 +289,7 @@ autoreconf -fi -Im4macros
 	--disable-static \
 	--disable-schemas-install
 
-%make
+%make_build
 
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
@@ -298,7 +298,7 @@ make one_time_password.so
 popd
 
 %install
-%makeinstall_std mkinstalldirs='mkdir -p'
+%make_install mkinstalldirs='mkdir -p'
 
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
 
