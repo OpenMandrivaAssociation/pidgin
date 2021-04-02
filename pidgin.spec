@@ -285,7 +285,7 @@ autoreconf -fi -Im4macros
 %endif
 	--without-krb4 \
 	--enable-cap \
-	--with-system-ssl-certs=%{_sysconfdir}/pki/tls/rootcerts/ \
+	--with-system-ssl-certs=/etc/pki/ca-trust/ \
 	--disable-static \
 	--disable-schemas-install
 
