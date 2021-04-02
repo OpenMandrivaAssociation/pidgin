@@ -25,8 +25,8 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.14.1
-Release:	2
+Version:	2.14.2
+Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
 Url:		http://www.pidgin.im/
@@ -59,6 +59,8 @@ BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
 BuildRequires:	krb5-devel
 BuildRequires:	openssl
+BuildRequires:	cyrus-sasl
+BuildRequires:	pkgconfig(libsasl2)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(gnutls)
@@ -285,7 +287,7 @@ autoreconf -fi -Im4macros
 %endif
 	--without-krb4 \
 	--enable-cap \
-	--with-system-ssl-certs=%{_sysconfdir}/pki/tls/rootcerts/ \
+	--with-system-ssl-certs=/etc/pki/ca-trust/ \
 	--disable-static \
 	--disable-schemas-install
 
