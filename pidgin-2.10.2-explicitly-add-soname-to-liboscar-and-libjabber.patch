@@ -9,14 +9,3 @@
  libxmpp_la_LDFLAGS = -module -avoid-version
  
  if USE_CYRUS_SASL
---- pidgin-2.10.2/libpurple/protocols/oscar/Makefile.am.soname~	2012-03-16 20:15:58.733552100 +0100
-+++ pidgin-2.10.2/libpurple/protocols/oscar/Makefile.am	2012-03-16 20:15:58.753552126 +0100
-@@ -52,7 +52,7 @@ AM_CFLAGS = $(st)
- 
- libaim_la_LDFLAGS = -module -avoid-version
- libicq_la_LDFLAGS = -module -avoid-version
--liboscar_la_LDFLAGS = -module -avoid-version
-+liboscar_la_LDFLAGS = -module -avoid-version -Wl,-soname=liboscar.so
- if STATIC_OSCAR
- 
- st = -DPURPLE_STATIC_PRPL
