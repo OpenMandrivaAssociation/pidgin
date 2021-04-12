@@ -260,8 +260,6 @@ This package contains translation files for Pidgin/Finch.
 autoreconf -fi -Im4macros
 
 %build
-#export CC=gcc
-#export CXX=g++
 %configure \
 	--enable-gnutls=yes \
 %if %build_perl
@@ -435,13 +433,10 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/buddynote.so
 %{_libdir}/purple-2/idle.so
 %{_libdir}/purple-2/joinpart.so
-%{_libdir}/purple-2/libaim.so
 %{_libdir}/purple-2/libgg.so
-%{_libdir}/purple-2/libicq.so
 %{_libdir}/purple-2/libirc.so
 %{_libdir}/purple-2/libjabber.so
 %{_libdir}/purple-2/libnovell.so
-%{_libdir}/purple-2/liboscar.so
 %{_libdir}/purple-2/libsimple.so
 %{_libdir}/purple-2/libxmpp.so
 %{_libdir}/purple-2/libzephyr.so
@@ -455,4 +450,3 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/purple-2/ssl.so
 %{_libdir}/purple-2/statenotify.so
 %{_libdir}/purple-2/nss-prefs.so
-
