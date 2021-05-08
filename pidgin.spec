@@ -4,7 +4,7 @@
 # arm 7 test
 %define _xz_threads 0
 
-%define build_evolution 0
+%define build_evolution 1
 %define build_libgadu 1
 %define build_meanwhile 1
 #gw http://developer.pidgin.im/ticket/11936#comment:1
