@@ -330,7 +330,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/appdata/%{name}.appdata.xml
+#{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*
 %{_datadir}/sounds/purple
