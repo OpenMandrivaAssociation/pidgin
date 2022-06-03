@@ -25,7 +25,7 @@
 
 Summary:	A GTK+ based multiprotocol instant messaging client
 Name:		pidgin
-Version:	2.14.9
+Version:	2.14.10
 Release:	1
 Group:		Networking/Instant messaging
 License:	GPLv2+
