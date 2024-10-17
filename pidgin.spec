@@ -29,7 +29,7 @@ Version:	2.14.12
 Release:	2
 Group:		Networking/Instant messaging
 License:	GPLv2+
-Url:		http://www.pidgin.im/
+Url:		https://www.pidgin.im/
 Source0:	http://downloads.sourceforge.net/pidgin/%{name}-%{version}.tar.bz2
 #gw from Fedora: generate one time passwords
 Source2:	one_time_password.c
