@@ -248,14 +248,14 @@ This package contains translation files for Pidgin/Finch.
 
 %prep
 %setup -q
-%patch0 -p1 -b .smiley
-%patch3 -p0
-%patch6 -p1
-%patch111 -p1 -b .reread-resolvconf
-%patch115 -p1 -b .gg-search
-%patch116 -p1
-%patch118 -p1 -b .soname~
-#patch119 -p1
+%patch 0 -p1 -b .smiley
+%patch 3 -p0
+%patch 6 -p1
+%patch 111 -p1 -b .reread-resolvconf
+%patch 115 -p1 -b .gg-search
+%patch 116 -p1
+%patch 118 -p1 -b .soname~
+#patch 119 -p1
 
 autoreconf -fi -Im4macros
 
