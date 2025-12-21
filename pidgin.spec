@@ -50,6 +50,11 @@ Patch116:	%{name}-2.8.0-gg-disconnect.patch
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
 #Patch119:	pidgin-2.14.0-gold.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
 BuildRequires:	graphviz
