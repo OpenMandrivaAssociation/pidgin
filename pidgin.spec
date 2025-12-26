@@ -155,13 +155,13 @@ Requires:	%{name} >= %{version}-%{release}
 %description perl
 Purple can use perl script as plugin, this plugin enable them.
 
-%package tcl
-Summary:	Purple extension, to use tcl scripting
-Group:		Networking/Instant messaging
-Requires:	%{name} >= %{version}-%{release}
+#package tcl
+#Summary:	Purple extension, to use tcl scripting
+#Group:		Networking/Instant messaging
+#Requires:	%{name} >= %{version}-%{release}
 
-%description tcl
-Purple can use tcl script as plugin, this plugin enable them.
+#description tcl
+#Purple can use tcl script as plugin, this plugin enable them.
 
 %if %build_evolution
 %package gevolution
@@ -406,9 +406,9 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %files bonjour
 %{_libdir}/purple-2/libbonjour.so
 
-%files tcl
-%doc doc/TCL-HOWTO.dox
-%{_libdir}/purple-2/tcl.so
+#files tcl
+#doc doc/TCL-HOWTO.dox
+#{_libdir}/purple-2/tcl.so
 
 %if %build_silc
 %files silc
