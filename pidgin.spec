@@ -262,7 +262,7 @@ This package contains translation files for Pidgin/Finch.
 %patch 118 -p1 -b .soname~
 #patch 119 -p1
 
-autoreconf -fi -Im4macros
+#autoreconf -fi -Im4macros
 
 %build
 %configure \
@@ -294,7 +294,7 @@ autoreconf -fi -Im4macros
 	--disable-static \
 	--disable-schemas-install
 
-%make_build
+%make_build LIBTOOL=slibtool-shared
 
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
@@ -303,7 +303,7 @@ make one_time_password.so
 popd
 
 %install
-%make_install mkinstalldirs='mkdir -p'
+%make_install mkinstalldirs='mkdir -p' LIBTOOL=slibtool-shared
 
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
 
