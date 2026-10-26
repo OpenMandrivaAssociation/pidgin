@@ -298,7 +298,7 @@ autoreconf -fi -Im4macros
 	--disable-static \
 	--disable-schemas-install
 
-%make_build
+%make_build LIBTOOL=slibtool-shared
 
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
@@ -307,7 +307,9 @@ make one_time_password.so LIBTOOL=slibtool-shared
 popd
 
 %install
-%make_install mkinstalldirs='mkdir -p'
+# The in-tree libtool script never installs, so purple-2 is not created.
+%make_install LIBTOOL=slibtool-shared mkinstalldirs='mkdir -p'
+mkdir -p %{buildroot}%{_libdir}/purple-2
 
 install -m 0755 libpurple/plugins/one_time_password.so %{buildroot}%{_libdir}/purple-2/
 
