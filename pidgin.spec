@@ -303,7 +303,7 @@ autoreconf -fi -Im4macros
 # one_time_password plugin, to be merged upstream soon
 cp %{SOURCE2} libpurple/plugins/
 pushd libpurple/plugins/
-make one_time_password.so
+make one_time_password.so LIBTOOL=slibtool-shared
 popd
 
 %install

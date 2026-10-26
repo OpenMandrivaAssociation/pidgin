@@ -5,5 +5,5 @@
  	$(LIBTOOL) --mode=link    $(CC) $(CFLAGS) -o libtmp$@.la -rpath $(plugindir) tmp$@.lo $(LIBS) $(LDFLAGS) -module -avoid-version $(PLUGIN_LIBS)
  	@rm -f tmp$@.lo tmp$@.o libtmp$@.la
 -	@cp .libs/libtmp$@*.so $@
-+	@cp -a .libs/libtmp$@.so.so $@ 2>/dev/null || cp -a .libs/libtmp$@ $@
++	@cp -a .libs/libtmp$@ $@ 2>/dev/null || cp -a .libs/libtmp$@.so $@ 2>/dev/null || cp -a .libs/libtmp$@.so.so $@ || { ls -la .libs; exit 1; }
  	@rm -rf .libs/libtmp$@.*
