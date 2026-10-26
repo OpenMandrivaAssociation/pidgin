@@ -1,5 +1,7 @@
 #gw 2.7.0, the yahoo plugin does not build otherwise
 %define _disable_ld_no_undefined 1
+# Zephyr still uses K&R definitions, which C23 rejects.
+%global optflags %{optflags} -std=gnu17
 
 # arm 7 test
 %define _xz_threads 0
