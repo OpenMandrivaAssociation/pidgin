@@ -49,6 +49,9 @@ Patch116:	%{name}-2.8.0-gg-disconnect.patch
 # add soname to plugins that other plugins links against it
 Patch118:	pidgin-2.10.2-explicitly-add-soname-to-liboscar-and-libjabber.patch
 #Patch119:	pidgin-2.14.0-gold.patch
+# GNU libtool -avoid-version writes .libs/libtmpNAME.so. The old glob
+# libtmpNAME.so*.so does not match that. slibtool writes .so.so.
+Patch120:	pidgin-slibtool-plugin-suffix.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -261,6 +264,7 @@ This package contains translation files for Pidgin/Finch.
 %patch 116 -p1
 %patch 118 -p1 -b .soname~
 #patch 119 -p1
+%patch 120 -p1
 
 autoreconf -fi -Im4macros
 
